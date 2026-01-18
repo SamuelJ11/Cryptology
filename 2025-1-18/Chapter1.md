@@ -56,6 +56,42 @@
     • One-time pad systesm are unbreakable but the expense of using a one-time pad is enormous as it requires exchanging a key that is as long as the plaintext itself, and the key can only be used once
 
 # 1.2 Crytographic Applications
+
+    • Cryptography is not only about encyrpting and decrypting messages, but also about solving real-world problems that require information security:
+
+        (1) Confidentiality: Eve should not be able to read Alice's message to Bob
+
+        (2) Data integrity: Bob wants to be sure that Alice's message has not been altered, cryptographic primitives, such as hash functions provide methods to detect data manipulation
+
+        (3) Authentication: Bob wants to be sure that only Alice could have sent the message he received
+
+            - authentication is often classifed into entity authentication (proving identity of all parties involved in the communication) and data-origin authentication (creator and time of creation)
+
+        (4) Non-repudiation: Alice cannot claim she did not send the message 
+
+            - important in electronic commerce where the customer cannot deny the authorization of the purchase
+
+    • In a symmetric key cryptosystem, authorization is guaranteed but non-repudiation is impossible.
+
+        - in a public key cryptosystem, both authentication and non-repudation can be achieved
+
+    • More specifc cryptographic applications are listed below:
+
+        - digital signatures: protocols that allow messages to be signed so that everyone believes that the signer was the person who signed the document and they cannot deny signing
+
+        - identifcation: passwords, zero-knowledge identifcation schemes that prove identity without revealing a password
+
+        - key establishment: Public key cryptosystems such as RSA, Diffe-Hellman key exchange algorithm, trusted third party, certificate authority, computer network authentication protocols (Kerberos)
+
+        - user (entity) authentication: proving a claimed identity or attribute is valid. authentication may leverage password, symmetric keys, or public key methods (e.g., digital signatures)
+
+        - secret sharing: dividing a bank safe combination among several agents so that a single person cannot access the safe
+    
+        - secure communication (security protocol suite): Protecting transactions over open channels such as the Internet (SSL/TLS)
+
+        - electronic cash: payment systems providing anonymity but prevent counterfeiting, e.g., Bitcoin
+
+        - games: dealing cards if players are not in the same room?
    
     
 
