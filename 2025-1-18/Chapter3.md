@@ -138,6 +138,85 @@
                 * the last step shows us that s = -4 and t = 15, giving 1 = 56(-4) + 15(15)     
 
 # 3.3 Congruences
+
+    • One of the most basic and useful notions in number theory is modular arithmetic, or congruences
+
+    • Let a, b, n be integers with n ≠ 0
+
+        - we say that a ≡ b (mod n) iff n(a-b)    "a is congruent to b mod n if a - b is a multiple of n"
+
+        - example: 
+
+            32 ≡ 7 (mod 5) because (32 - 7) is divisible by 5
+
+            17 ≡ 17 (mod 13) because (17 - 17) is divisible by 13 (or any number)
+
+    • Another way to view congruence is two numbers that are congruent mod n yield the same remainders when divided by n
+
+    • Some useful properties of congruence are shown below:
+
+        (1) a ≡ 0 (mod n) iff n|a
+        (2) a ≡ a (mod n)
+        (3) a ≡ b (mod n) iff b ≡ a (mod n)
+        (4) if a ≡ b and b ≡ c (mod n), then a ≡ c (mod n)   
+
+    • example:
+
+        solve x + 7 ≡ 3 (mod 17)     "When x + 7 is divided by 17, the remainder is 3"
+
+        (1) isolate x: x ≡ −4 (mod 17)
+
+        (2) convert negative number to a positive equivalent modulo 17: 
+
+            - here we must think of a number between 0 and 16 that has the same remainder as -4 when divided by 17
+
+                - add 17 until we get a nice positive number: -4 + 17 = 13
+            
+            - since -4 ≡ 13 (mod 17), we obtain the final solution x ≡ 13 (mod 17)
+
+# 3.3.1 Division
+
+    • The general rule is that you can divide by a (mod n) when gcd(a, n) = 1 (in other words, when a and n are relatively prime)
+
+    • The division modulo n is based on the concept of modular multiplicative inverse, which is defined below:
+
+        - let a, n be a member of Z.  
+        
+        - an integer s is a multiplicative inverse modulo n of a iff as ≡ 1 (mod n)
+
+        *essentially, (s)a gives a remainder of 1 when divided by n, therefore s is the modular inverse of a (mod n)
+
+    • A number a has a modular inverse mod n if and only if gcd(a, n) = 1
+
+    • A useful feature that follows from the above statement is shown below:
+
+        - let a, b, c, n be integers with n ≠ 0 and with gcd(a, n) = 1
+
+        - if ab ≡ ac (mod n), then b ≡ c (mod n) 
+
+    • For example, lets solve 2x + 7 ≡ 3 (mod 17):
+
+        (1) 2x ≡ -4 (mod 17)       *we notice gcd(2, 17) = 1, so 2 has an inverse mod 17 and we can divide both sides of the congruence by 2
+        (2) x ≡ -2 (mod 17)
+        (3) x ≡ 15 (mod 17)
+   
+    • Another slightly harder example, lets solve 5x + 6 ≡ 13 (mod 11)
+
+        (1) 5x ≡ 7 (mod 11)         *again, gcd(5, 11) = 1, so 5 has an inverse mod 11.  
+                                    *however, we notice that since 5 does not divide 7, we can use a congruence trick to perform the same steps as before
+                                    *since 7 ≡ 18 ≡ 29 ≡ 40 ≡ . . . (mod 11), we can simply replace 7 with 40 since 5 now divides 40
+        (2) 5x ≡ 40 (mod 11)
+        (3) x ≡ 8 (mod 11)
+
+    • The below propostion is a rephrasing of the definition of modular multiplicative inverses:  
+
+        - suppose gcd(a, n) = 1 
+        - let s and t be integers such that as + nt = 1 (where s and t are found from the extended Euclidean algorithm)
+        - then as ≡ 1 (mod n), so s is the multiplicative inverse for a (mod n)
+
+        *note that s is denoted a⁻¹
+
+
                             
                 
             
