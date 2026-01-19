@@ -192,7 +192,7 @@
 
         - let a, b, c, n be integers with n ≠ 0 and with gcd(a, n) = 1
 
-        - if ab ≡ ac (mod n), then b ≡ c (mod n) 
+        - if a.b ≡ a.c (mod n), then b ≡ c (mod n) 
 
     • For example, lets solve 2x + 7 ≡ 3 (mod 17):
 
@@ -212,14 +212,125 @@
 
         - suppose gcd(a, n) = 1 
         - let s and t be integers such that as + nt = 1 (where s and t are found from the extended Euclidean algorithm)
-        - then as ≡ 1 (mod n), so s is the multiplicative inverse for a (mod n)
+        - then a.s ≡ 1 (mod n), so s is the multiplicative inverse for a (mod n)
 
         *note that s is denoted a⁻¹
 
+    • To tie it all together, lets revisit the results we obtained for s and t from the extended Euclidean algorithm:
 
-                            
-                
-            
+        - gcd(56, 15) = 1 ≡ (-4).56 + 15.15   *where s = -4 and t = 15
+
+        - now, we look at this equation through the "lens" of mod 56 (for example, we could also choose mod 15) 
+        
+        - in modular arithmetic, any multiple of the modulus becomes 0
+
+            - since (-4).56 is a multiple of 56, it becomes 0 mod (56)    
+
+        - so the equation transposes into:
+
+            - 1 ≡ 0 + 15.15 (mod 56)  -->  1 ≡ 15.15 (mod 56)   
+
+        - recall the definition of a multiplicative inverse:    
+        
+            - a.s ≡ 1 (mod n)    *s is the multiplicative inverse for a (mod n)
+
+        - the equation we derived fits this model directly:
+
+            - 1 ≡ 15.15 (mod 56)  -->  15.15 ≡ 1 (mod 56)  *here a = 15 and s = 15
+
+            - therefore 15 is the multiplicative inverse for 15 (mod 56)
+
+    • An important property of modular multiplicative inverses is that if s is a multiplicative inverse of a (mod n), then so is every integer s + k.n for any integer k
+
+        - e.g., let k = 1, then 15 + 1.56 = 71
+
+        - using a.s ≡ 1 (mod n), we already know that 15.15 ≡ 1 (mod 56), but now we also see that 15.71 ≡ 1 (mod 56), so 71 is also a multiplicative inverse for 1 (mod 56)
+
+    • Summary of steps to solve modular arithmetic equations:
+
+        - if we are tasked with finding a⁻¹ (mod n)
+
+            (1) use the extended Euclidean algorithm for gcd(a, n) to find integers s and t such that a.s + n.t = 1
+
+            (2) a⁻¹ ≡ s (mod n)
+
+        - if we are solving ax ≡ c (mod n) when gcd(a, n) = 1
+
+            (1) use the extended Euclidean algorithm to find integers s and t such that a.s + n.t = 1
+
+            (2) x ≡ cs (mod n)  *if you must, replace the fraction c/a with c.s
+
+        - if we need to solve a congruence of the form ax ≡ b (mod n) when gcd(a, n) = d > 1, the procedure is as follows:
+
+            (1) if d does not divide b, there is no solution
+
+            (2) Assume d|b, consider a new congruence of the form (a/d)x ≡ b/d (mod n/d)
+
+                *since (a/d), (b/d) and (n/d) are integers and gcd (a/d, n/d) = 1, we can solve this congruence by the above procude to obtain the solutions:
+
+                    x₀ + 1(n/d) + x₀ + 2(n/d) + . . .x₀ + (d-1)(n/d)
+
+    • Examples:
+
+        - given 7x ≡ 3 (mod 20), find a⁻¹ (mod 20)
+
+            (1) 
+                * here our numbers are 20 and 7
+
+                +-------------------+-----------------+-------------------------------------------------+
+                |     Euclidean     |    Rewrite      |                Build Solution                   |
+                +-------------------+-----------------+-------------------------------------------------+
+                |  20 = 7(2) + 6    | 20 - 7(2) = 6   |  7 - (20 - 7(2)) = 1  -->  (3).7 + (-1).20 = 1  |
+                +-------------------+-----------------+-------------------------------------------------+
+                |  7 = 6(1) + 1     | 7 - 6(1) = 1    |                  7 - [6] = 1                    |
+                +-------------------+-----------------+-------------------------------------------------+
+               
+                *now we see that s = 3 and t = -1 
+                *remember that s = a⁻¹ = 3
+
+            (2)
+                a⁻¹ = 3 mod (20)
+
+        - using a⁻¹ found previously, solve 7x ≡ 3 (mod 20)
+
+            (1) x = 3.3 (mod 20)  -->  x = 9 (mod 20)
+
+        - solve 6x ≡ 12 (mod 15)
+
+            (1) find gcd(15, 6)
+
+                - this is 3, so let d = 3
+
+            (2) find a new congruence of the form (a/d)x ≡ b/d (mod n/d)
+
+                - 2x ≡ 4 (mod 5)
+
+            (3) use the extended Euclidean algorithm to find integers s and t such that a.s + n.t = 1
+
+                +-------------------+-----------------+-------------------------------------------------+
+                |     Euclidean     |    Rewrite      |                Build Solution                   |
+                +-------------------+-----------------+-------------------------------------------------+
+                |  5 = (2)2 + 1     | 5 - 2(2) = 1    |              2(-2) + 5(1) = 1                   |
+                +-------------------+-----------------+-------------------------------------------------+
+
+                *therefore s = 3 and t = 1
+                *we obtained s = 3 via the formula s + k.n obtaining -2 + 5(1) = 3 
+
+            (4) solve for x:
+
+                x = 4.3 (mod 5)  -->  x = 12 (mod 5)    
+
+                * this solution can be simplified by modular reduction.
+                * since 5 "fits" into 12 two times, we subtract (5.2) from 12, obtaining 12 - 10 = 2
+
+                x = 2 (mod 5)   *this is only the fist of three solutions!
+
+                * To find all d solutions, you take your first solution and keep adding the simplified modulus (5) until you have d (3) unique answers:
+
+                x = 2 (mod 5)   *first solution
+                x = 7 (mod 5)   *second solution
+                x = 12 (mod 5)  *third solution
+
 
 
 
