@@ -90,7 +90,7 @@
 
         - the process looks something like this:
 
-            (1) form a table with 2 rows and 3 columns.  In the first column, we run the normal Euclidean algorithm
+            (1) form a table with 3 columns.  In the first column, we run the normal Euclidean algorithm
 
                 +-------------------+-----------------+----------------+
                 |     Euclidean     |    Rewrite      | Build Solution |
