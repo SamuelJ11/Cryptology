@@ -205,7 +205,7 @@
 
             - lets put those two equations directly op top of each other and maybe we'll notice something:
 
-                x₁ ≡ α⁻¹(-β)         (mod 26)
+                x₁ ≡ α⁻¹(-β)       (mod 26)
                 x₂ ≡ α⁻¹ + α⁻¹(-β) (mod 26)
 
                 * notice the second part of the equation for x₂ is exactly x₁:
