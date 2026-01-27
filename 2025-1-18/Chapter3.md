@@ -174,7 +174,7 @@
             
             - since -4 ≡ 13 (mod 17), we obtain the final solution x ≡ 13 (mod 17)
 
-# 3.3.1 Division
+## 3.3.1 Division
 
     • The general rule is that you can divide by a (mod n) when gcd(a, n) = 1 (in other words, when a and n are relatively prime)
 
@@ -182,11 +182,11 @@
 
         - let a, n be a member of Z.  
         
-        - an integer s is a multiplicative inverse modulo n of a iff as ≡ 1 (mod n)
+        - an integer 's' is a multiplicative inverse (mod n) of 'a' iff as ≡ 1 (mod n)
 
-        *essentially, (s)a gives a remainder of 1 when divided by n, therefore s is the modular inverse of a (mod n)
+        *essentially, s.a gives a remainder of 1 when divided by n, therefore 's' is the multiplicative inverse of a (mod n)
 
-    • A number a has a modular inverse mod n if and only if gcd(a, n) = 1
+    • A number 'a' has a multiplicative inverse (mod n) iff gcd(a, n) = 1
 
     • A useful feature that follows from the above statement is shown below:
 
@@ -240,7 +240,7 @@
 
             - therefore 15 is the multiplicative inverse for 15 (mod 56)
 
-    • An important property of modular multiplicative inverses is that if s is a multiplicative inverse of a (mod n), then so is every integer s + k.n for any integer k
+    • An important property of modular multiplicative inverses is that if 's' is a multiplicative inverse of a (mod n), then so is every integer s + k.n for any integer k
 
         - e.g., let k = 1, then 15 + 1.56 = 71
 
