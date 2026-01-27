@@ -44,7 +44,7 @@
             
                 -- 7 ≡ 0 + k (mod 26), k = 7
 
-        (4) chosen ciphertext: here we pick the cyphertext and see what it decrypts to, so we use the decryption formula: 
+        (4) chosen ciphertext: here we pick the ciphertext and see what it decrypts to, so we use the decryption formula: 
         
             - if we can choose 'a' as the ciphertext and the plaintext is 'h', the we use the formula plaintext ≡ ciphertext - key:
             
@@ -231,7 +231,102 @@
 
 # 2.3 The Vigenère Cipher
 
+    • The key for the encryption is a vector of a given length whose entries are integers from 0 to 25
 
+        - often the key corresponds to a word that is easily remembered
+
+            -- lets assume our word is "vector", which corresponds to (21, 4, 2, 19, 14, 17)
+
+    • To encrypt the message using the key from our example, we take the first letter of the plaintext and shift by the first number in our vector, then shift the second letter by the second value, etc:
+
+        (plaintext)  h   e   r   e   i   s   h   o   w   i   t   w   o   r   k   s
+           (key)     21  4   2   19  14  17  21  4   2   19  14  17  21  4   2   19
+        (ciphertext) C   I   T   X   W   J   C   S   Y   B   H   N   J   V   M   L
+
+    • A known plaintext attack will succeed if enough characters are known since the key is obtained by subtracting the plaintext from the ciphertext (mod 26):
+
+        (ciphertext)  C   I   T   X   W   J   C   S   Y   B   H   N   J   V   M   L
+        (plaintext)   h   e   r   e   i   s   h   o   w   i   t   w   o   r   k   s
+        (difference)  -5  4   2   19  14  -9  -5  4   2   -7  -12 -9  -5  4   2   -7
+
+        - notice how the pattern -5, 4, 2, 19, 14, -9 repeats every 6 letters
+
+        - we can thus reconstruct the key vector by first converting negative number to positive using the relevant modular arithmetic:
+
+            -5 ≡ 21 (mod 26),  -9 ≡ 17 mod (26)
+
+        - thus our key vector is reconstructed as (21, 4, 2, 19, 14, 17)
+
+    • A chosen plaintext attack using the plaintext 'aaaaaaa ... ' will yield the key immediately:
+
+        (plaintext)   a   a   a   a   a   a   a   a   a   a   a   a   a   a   a   a  . . .
+        (ciphertext)  V   E   C   T   O   R   V   E   C   T   O   R   V   E   C   T  . . .
+           (key)      21  4   2   19  14  17  21  4   2   19  14  17  21  4   2   19 . . .
+
+    • A chosen ciphertext with 'AAAAAAA ... ' yeilds the negative of the key:
+
+        (ciphertext)  A    A    A    A    A    A    A    A    A    A    A    A    A    A    A    A  . . .
+        (plaintext)   f    w    y    h    m    j    f    w    y    h    m    j    f    w    y    h  . . .
+           (key)      -5  -22  -24   -7  -12   -9   -5   -22  -24  -7   -12  -9   -5   -22  -24  -7 . . .
+
+    • It was long thought that this cipher method was secure against a a ciphertext-only attack, however this turned out to be untrue
+
+        - because frequency counts are smoothed out during the encryption process, it becomes much more difficult to deduce the decryption key from frequency analysis
+
+        - we will see shortly that once the length of the key is known, frequency analysis becomes much more tenable and the decryption key easily follows 
+
+## 2.3.1 Finding the Key Length
+
+    • Honestly the textbook explains this section better than I could rephrase it, just read this section it's pretty straightforward 
+
+## 2.3.2 Finding the Key: First Method
+
+    • After determining the key length, look at the letter 1, 1 + k, 1 + 2k, etc and see which letters occur most frequently
+
+        - e.g., if the key length was determined to be 5, look at the first, 6th, 11th, etc letters
+
+    • Record these frequency counts in a table similar to one found in this section
+
+    • Using the fact that 'e' is the most frequently used letter in English, we decide that the most frequently observed letter in our table corresponds to 'e'
+
+        - e.g., if the most frequently observed ciphertext letter was 'G', then we decide that G = e
+
+    • Now we can determine the shift value: if for example G represents the plaintext 'e', we calculate the shift via 4 + s = 6  ->  s = 2
+
+        * remember 'e' = 4 and 'g' = 6
+
+    • Now that we determined that our shift value is 2, we can determine the FIRST letter of the key.  Lets briefly recall some facts to make this clear:
+
+        - because the key length is 5, the shift pattern resets every 5 letters
+
+        - this is why we are instructed to look at the 1st, 6th, and 11th letters specifically. 
+        
+            -- by skipping 5 letters each time, you are looking only at the letters that were scrambled using the exact same part of the key
+
+        - when looking only at the 1st, 6th, and 11th positions, 'G' will consistently represent 'e' because the key hasn't moved to a different letter yet; it's always "circling back" to the first letter of the key
+
+        - since we now know that the FIRST letter (along with the 6th, 11th, etc) was shifted by 2, we conclude that the first letter of the key must be 'c'
+
+    • We now look at the 2nd, 7th, 12th . . . letters.  If it is found, for example, that 'S' occurs the most frequently, then again we conclude that 'S' corresponds to 'e'
+
+        - the shift value to go from 'e' to 's' is obtained via 4 + s = 18  ->  s = 14
+
+        - thus the second letter in our key is 'o'
+
+    • Continue the above process until all the letters of the key are found and test it by using it to decrypt the ciphertext
+
+## 2.3.3 Finding the Key: Second Method
+
+    
+
+        
+    
+
+
+
+
+
+    
 
                
 
