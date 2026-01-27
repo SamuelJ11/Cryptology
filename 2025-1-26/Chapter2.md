@@ -317,6 +317,33 @@
 
 ## 2.3.3 Finding the Key: Second Method
 
+    • The following is a summary of the steps outlining what to do for this method.
+
+        - for the full explanation, read this section in its entirety
+
+    • First, assume the key length is found via the method discussed previously, and let this length be 'n'
+
+    • For i = 1 to n, do the following:
+
+        (1) compute the frequencies of the letters in positions i (mod n) just like before, but this time put these numbers into a vector 'V'
+
+            - divide each integer entry of the vector 'V' by the total number of entries, and let this new vector be 'W'
+
+        (2) for j = 0 to 25, compute W . Aⱼ
+
+            * Aⱼ represents the standard frequency of letters in the English language, but shifted by 'j' positions. 
+
+            - here we are comparing the ciphertext slice 'W' against every possible shifted version of the English alphabet frequencies Aⱼ to see which one "fits" best
+
+            - j₀ in this case is the specific shift number that produces that largest dot product among the elements of W . Aⱼ
+
+            - after we calculate the dot product for every single value of j, we'll end up with 26 different scores.
+            
+                -- the shift number (0, 1, 2, . . . 24, 25) associated with that highest score is j₀
+         
+        (3) let kᵢ = j₀ give the maximum value of W . Aⱼ
+
+            * after you find the winning shift j₀, that number tells you what the i-th letter of your key is kᵢ
     
 
         
