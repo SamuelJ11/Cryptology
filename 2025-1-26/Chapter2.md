@@ -325,23 +325,23 @@
 
     • For i = 1 to n, do the following:
 
-        (1) compute the frequencies of the letters in positions i (mod n) just like before, but this time put these numbers into a vector 'V'
+        (1) compute the frequencies of the letters in positions i (mod n) just like before, but this time put these numbers into a vector 'Vᵢ'
 
-            - divide each integer entry of the vector 'V' by the total number of entries, and let this new vector be 'W'
+            - divide each integer entry of the vector 'Vᵢ' by the total number of entries, and let this new vector be 'Wᵢ'
 
-        (2) for j = 0 to 25, compute W . Aⱼ
+        (2) for j = 0 to 25, compute Wᵢ . Aⱼ
 
             * Aⱼ represents the standard frequency of letters in the English language, but shifted by 'j' positions. 
 
             - here we are comparing the ciphertext slice 'W' against every possible shifted version of the English alphabet frequencies Aⱼ to see which one "fits" best
 
-            - j₀ in this case is the specific shift number that produces that largest dot product among the elements of W . Aⱼ
+            - j₀ in this case is the specific shift number that produces that largest dot product among the elements of Wᵢ . Aⱼ
 
             - after we calculate the dot product for every single value of j, we'll end up with 26 different scores.
             
                 -- the shift number (0, 1, 2, . . . 24, 25) associated with that highest score is j₀
          
-        (3) let kᵢ = j₀ give the maximum value of W . Aⱼ
+        (3) let kᵢ = j₀ give the maximum value of Wᵢ . Aⱼ
 
             * after you find the winning shift j₀, that number tells you what the i-th letter of your key is kᵢ
     
