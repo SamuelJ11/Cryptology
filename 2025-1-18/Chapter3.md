@@ -431,11 +431,11 @@
 
 # 3.5 Modular Exponentiation
 
-    • Here will be concerning ourselves with concerning ourselves with numbers of the form xᵃ (mod n)
+    • Here will be concerning ourselves with numbers of the form xᵃ (mod n)
 
     • Suppose we want to compute 2¹²³⁴ (mod 789); if we first compute 2¹²³⁴, then reduce (mod 789), we'll be working with very large numbers even though the final answer has only 3 digits.
 
-    • The strategy to solve this uses sucesssive squaring (in this case of powers of 2):
+    • The strategy to solve this uses sucessive squaring (in this case of powers of 2):
 
         (1) start with 2¹ ≡ 2 (mod 789) and repeatedly square both sides until we reach the highest power of 2 that is less than or equal to your target exponent
 
