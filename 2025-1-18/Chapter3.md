@@ -331,9 +331,100 @@
                 x = 7 (mod 5)   *second solution
                 x = 12 (mod 5)  *third solution
 
+# 3.4 The Chinese Remainder Theorem
+
+    • Recall that if x ≡ 25 (mod 42), we can rewrite it in standard arithmetic as x = 25 + 42k for some integer k.
+
+        - rewriting 42 as 7.6, we obtain x = 25 + 7(6k)
+
+        - this implies that x ≡ 4 (mod 7) and x ≡ 1 (mod 6)
+
+    • Now we can break the original congruence (mod 42) into a system of congruences (mod factors of 42):
+
+                              | x ≡ 4 (mod 7)
+        x ≡ 25 (mod 42)  -->  |
+                              | x ≡ 1 (mod 6)
+
+    • The Chinese remainder theorem shows that this process can be reversed;
+
+        - suppose gcd (m, n) = 1
+        - given integers a and b, there exists exactly one solution x (mod m.n) to the simultaneous congruences
+
+            x ≡ a (mod m),  x ≡ b (mod n)
+
+    • Let's do an example where we solve x ≡ 3 (mod 7), x ≡ 5 (mod 15):
+
+        (1) list the numbers that are congruent to b (mod n) until one of THOSE numbers is found to be congruent to a (mod m):
+
+            5, 20, 35, 50, 65, 80 . . . 
+
+                ↓ (mod 7) ↓
+
+            5, 6, 0, 1, 2, 3 . . .
+
+                * note that 80 ≡ 5 (mod 15) and 80 ≡ 3 (mod 7), so we have found 'c' from the general formula x ≡ c (mod n)
+
+        (2) multiply m.n to find 'n' and form the orginal (combined) congruence 
+
+            7 . 15 = 105
+
+            x ≡ 80 (mod 105)
+
+    • The above method works for small values of m and n, but is really inefficient for larger ones.  Luckily the CRT gives us a systematic way to do this:
+
+        (1) use the Extended Euclidean algorithm to find 's' and 't' such that m.s + n.t = 1
+
+        (2) let x ≡ b.m.s + a.n.t (mod m.n)
+         
+    • CRT lets you solve a hard congruence mod a composite number by solving easier congruences mod its coprime factors and then recombining the solutions.
+
+    • For example, suppose we want to solve the congruence x² ≡ 1 (mod 35):
+
+        (1) like before we set up a system of congruences:
+
+                                 | x ≡ 1 (mod 7)
+            x² ≡ 1 (mod 35) -->  |
+                                 | x ≡ 1 (mod 5)    
+
+        (2) notice that each congruence has two solutions:
+
+            x ≡ ±1 (mod 7)
+
+            x ≡ ±1 (mod 5)
+
+            * hence we have four cases to consider:
+
+                Case 1: x ≡ 1 (mod 5), x ≡ 1 (mod 7)
+
+                    obvious solution: x ≡ 1 (mod 35)
 
 
+                Case 2: x ≡ 1 (mod 5), x ≡ -1 ≡ 6 (mod 7)
 
+                    numbers ≡ 1 (mod 5):  1, 6, 11, 16, 21 . . .
+                    numbers ≡ 6 (mod 7):  6, 13, 20, 27, 35 . . .
 
-    
-    
+                    pick 6: x ≡ 6 (mod 35)
+
+                Case 3: x ≡ -1 ≡ 4 (mod 5), x ≡ 1 (mod 7)
+
+                    numbers ≡ 4 (mod 5):  4, 9, 14, 19, 24, 29 . . .
+                    numbers ≡ 1 (mod 7):  1, 8, 15, 22, 29 . . .
+
+                    pick 29: x ≡ 29 (mod 35)
+
+                Case 4: x ≡ -1 ≡ 4 (mod 5), x ≡ -1 ≡ 6 (mod 7)
+
+                    numbers ≡ 4 (mod 5):  4, 9, 14, 19, 24, 29, 34 . . .
+                    numbers ≡ 6 (mod 7):  6, 13, 20, 27, 34 . . .
+
+                    pick 34: x ≡ 34 (mod 35)
+
+        (3) thus we have 4 solutions:
+
+            x ≡ 1 (mod 35)
+            x ≡ 6 (mod 35)
+            x ≡ 29 (mod 35)
+            x ≡ 34 (mod 35)
+
+    • In general, if 'n' in the formula x ≡ c (mod n) is the product of 'r' distinct primes, then x² ≡ 1 (mod n) has 2ʳ solutions.
