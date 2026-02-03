@@ -428,3 +428,42 @@
             x ≡ 34 (mod 35)
 
     • In general, if 'n' in the formula x ≡ c (mod n) is the product of 'r' distinct primes, then x² ≡ 1 (mod n) has 2ʳ solutions.
+
+# 3.5 Modular Exponentiation
+
+    • Here will be concerning ourselves with concerning ourselves with numbers of the form xᵃ (mod n)
+
+    • Suppose we want to compute 2¹²³⁴ (mod 789); if we first compute 2¹²³⁴, then reduce (mod 789), we'll be working with very large numbers even though the final answer has only 3 digits.
+
+    • The strategy to solve this uses sucesssive squaring (in this case of powers of 2):
+
+        (1) start with 2¹ ≡ 2 (mod 789) and repeatedly square both sides until we reach the highest power of 2 that is less than or equal to your target exponent
+
+            2² ≡ 4              (mod 789)
+            2⁴ ≡ 4² ≡ 16        (mod 789)        
+            2⁸ ≡ 16² ≡ 256      (mod 789)
+            2¹⁶ ≡ 256² ≡ 49     (mod 789)
+            2³² ≡ 49² ≡ 34      (mod 789)
+            2⁶⁴ ≡ 34² ≡ 367     (mod 789)
+            2¹²⁸ ≡ 367² ≡ 559   (mod 789)
+            2²⁵⁶ ≡ 559² ≡ 37    (mod 789)
+            2⁵¹² ≡ 37² ≡ 580    (mod 789)
+            2¹⁰²⁴ ≡ 580² ≡ 286  (mod 789)
+
+        (2) convert the original exponent (1234) to binary
+
+            (1234)₁₀ = (10011010010)₂ = 1024 + 128 + 64 + 16 + 2
+
+            *every '1' in the binary representation corresponds to the power of 2 that we will use in our final congruence
+
+        (3) multiply together the modulo values of all powers of 2 corresponding to 1’s in the binary representation, reducing modulo 789 at each step.
+
+            (10011010010)₂ = 1024 + 128 + 64 + 16 + 2
+
+            2¹²³⁴ ≡ 286 . 559 . 367 . 49 . 4 ≡ 481 (mod 789) 
+
+    • Notice this step required a total of 10 + 4 = 14 multiplications:
+
+        - in general, if we want to compute aᵇ (mod n), this strategy requires no more than 2(log₂b) multiplications (mod n) 
+        
+        - additionally, we never have to work with numbers larger than n²  
