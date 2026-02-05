@@ -467,3 +467,94 @@
         - in general, if we want to compute aᵇ (mod n), this strategy requires no more than 2(log₂b) multiplications (mod n) 
         
         - additionally, we never have to work with numbers larger than n²  
+
+# 3.6 Fermat's Little Theorem and Euler's Totient Function
+
+    • Fermat’s Theorem states that if 'p' is prime and does not divide 'a', then aᵖ⁻¹ ≡ 1(mod p)
+
+        - for example, 2¹⁰ ≡ 1(mod 11)      *with a = 2 and p = 11
+
+    • To bring this home, lets compute 2⁵³ (mod 11):
+
+        - this would be impossible by hand, so we use Fermat's theorem:
+
+        (1) Split the exponent
+
+            2⁵³ = (2¹⁰)⁵ . 2³
+
+        (2) From Fermat's theorem we know 2¹⁰ ≡ 1(mod 11), so we make the replacement
+
+            2⁵³ ≡ (1)⁵ . 2³ (mod 11)
+
+            2⁵³ ≡ 2³ (mod 11)
+
+            2⁵³ ≡ 8 (mod 11)
+
+    • In the previous example, we reduced the exponent (mod 10), so 53 -> 3, which leads us to a very important fact:
+
+        - if you want to work (mod p), you should work (mod p - 1) in the exponent
+
+        *IMPORTANT!! - remeber to always reduce exponents by (mod p - 1) and NOT (mod p)
+
+    • We can often use Fermat's theorem to show that a number 'c' is composite by showing that 2ᶜ⁻¹ ≢  1 (mod c):
+
+        - example: show that 49 is prime without factoring (using the technique from section 3.5)
+
+            2² ≡ 4              (mod 49)
+            2⁴ ≡ 4² ≡ 16        (mod 49)        
+            2⁸ ≡ 16² ≡ 11       (mod 49)
+            2¹⁶ ≡ 11² ≡ 23      (mod 49)
+            2³² ≡ 23² ≡ 39      (mod 49)
+            2⁴⁸ ≡ 2³² . 2¹⁶ ≡ 39 . 23 ≡ 15 (mod 49)
+
+        - since 2⁴⁸ ≢  1 (mod 49), 49 is not prime (aka composite)
+
+    • It is important to note that if 2ⁿ⁻¹ ≡ 1 (mod n), then it is LIKELY that 'n' is prime, however if 2ⁿ⁻¹ ≡/ 1 (mod n), then 'n' cannot be prime
+
+        - exceptions, while quite rare, do exist: 561 and 1729, for example, are composite numbers that satisify 2ⁿ⁻¹ ≡ 1 (mod n)
+
+        - these are called 'Carmichael numbers', basically numbers that "fool" Fermat's little theorem
+
+    • When 'n' is composite, there's a similar statement using Euler's theorem: 
+    
+        - if gcd(a, n) = 1, then aᶲ⁽ⁿ⁾ ≡ 1 (mod n), where ϕ(n) is Euler’s totient function (the number of integers less than 'n' that are coprime to 'n')
+
+    • Three useful formulas arise from Euler's totient function:
+    
+        ϕ(pʳ) = pʳ(1 - 1/p)         * tells you how many numbers are coprime to a prime power
+
+        ϕ(p) = p - 1                * special case when r = 1, used for just a single prime
+
+        ϕ(p.q) = (p - 1)(q - 1)     * for two prime numbers 'p' and 'q' 
+
+    • More generally, for any integer 'n' with distinct prime factors p₁, p₂, . . . pₖ:
+    
+        - ϕ(n) = n.(1 - 1/p₁)(1 - 1/p₂) . . . (1 - 1/pₖ)        * this is Euler’s totient product formula written informally
+
+    • For example, we can compute the last 3 digits of 7⁸⁰³ using Euler's totient function:
+
+        (1) since we want the last three digits of a number, we are looking for the remainder when that number is divided by 1000
+
+            - this is called working (mod 1000)
+
+            - using Euler's totient product formula we see the following:
+            
+                (1) we know 1000 has prime factorization 2³ . 5³, so the unique prime factors are 2 and 5
+
+                (2) now its plug and chug time: ϕ(1000) = 1000(1 - 1/2)(1 - 1/5) = 1000(0.4) = 400
+
+                    * there are 400 non-negative integers < 1000 that are coprime to 1000
+
+        (2) split the exponent using the technique from Fermat's little theorem:
+
+            (1) 7⁸⁰³ = (7⁴⁰⁰)² . 7³
+
+            (2) 7³ = 343
+
+            - therefore the last 3 digits are '343'
+
+    • In the previous example, we were able to change the previous exponent 803 to 3 because 803 ≡ 3 (mod ϕ(1000))
+
+        - if you want to work (mod n), you should work (mod ϕ(1000)) in the exponent
+
+# 3.7 Primitive Roots
