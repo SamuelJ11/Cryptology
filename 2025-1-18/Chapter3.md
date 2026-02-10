@@ -558,3 +558,22 @@
         - if you want to work (mod n), you should work (mod ϕ(1000)) in the exponent
 
 # 3.7 Primitive Roots
+
+    • A primitive root is a number whose powers touch every possible remainder before hitting 1.
+
+        - for example, consider 3 (mod 7)
+
+            3¹ ≡ 3 (mod 7)
+            3² ≡ 2 (mod 7)
+            3³ ≡ 6 (mod 7)
+            3⁴ ≡ 4 (mod 7)
+            3⁵ ≡ 5 (mod 7)
+            3⁶ ≡ 1 (mod 7)
+
+        - because 3 "generated" the entire set of non-zero remainders when divided by 7, we say that 3 is a "primitive root (mod 7)"
+
+        - as soon as we generate 1, the numbers repeat, so 3⁷ ≡ 3 (mod 7), 3⁸ ≡ 2 (mod 7), etc.
+
+    • More formally, let n ∈ {2, 4, pᵏ, 2pᵏ} for all integers 'k' greater than 0, and where 'p' is a prime number:
+    
+        - a primitive root (mod n) is a number 'α' such that αⁿ⁻¹ ≡ 1 (mod n), with no smaller power yielding 1 (mod n) when divided by 'n'
