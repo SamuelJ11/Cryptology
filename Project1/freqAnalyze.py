@@ -43,26 +43,65 @@ def main():
         charcount_dict[onegram] = char_counts[onegram]
     charcount_dict = dict(sorted(charcount_dict.items(), key = operator.itemgetter(1), reverse = True))
 
-    ## Prepare a 2D list of the form [[1, 'letter', 'count'], [2, 'letter', 'count'] . . .]
-    charcount_list = []    
-    for index, (key, value) in enumerate(charcount_dict.items(), start = 1):
-        charcount_list.append([index, key, value])       
-
-    ## Make a "prettytable" from the charcount_list
-    table = PrettyTable(["Index", "Onegrams", "Counts"]) 
-    for list in charcount_list:
-        table.add_row([list[0], list[1], list[2]])
-    
-    print(table)
-
-        ## PROCESS BIGRAMS AND TRIGRAMS
-
-    multigram_text = filepath.read_text().lower()
-    
+    ## Create a common text for bigrams and trigrams by removing every non-alphabetic character that is not whitelisted from the text
+    multigram_text = filepath.read_text().lower()    
     for char in multigram_text:
         if (char not in punctuation_to_preserve and char not in alphabet):
             multigram_text = multigram_text.replace(char, "")
+
+        ## PROCESS BIGRAMS
+
+    ## Prepare a list of bigrams of the form ['bigram', 'bigram' . . .]
+    bigram_list = []
+    for i in range(len(multigram_text) - 1):
+        first = multigram_text[i]
+        second = multigram_text[i+1]
+
+        if (first in alphabet and second in alphabet):
+            bigram_string = first + second
+            bigram_list.append(bigram_string)
+
+    ## Use the Counter class to get a count of every bigram in the text
+    bigram_counts = Counter(bigram_list)
+
+    ## Convert the Counter object to a dictionary and sort the dictionary by value in descending order
+    bigram_dict = {}
+    for bigram in bigram_counts:
+        bigram_dict[bigram] = bigram_counts[bigram]
+    bigram_dict = dict(sorted(bigram_dict.items(), key = operator.itemgetter(1), reverse = True))
+
+        ## TABULATE THE DATA
+
+    ## Initialze the table
+    Table = PrettyTable()
+
+    ## Create the first column
+    index_column = []
+    for i in range(1, 27):
+        index_column.append(i)
+
+    Table.add_column("Index", index_column)
+
+    ## Create the second and third column
+    onegram_columnkeys = []
+    onegram_columnvalues = []
+    for key, value in charcount_dict.items():
+        onegram_columnkeys.append(key)
+        onegram_columnvalues.append(value)
+
+    Table.add_column("Onegram", onegram_columnkeys)
+    Table.add_column("Counts", onegram_columnvalues)
+
+    ## Create the fourth and fifth column
+    bigram_columnkeys = []
+    bigram_columnvalues = []
+    for key, value in bigram_dict.items():
+        bigram_columnkeys.append(key)
+        bigram_columnvalues.append(value)
     
-    print(multigram_text[0:200])
+    Table.add_column("Bigram", bigram_columnkeys[0:26])
+    Table.add_column("Counts", bigram_columnvalues[0:26])
+    
+    print(Table)
 
 main()
