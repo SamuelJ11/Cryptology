@@ -12,8 +12,9 @@ def main():
         print("Usage: myscript.py <filename>")
         return
     
-    ## Define the alphabet
+    ## Define the alphabet and punctuation to preserve
     alphabet = set(string.ascii_lowercase)
+    punctuation_to_preserve = {" ", "\n", "\n\n", "'", ","}
 
     ## Import and read filename for analysis
     filename = str(sys.argv[1] + ".txt")
@@ -25,15 +26,16 @@ def main():
         print(f"{filename} could not be found in the current working directory")
         return
 
-    filename = filepath.read_text().lower()
-    
+        ## PROCESS ONEGRAMS
+ 
     ## Remove every non-alphabetic character from the text
-    for ch in filename:
+    onegram_text = filepath.read_text().lower()
+    for ch in onegram_text:
         if ch not in alphabet:
-            filename = filename.replace(ch, "")
+            onegram_text = onegram_text.replace(ch, "")
 
     ## Use the Counter class to get a count of every character in the text
-    char_counts = Counter(filename)
+    char_counts = Counter(onegram_text)
 
     ## Convert the Counter object to a dictionary and sort the dictionary by value in descending order
     charcount_dict = {}
@@ -52,5 +54,15 @@ def main():
         table.add_row([list[0], list[1], list[2]])
     
     print(table)
+
+        ## PROCESS BIGRAMS AND TRIGRAMS
+
+    multigram_text = filepath.read_text().lower()
     
+    for char in multigram_text:
+        if (char not in punctuation_to_preserve and char not in alphabet):
+            multigram_text = multigram_text.replace(char, "")
+    
+    print(multigram_text[0:200])
+
 main()
