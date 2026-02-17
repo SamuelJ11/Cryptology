@@ -1,6 +1,9 @@
-from pathlib import Path
 import string
 import sys
+from pathlib import Path
+from collections import Counter
+from prettytable import PrettyTable
+import operator
 
 def main():
 
@@ -29,4 +32,25 @@ def main():
         if ch not in alphabet:
             filename = filename.replace(ch, "")
 
+    ## Use the Counter class to get a count of every character in the text
+    char_counts = Counter(filename)
+
+    ## Convert the Counter object to a dictionary and sort the dictionary by value in descending order
+    charcount_dict = {}
+    for onegram in char_counts:
+        charcount_dict[onegram] = char_counts[onegram]
+    charcount_dict = dict(sorted(charcount_dict.items(), key = operator.itemgetter(1), reverse = True))
+
+    ## Prepare a 2D list of the form [[1, 'letter', 'count'], [2, 'letter', 'count'] . . .]
+    charcount_list = []    
+    for index, (key, value) in enumerate(charcount_dict.items(), start = 1):
+        charcount_list.append([index, key, value])       
+
+    ## Make a "prettytable" from the charcount_list
+    table = PrettyTable(["Index", "Onegrams", "Counts"]) 
+    for list in charcount_list:
+        table.add_row([list[0], list[1], list[2]])
+    
+    print(table)
+    
 main()
