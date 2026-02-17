@@ -1,9 +1,7 @@
-import string
-import sys
+import string, sys, operator
 from pathlib import Path
 from collections import Counter
 from prettytable import PrettyTable
-import operator
 
 def main():
 
