@@ -13,7 +13,7 @@ def main():
         return
     
     ## Import and read filename for analysis
-    filename = str(sys.argv[1] + ".txt")
+    filename = str(sys.argv[1])
     cwd = Path().resolve() 
     filepath = cwd.joinpath(filename)   
 
