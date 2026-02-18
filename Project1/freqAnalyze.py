@@ -43,6 +43,9 @@ def main():
         charcount_dict[onegram] = char_counts[onegram]
     charcount_dict = dict(sorted(charcount_dict.items(), key = operator.itemgetter(1), reverse = True))
 
+    ## Note the number of unique that letters that appear in the text (needed for tabulation later) 
+    num_letters = len(charcount_dict.keys())
+   
     ## Create a common text for bigrams and trigrams by removing every non-alphabetic character that is not whitelisted from the text
     multigram_text = filepath.read_text().lower()    
     for char in multigram_text:
@@ -99,7 +102,7 @@ def main():
 
     ## Create the first column
     index_column = []
-    for i in range(1, 27):
+    for i in range(1, num_letters + 1):
         index_column.append(i)
 
     Table.add_column("Index", index_column)
@@ -121,8 +124,8 @@ def main():
         bigram_columnkeys.append(key)
         bigram_columnvalues.append(value)
     
-    Table.add_column("Bigram", bigram_columnkeys[0:26])
-    Table.add_column("Counts", bigram_columnvalues[0:26])
+    Table.add_column("Bigram", bigram_columnkeys[0:num_letters])
+    Table.add_column("Counts", bigram_columnvalues[0:num_letters])
 
     ## Create the last two columns
     trigram_columnkeys = []
@@ -131,9 +134,9 @@ def main():
         trigram_columnkeys.append(key)
         trigram_columnvalues.append(value)
     
-    Table.add_column("Trigram", trigram_columnkeys[0:26])
-    Table.add_column("Counts", trigram_columnvalues[0:26])
-    
-    print(Table)
+    Table.add_column("Trigram", trigram_columnkeys[0:num_letters])
+    Table.add_column("Counts", trigram_columnvalues[0:num_letters])
 
+    print(Table)
+    
 main()
