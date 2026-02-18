@@ -34,6 +34,8 @@ def main():
         'l': 'a',
         'p': 'n',  
         'g': 'd',
+        'f': 'y',
+        'i': 'u'
     }
 
     ## Replace each char in the ciphertext with its mapping
