@@ -26,24 +26,26 @@ def main():
 
     ## Create a tentative dictionary mapping of chipertext to plaintext letters (ciphertext1 - Hamlet)
     char_mappings = {
+        ',': ',', #dont change commas
+        '.': '.', #dont change periods
         'b': 't', 
         'w': 'h',  
         'x': 'e', 
         'l': 'a',
-        'p': 'n',
+        'p': 'n',  
         'g': 'd',
-        'f': 'y',
-        'l': 'o',  
-        'i': 'u',
     }
 
     ## Replace each char in the ciphertext with its mapping
+    textstring = ""
     for char in ciphertext: 
         if char in char_mappings.keys():                  
-            ciphertext = ciphertext.replace(char, char_mappings[char])
+            textstring = textstring + char_mappings[char]
+        else:
+            textstring = textstring + "_"
 
     ## Write the output to a test file
     with open("test.txt", "w") as file:
-        file.write(ciphertext)
+        file.write(textstring)
        
 main()
