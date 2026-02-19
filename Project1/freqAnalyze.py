@@ -26,7 +26,7 @@ def main():
 
     ## Define the alphabet and punctuation to preserve
     alphabet = set(string.ascii_lowercase)
-    punctuation_to_preserve = {" ", "\n", "\n\n", "'", ","}
+    punctuation_to_preserve = {" ", "\n", "'", ",", "."}
  
     ## Remove every non-alphabetic character from the text
     onegram_text = filepath.read_text().lower()
