@@ -374,7 +374,7 @@
 
         (1) use the Extended Euclidean algorithm to find 's' and 't' such that m.s + n.t = 1
 
-        (2) let x ≡ b.m.s + a.n.t (mod m.n)
+        (2) let x ≡ b.m.t + a.n.s (mod m.n)
          
     • CRT lets you solve a hard congruence mod a composite number by solving easier congruences mod its coprime factors and then recombining the solutions.
 
