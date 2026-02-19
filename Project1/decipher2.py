@@ -23,33 +23,19 @@ def main():
     
     ciphertext = filepath.read_text().lower()
 
-    ## Create a tentative dictionary mapping of chipertext to plaintext letters (ciphertext1 - CallOfTheWild)
+    ## Create a tentative dictionary mapping of chipertext to plaintext letters (ciphertext2 - Hamlet)
     char_mappings = {
-        'b': 't',
-        'c': 'f',
-        'd': 'x',
-        'e': 'g',
-        'f': 'w',
-        'g': 'd',
-        'h': 'p',
-        'i': 's',
-        'j': 'b',
-        'k': 'r',
-        'l': 'a',
-        'm': 'y',
-        'n': 'l',
-        'o': 'u',
-        'p': 'n',
-        'q': 'v',
-        'r': 'o',
-        's': 'm',
-        't': 'z',
-        'u': 'i',
-        'v': 'z',
-        'w': 'h',
+        'j': 't',
+        'p': 'h',
         'x': 'e',
-        'y': 'c',
-        'z': 'k',
+        'b': 'i',
+        't': 'n',
+        'w': 'g',
+        'm': 'a',
+        'n': 'd',
+        'c': 'o',
+        'r': 's',
+        'l': 'm',
     }
 
     ## Define the punctuation to preserve in the ciphertext
