@@ -1,7 +1,6 @@
 import string, sys, operator
 from pathlib import Path
 from collections import Counter
-from prettytable import PrettyTable
 
 def main():
 
@@ -66,8 +65,8 @@ def main():
         else:
             textstring = textstring + " "
 
-    ## Write the output to a test file
-    with open("test.txt", "w") as file:
+    ## Overwrite the ciphertext with the deciphered text
+    with open(filepath, "w") as file:
         file.write(textstring)
        
 main()
