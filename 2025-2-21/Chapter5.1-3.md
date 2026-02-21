@@ -64,7 +64,7 @@
 
     • Another method of generating random bits is to use an intractable problem from number theory.
 
-        - One of the most popular cryptographically secure pseudorandom number generators is the Blum-Blum-Shub (BBS) pseudorandom bit generator
+        - one of the most popular cryptographically secure pseudorandom number generators is the Blum-Blum-Shub (BBS) pseudorandom bit generator
 
     • First we define "quadratic residues":
 
@@ -147,4 +147,16 @@
 
             - notice since n = pq with p ≡ q ≡ 3 (mod 4), every number in B₇₇ maps a different unique number in B₇₇, thus fullfilling the requirements of Blum-Blum-Shub
             
+    • Now we can look at a concrete example using a Blum-Blum-Shub generator for B₇₇:
+
+        - suppose we start with x = 9, then the initial seed is x₀ = x² (mod 77) = 4
         
+        - thus the values for x₁, x₂ . . . are:
+            
+            16, 25, 9, 4, 16, . . .
+
+        - taking the least significant bit of x₀, x₁, x₂ . . . is easily done by checking whether the number is odd or even, produces the sequence:
+
+            0, 0, 1, 1, 0, 0, . . .
+
+# 5.2 Linear Feedback Shift Register Sequences         
