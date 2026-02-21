@@ -43,7 +43,7 @@ def main():
         charcount_dict[onegram] = char_counts[onegram]
     charcount_dict = dict(sorted(charcount_dict.items(), key = operator.itemgetter(1), reverse = True))
 
-    ## Note the number of unique that letters that appear in the text (needed for tabulation later) 
+    ## Note the number of unique letters that appear in the text (needed for tabulation later) 
     num_letters = len(charcount_dict.keys())
    
     ## Create a common text for bigrams and trigrams by removing every non-alphabetic character that is not whitelisted from the text
