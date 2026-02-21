@@ -23,6 +23,8 @@ def main():
     
     ciphertext = filepath.read_text().lower()
 
+        ### DEFINE THE CHARACTER MAPPING AND WHITELISTED PUNCTUATION ###
+
     ## Create a tentative dictionary mapping of chipertext to plaintext letters (ciphertext1 - CallOfTheWild)
     char_mappings = {
         'b': 't',
@@ -54,6 +56,8 @@ def main():
 
     ## Define the punctuation to preserve in the ciphertext
     punctuation_to_preserve = {" ", "\n", "'", ",", "."}
+
+        ### DECRYPT THE CIPHERTEXT WITH THE MAPPING AND PRINT OUTPUT TO TERMINAL ###
 
     ## Replace each char in the ciphertext with its mapping
     textstring = ""
