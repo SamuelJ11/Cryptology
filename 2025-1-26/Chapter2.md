@@ -344,21 +344,3 @@
         (3) let kᵢ = j₀ give the maximum value of Wᵢ . Aⱼ
 
             * after you find the winning shift j₀, that number tells you what the i-th letter of your key is kᵢ
-    
-
-        
-    
-
-
-
-
-
-    
-
-               
-
-
-
-    
-
-    
