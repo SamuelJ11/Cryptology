@@ -49,7 +49,7 @@ def main():
         'w': 'h',
         'x': 'e',
         'y': 'c',
-        'z': 'k',
+        'z': 'k'
     }
 
     ## Define the punctuation to preserve in the ciphertext
@@ -65,19 +65,10 @@ def main():
         else:
             textstring = textstring + " "
 
-    ## Generate a separate file for the deciphered text
-    deciphered_file = str(filename).replace(".txt", "") + "_decrypted.txt"
-    deciphered_path = cwd.joinpath(deciphered_file)
-
-    ## Print the deciphered text and its corresponding codebook to the terminal and a separate file   
+    ## Print the deciphered text and its corresponding codebook to the terminal 
     print("DECRYTPED CIPHERTEXT:\n")
-    print(textstring)
-    print()
-
+    print(f"{textstring}\n")
     print(f"CHARACTER MAPPINGS FOR {filename}: \n")
     print(char_mappings)
-
-    with open(deciphered_path, "w") as file:
-        file.write(textstring)
-       
+     
 main()

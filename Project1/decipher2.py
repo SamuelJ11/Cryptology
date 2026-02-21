@@ -25,17 +25,32 @@ def main():
 
     ## Create a tentative dictionary mapping of chipertext to plaintext letters (ciphertext2 - Hamlet)
     char_mappings = {
-        'j': 't',
-        'p': 'h',
-        'x': 'e',
+        'a': 'c',
         'b': 'i',
-        't': 'n',
-        'w': 'g',
+        'c': 'o',
+        'd': 'v',
+        'e': 'y',
+        'f': 'b',
+        'g': 'l',
+        'h': 'k',
+        'i': 'f',
+        'j': 't',
+        'k': 'q',
+        'l': 'm',
         'm': 'a',
         'n': 'd',
-        'c': 'o',
+        'o': 'z',
+        'p': 'h',
+        'q': 'p',
         'r': 's',
-        'l': 'm',
+        's': 'j',
+        't': 'n',
+        'u': 'u',
+        'v': 'r',
+        'w': 'g',
+        'x': 'e',
+        'y': 'w',
+        'z': 'x'
     }
 
     ## Define the punctuation to preserve in the ciphertext
@@ -51,19 +66,10 @@ def main():
         else:
             textstring = textstring + " "
 
-    ## Generate a separate file for the deciphered text
-    deciphered_file = str(filename).replace(".txt", "") + "_decrypted.txt"
-    deciphered_path = cwd.joinpath(deciphered_file)
-
-    ## Print the deciphered text and its corresponding codebook to the terminal and a separate file   
+    ## Print the deciphered text and its corresponding codebook to the terminal 
     print("DECRYTPED CIPHERTEXT:\n")
-    print(textstring)
-    print()
-
+    print(f"{textstring}\n")
     print(f"CHARACTER MAPPINGS FOR {filename}: \n")
     print(char_mappings)
 
-    with open(deciphered_path, "w") as file:
-        file.write(textstring)
-       
 main()
