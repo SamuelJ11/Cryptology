@@ -103,6 +103,29 @@
 
         * AWX -> abc
 
+    • The general procedure for encrypting a plaintext with a Hill cipher using an n x n matrix is as follows:
+
+        (1) convert letters to numbers, and pad the plaintext (if needed) so that the number of letters in the plaintext is a multiple of 'n'
+
+            * let the number of letters in the plaintext be denoted as 's'
+
+        (2) group the numbers into blocks of size 'n':
+
+            Block 1: [x₀, x₁, x₂ . . . xₙ]
+            Block 1: [x₀, x₁, x₂ . . . xₙ]
+                .
+                .
+                .
+            Block s/n: [x₀, x₁, x₂ . . . xₙ]
+
+        (3) Multiply each block by a matrix 'M', but ensure that 'M' is invertible before proceeding
+
+            [ciphertext vector] = [plaintext vector] * M (mod 26)
+
+        (4) Convert each ciphertext vector to thier corresponding letters
+
+    • The Hill cipher is difficult to decrypt using only the ciphertext, but it succumbs easily to a known plaintext attack.
+
     
 
     
