@@ -160,3 +160,104 @@
             0, 0, 1, 1, 0, 0, . . .
 
 # 5.2 Linear Feedback Shift Register Sequences         
+
+    • In this section, all congruences are (mod 2)
+
+    • Consider a linear recurrence relation of length 'm'
+
+    ​   xₘ₊ₙ = c₀xₙ + c₁xₙ₊₁ + c₂xₙ₊₂ + . . . cₘ₋₁xₙ₊ₘ₋₁ (mod 2), where
+
+        - xₘ₊ₙ = the next bit we are trying to calculate
+
+        - m = "memory" aka how many previous bits the system looks back at to decide what the next one will be
+
+        - c₀, c₁ . . . = the switches which are coefficients of either 0 or 1; if 1, that previous bit is switched on; if 0 it's ignored
+
+    • Adding up all the "switched on" bits, if the total is odd, the next bit is 1, if even, the next bit is 0
+
+        - the resulting sequence of 0s and 1s can be used as a key for encryption
+
+    • For example, the sequence below can modelled by a linear recurrence relation:
+
+        0100001001011001111100011011 . . . 
+
+        can be modelled by xₙ₊₅ = xₙ + xₙ₊₂
+
+    • The pattern's length is determined by 'm'; a sequence of length 'm' can create a pattern that doesn't repeat for up to 2ᵐ - 1 terms
+
+    • If you increase the memory to m = 31, you only need 62 bits of information (31 for the seed + 31 for the rule), which can produce more than two billion bits of key!
+
+        - this method can be implemented very easily in hardware using what is known as a linear feedback shift register   
+
+    • Unfortunately, the preceding encryption method succumbs easily to a known plaintext attack.
+
+        - by adding or subtracting the plaintext from the ciphertext (mod 2) we obtain bits of the key
+
+    • For example, suppose we know that the initial segment of the key is given by:
+
+        011010111100 which is part of the larger sequence:
+
+        0110101111000100110101111 . . .
+                       | <- starts repeating here (period 15)
+
+        - first we must determine the length of the recurrence before we can find the coefficients
+
+    • To find the length of the sequence, we start by assuming length 2, and supposing the recurrence is:
+
+        xₙ₊₂ = c₀xₙ + c₁xₙ₊₁
+
+        let n = 1, n = 2 be starting points for calculating x₃ and x₄, respectively
+
+        x₁ = 0, x₂ = 1, x₃ = 1, x₄ = 0
+
+    • Now we form a series of 'm' = 2 equations:
+
+        x₃ = 1 ≡ c₀(0) + c₁(1)   (n = 1)
+        x₄ = 0 ≡ c₀(1) + c₁(1)   (n = 2)
+
+        - in matrix form, this is:
+
+        |0 1| * |c₀| = |1|  
+        |1 1|   |c₁|   |0|  
+
+        * honestly easier to set up an augmented matrix and use row reduction to solve for c₀, c₁
+
+        - solving we obtain c₀ = c₁ = 1, making the recurrence:
+
+            xₙ₊₂ = xₙ + xₙ₊₁
+
+        - unfortunately our assumption is incorrect since x₆ ≠ x₄ + x₅
+
+    • Now we try a length of 'm' = 3:
+
+        xₙ₊₃ = c₀xₙ + c₁xₙ₊₁ + c₂xₙ₊₂
+
+        with the observed values x₁ = 0, x₂ = 1, x₃ = 1, x₄ = 0, x₅ = 1, x₆ = 0
+
+        again, let n = 1, n = 2 and n = 3 be starting points for calculating x₄, x₅, x₆
+
+        x₄ = 0 ≡ c₀(0) + c₁(1) + c₂(1) (n = 1)
+        x₅ = 1 ≡ c₀(1) + c₁(1) + c₂(0) (n = 2)
+        x₆ = 0 = c₀(1) + c₁(0) + c₂(1) (n = 3)
+
+        - converting to matrix we obtain:
+
+        |0 1 1|   |c₀|   |0|
+        |1 1 0| * |c₁| = |1|
+        |1 0 1|   |c₂|   |0|
+
+        - since every column in the matrix sums to 0 (mod 2), the determinant is 0 (mod 2) and thus the matrix is not invertible
+        
+        - this means the matrix cannot be inverted to solve for the coefficients, meaning the equation has no UNIQUE solution
+
+    • Eventually we end up trying 'm' = 4, and correctly arrive at the linear recurrence defined by xₙ₊₄ = xₙ + xₙ₊₁
+
+        - verify this: 2⁴ - 1 = 15, which indeed matches the period we found earlier
+
+    • If several consecutive values of 'm' yield 0 determinants stop; the last 'm' to yield a non-zero determinant is probably the length of the recurrence 
+
+    • We conclude this discussion with the following theorem:
+
+        - let x₁, x₂, . . . be the sequence of bits produced by a linear recurrence relation (mod 2) 
+        
+        - let 'm' be the length of a shortest such equation. Then det(Mₘ) ≡ 1 (mod 2), and det(Mₙ) ≡ 0 (mod 2) for every n > m                                                   
