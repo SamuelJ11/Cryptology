@@ -134,7 +134,7 @@
 
             ZWSENSIUSPLJVEU = 25 22   18 4   13 8   20 18   15 11   9 21   4 20
 
-        - then the first two blocks yield the matrix equation:
+        - then the first two blocks of the plaintext yield the matrix equation:
 
             |7 14| * |a b| = |25 22| (mod 26)
             |22 0|   |c d|   |18  4| 
