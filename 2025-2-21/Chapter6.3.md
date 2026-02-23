@@ -40,7 +40,7 @@
 
         gcd(det(M), 26) = 1
     
-    • det(M) = -3, so we can find the inverse using the algorithm from MA322:
+    • det(M) = -3, so we can find the inverse of 'M' using the algorithm from MA322:
 
         |1  2  3 | 1  0  0|
         |4  5  6 | 0  1  0|     *R2 = r2 - 4r1
@@ -125,6 +125,47 @@
         (4) Convert each ciphertext vector to thier corresponding letters
 
     • The Hill cipher is difficult to decrypt using only the ciphertext, but it succumbs easily to a known plaintext attack.
+
+        - suppose we know that n = 2 and we have the plaintext:
+
+            howareyoutoday = 7 14   22 0   17 4   24 14   24 14   20 19   14 3   0 24
+
+            corresponding to the ciphertext:
+
+            ZWSENSIUSPLJVEU = 25 22   18 4   13 8   20 18   15 11   9 21   4 20
+
+        - then the first two blocks yield the matrix equation:
+
+            |7 14| * |a b| = |25 22| (mod 26)
+            |22 0|   |c d|   |18  4| 
+
+        - unfortunately, the first matrix has a determinant of -308 ≡ 4 (mod 26), and since gcd(26, 4) ≠ 1, the matrix is not invertible
+
+        - after tediously scanning through possible combinations of blocks for the second row that yeild a matrix with a determinant coprime to 26, we land upon one solution using the first block for the first row and fifth block for the second row:
+
+            |7  14| * |a b| = |25 22| (mod 26)
+            |20 19|   |c d|   |18  4| 
+
+        - finding the inverse of the matrix (using the process outlined earlier we obtain) allows us to isolate and solve for the key:
+
+            |5  10| (mod 26)
+            |18 21|  
+                
+        - now we can solve for encryption key 'M':
+
+            M ≡ |5  10| * |25 22| ≡ |15 12| (mod 26)
+                |18 21|   |15 11|   |11  3|
+
+        - to solve for the decryption key, we take inverse of 'M':
+
+            N = |17 10|
+                |7   7|
+
+        - now can decrypt, testing with ciphertext [25, 22]
+
+                       |17 10| 
+            [25, 22] * |7   7| = [7, 14]
+
 
     
 
