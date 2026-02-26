@@ -1,4 +1,4 @@
-# 6.0 Stream Ciphers
+# 6.1 Block Ciphers
 
     • In many classical cryptosystems such as the shift, affine and substitution ciphers, a given letter in the ciphertext always comes from exactly one letter in the plaintext
 
