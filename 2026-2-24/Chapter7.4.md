@@ -72,7 +72,7 @@
 
                     - the output is Kᵢ (48-bit string obtained from the key 'K')
                     
-            (2) define the feistel function f(Rᵢ₋₁, Kᵢ)
+            (2) define the DNS function f(Rᵢ₋₁, Kᵢ)
 
                     - first, the 32-bit 'R' is expanded to the 48-bit E(R) by the expansion perumutation table:
 
