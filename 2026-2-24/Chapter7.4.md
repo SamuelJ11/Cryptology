@@ -14,7 +14,9 @@
 
         - so the 56-bit key is expanded to 64 bits, with the 8 parity bits there to make sure each group has an odd number of 1s
 
-    • The algorithm starts with a plaintext 'm' of 64 bits and consists of three stages:
+    • The algorithm starts with a plaintext 'm' of 64 bits and consists of four main stages:
+
+        STAGE 1 (PREPROCESSING): DERIVE L₀R₀ and the 56-bit key 
 
         (1) the bits of 'm' are permuted by a fixed initial permutation (IP) to obtain m₀ = IP(m)
 
@@ -27,18 +29,52 @@
 
             - this means that the 58th bit of m becomes the first bit of m₀, etc
 
-        (2) write m₀ as L₀R₀, where L₀ = first 32 bits, R₀ = last 32 bits
+        - write m₀ as L₀R₀, where L₀ = first 32 bits, R₀ = last 32 bits
 
-        (3) for 1 <= i <= 16, perform the following
+        (2) removing the parity bits (bits 8, 16, 24, 32, 40, 48, 56, 64) from the 64-bit key 'K' and permute the bits based on the key permutation table:
+
+            57 49 41 33 25 17  9 1  58 50 42 34 26 18
+            10 2  59 51 43 35 27 19 11 3  60 52 44 36
+            63 55 47 39 31 23 15 7  62 54 46 38 30 22
+            14 6  61 53 45 37 29 21 13 5  28 20 12 4
+
+            - this means that the 57th bit of the original 'K' is now the first, etc
+
+            - write the 56-bit result as C₀D₀ (28 bits each)
+
+            * IMPORTANT CLARIFICATION: C₀D₀ is created ONCE in this stage because it serves as the "seed" for all the round keys that follow in stage 2
+
+        STAGE 2: THE KEY SCHEDULE AND FEISTEL FUNCTION 
+
+        for 1 <= i <= 16 {
 
             Lᵢ = Rᵢ₋₁
             Rᵢ = Lᵢ₋₁ ⊕ f(Rᵢ₋₁, Kᵢ)
 
-           * here Kᵢ is a 48-bit string obtained from the key 'K' (the 48 is explained below)
+            * here we describe how to obtain the 48-bit Kᵢ starting with the 64-bit 'K':
 
-           - the function f(Rᵢ₋₁, Kᵢ) depicted in figure 7.5 is described below:
+            (1) derive the round key Kᵢ
+            
+                - start with the preprocessed 56-bit key C₀D₀
 
-                1. first, the 32-bit 'R' is expanded to the 48-bit E(R) by the expansion perumutation table:
+                - let Cᵢ = LSᵢ(Cᵢ₋₁) and Dᵢ = LSᵢ(Dᵢ₋₁), where LSᵢ means left shift the input one or two places to the left, according to the table below
+
+                Round (i): 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+                Shift:     1 1 2 2 2 2 2 2 1 2  2  2  2  2  2  2
+
+                - of this 56-bit string CᵢDᵢ, 48 bits are chosen according to the table below:
+
+                14 17 11 24 1  5  3  28 15 6  21 10
+                23 19 12 4  26 8  16 7  27 20 13 2
+                41 52 31 37 47 55 30 40 51 45 33 48
+
+                - this means that the 14th bit of the original CᵢDᵢ becomes the first, etc
+
+                - the output is Kᵢ (48-bit string obtained from the key 'K')
+                
+           (2) define the feistel function f(Rᵢ₋₁, Kᵢ)
+
+                - first, the 32-bit 'R' is expanded to the 48-bit E(R) by the expansion perumutation table:
 
                     32 1  2  3  4  5  4  5  6  7  8  9
                     8  9  10 11 12 13 12 13 14 15 16 17
@@ -47,7 +83,7 @@
 
                     - this means that the first bit of E(R) is the 32nd bit of 'R', etc
 
-                2. compute E(R) ⊕ Kᵢ, and write it as 8 six-bit blocks B₁, B₂, . . . B₈
+                - compute E(R) ⊕ Kᵢ, and write it as 8 six-bit blocks B₁, B₂, . . . B₈
 
                     - take note of the eight S-boxes below:
 
@@ -99,13 +135,13 @@
                     7 11 4 1 9 12 14 2 0 6 10 13 15 3 5 8
                     2 1 14 7 4 10 8 13 15 12 9 0 3 5 6 11
 
-                3. Referencing the S-boxes above, we note Bₘ for Sₘ, and that the row of the S-box is specified by b₁b₆, while the column is denoted by b₂b₃b₄b₅
+                - Referencing the S-boxes above, we note Bₘ for Sₘ, and that the row of the S-box is specified by b₁b₆, while the column is denoted by b₂b₃b₄b₅
 
                     - e.g, if B₃ = 001001, we look at the third S-box at row (01)₂, column(0100)₂, which is the SECOND row FIFTH column, yielding (3)₁₀ = (0011)₂
 
                     - therefore the output of S₃ is 0011, and we repeat this process for the remaining seven 4-bit outputs C₁, C₂ . . . C₈
 
-                4. Perumute the string C₁C₂ . . . C₈ according to the permutation table below:
+                - Perumute the string C₁C₂ . . . C₈ according to the permutation table below:
 
                     16 7 20 21 29 12 28 17 1 15 23 26 5 18 31 10
                     2  8 24 14 32 27 3  9 19 13 30 6 22 11 4  25
@@ -114,17 +150,8 @@
 
                     - the resulting 32-bit string is f(Rᵢ₋₁, Kₘ)
 
-                5. Now we describe how to obtain the 16-bit Kᵢ starting with the 64-bit 'K':
+        } end of stage 2 for-loop
 
-                    - starting by removing the parity bits (bits 8, 16, 24, 32, 40, 48, 56, 64) and permuting based on the key permutation table:
+        STAGE 3 (POST PROCESSING): 
 
-                    57 49 41 33 25 17  9 1  58 50 42 34 26 18
-                    10 2  59 51 43 35 27 19 11 3  60 52 44 36
-                    63 55 47 39 31 23 15 7  62 54 46 38 30 22
-                    14 6  61 53 45 37 29 21 13 5  28 20 12 4
-
-                    - this means that the 57th bit of the original 'K' is now the first, etc
-
-                    - write the 56-bit result as C₀D₀
-
-        (4) switch left and right to obtain R₁₆L₁₆, then apply the inverse of the initial permutation to get the ciphertext c = IP⁻¹(R₁₆L₁₆)
+        (1) switch left and right to obtain R₁₆L₁₆, then apply the inverse of the initial permutation to get the ciphertext c = IP⁻¹(R₁₆L₁₆)
