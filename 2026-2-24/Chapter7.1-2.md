@@ -78,7 +78,7 @@
     
     • The function used for 'f' is an expander; it takes an input of six bits and outputs eight bits (see figure 7.2)
 
-        - for example, this could me that the third input bit yields both the fourth and the sixth output bits, and the fourth input bit yields both the 3rd and 5th output bit, with the mappings defined by the following dictionary (note this dictionary is only used for reference)
+        - for example, this could mean that the third input bit yields both the fourth and the sixth output bits, and the fourth input bit yields both the 3rd and 5th output bit, with the mappings defined by the following dictionary (note this dictionary is only used for reference)
 
         bit_mappings = {
             1st -> 1st
