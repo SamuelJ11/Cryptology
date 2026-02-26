@@ -141,7 +141,7 @@
 
                         - therefore the output of S₃ is 0011, and we repeat this process for the remaining seven 4-bit outputs C₁, C₂ . . . C₈
 
-                    - Perumute the string C₁C₂ . . . C₈ according to the permutation table below:
+                    - Permute the string C₁C₂ . . . C₈ according to the permutation table below:
 
                         16 7 20 21 29 12 28 17 1 15 23 26 5 18 31 10
                         2  8 24 14 32 27 3  9 19 13 30 6 22 11 4  25
@@ -160,7 +160,7 @@
             
                 (1) the Key track shifted C and D to create a new 48-bit Kᵢ
                 
-                (2) starting with the original R₀ and for each Rᵢ₋₁ from the previous round, Rᵢ₋₁ was fed throught the DES function and the output of that function was XORed with Lᵢ₋₁ from the previous round to create a new Rᵢ 
+                (2) starting with the original R₀ and for each Rᵢ₋₁ from the previous round, Rᵢ₋₁ was fed through the DES function and the output of that function was XORed with Lᵢ₋₁ from the previous round to create a new Rᵢ 
                 
                     - The old Rᵢ₋₁ simply moved over to become the new Lᵢ
 
