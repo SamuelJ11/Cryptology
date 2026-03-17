@@ -577,3 +577,162 @@
     • More formally, let n ∈ {2, 4, pᵏ, 2pᵏ} for all integers 'k' greater than 0, and where 'p' is a prime number:
     
         - a primitive root (mod n) is a number 'α' such that αⁿ⁻¹ ≡ 1 (mod n), with no smaller power yielding 1 (mod n) when divided by 'n'
+
+# 3.11 Finite Fields
+
+    • Many tiems we word with integers (mod p), where we can divide by any number that is nonzero (mod p)
+
+        - thus, any nonzero number from 1 - p - 1 has an inverse (mod p)
+
+    • A field is a set where addition, subtraction, multiplication, and division by nonzero elements are defined and closed within the set.
+
+    • Évariste Galois (1811–1832) was a French mathematician who laid the foundation for modern group theory.
+
+        - he postulated that a field with 'n' elements exists if and only if n = pᵏ, where 'p' is prime and 'k' is a positive integer
+
+    • For example, consider the set with 4 elements GF(4) = {0, 1, 𝜔, 𝜔²} with the following laws:
+
+        1. 0 + x = x
+        2. x + x = 0
+        3. 1 . x = x
+        4. 𝜔 + 1 = 𝜔²
+        5. addition and multiplication are commutative and associative, and the distributive law holds
+  
+        * we're essentially creating these extra elements (𝜔 and 𝜔²) because we want a field that has more than just two elements, but still has the properties we need for a field
+  
+    • Now we can observe that:
+
+        𝜔² . 𝜔 = 𝜔(𝜔 + 1) = 𝜔² + 𝜔 = 𝜔 + (𝜔 + 1) = 0 + 1 = 1
+
+        * this tells us that 𝜔² is the multiplicative inverse of 𝜔
+  
+    • More generally, a field is a set, call it 'A', with two special elements: 0 and 1, and two operations: addition and multiplication
+
+        - these must satisfy the following conditions:
+  
+        1. it has a multiplication and addition satisfying (1), (3), (5) in the preceding list
+   
+        2. every element has an additive inverse 
+
+        3. every nonzero element has a multiplicative inverse
+    
+    • For every power pⁿ of a prime, there is exactly one finite field with pⁿ elements, and these are the only finite feilds
+                
+        - if 'n' > 1, then the integers (mod pⁿ) do not form a feild
+
+        - aka, px ≡ 1 (mod pⁿ) does not have a solution, so we cannot divide by 'p'
+
+    • The previous fact is why we needed more complicated constructions for GF(4) such as 𝜔 and 𝜔².
+
+        - in general, all GF(pⁿ) are built from polynomials (mod p)
+
+    • Consider another way to produce the field GF(4): Let Z₂[X] be the set of polynomials whose coefficients are integers (mod 2):
+
+        - then any polynomial that meets this requirement is in this set, for example 1 + X³ + X⁶, X, even the polynomials of degree 0 such as 0 and 1 are in Z₂[X]
+  
+        - we can add, subtract, and multiply in this set as long as we work with coefficients (mod 2)
+  
+    • Equipped with this fact, we can now reduce any large polynomial down until it fits into the 4-element set {0, 1, X, X + 1}
+
+        * recall that with {0, 1, 𝜔, 𝜔²}, 𝜔² = 𝜔 + 1
+
+        - in Z₂[X], there are only 4 possible degree-2 polynomials:
+  
+        1. X²: factors into X . X (reducible)
+        2. X² + X: factors into X(X + 1) (reducible)
+        3. X² + 1: factors into (X + 1)(X + 1) (reducible)
+        4. X² + X + 1: (irreducible)
+   
+        * you can also the use the "root test" to guess the factors: if you plug 0 or 1 into the polynomial and get 0, it must be factorable
+  
+        - with this, we can use X² + X + 1 as our modulus for reducing any polynomial whose coefficents are either 0 or 1
+
+    • The example using long division for section 3.11 illustrates that we do polynomial long division by dividing a large polynomial such as:
+
+        X⁴ + X³ + 1
+
+      by our modulus X² + X + 1 we obtain X as the remainder, so effectively we have:
+
+        X⁴ + X³ + 1 ≡ X mod (X² + X + 1)  
+
+    • Using our cumulative knowledge acquired thus far we can conclude that whenever we divide by X² + X + 1 we can obtain a remainder that is either 0 or a polynomial of degree at most 1.
+
+        - therefore, we define Z₂[X] (mod X² + X + 1) to be the set {0, 1, X, X + 1} of polynomials of degree at most 1
+  
+        - this is completely analogous to what happens when we work with integers (mod n)
+    
+    • We can also see this with multiplication in Z₂[X] (mod X² + X + 1):
+
+        - X.X = X² ≡ X + 1 (mod X² + X + 1)
+
+        - X³ ≡ X.X² ≡ X(X + 1) ≡ X² + X ≡ (X + 1) + X ≡ 1 (mod X² + X + 1)
+  
+    • The general procedure for constructing a finite field with pⁿ elements, is as follows:
+
+        1. Zₚ[X] is the set of polynomials with coefficients (mod p)
+        2. Choose P(X) to be an irreducible polynomial (mod p) of degree n
+        3. Let GF(pⁿ) be Zₚ[X] (mod P(X)). Then GF(pⁿ) is a field with pⁿ elements
+   
+        * sanity check: the possible remainders after dividing by P(X) are the polynomials of the form 
+
+            a₀ + a₁X + . . . aₙ₋₁Xⁿ⁻¹, where the coefficients are integers (mod p)
+
+            there are 'p' choices for each coefficient, hence pⁿ possible remainders
+
+## 3.11.2 GF(2⁸)
+
+    • This field is used in AES, where we work mod the irreducible polynomial (X⁸ + X⁴ + X³ + X + 1)
+    
+        - each element of this field can be represented uniquely as a polynomial
+  
+            b₀ + b₁X + b₂X² + b₃X³ + b₄X⁴ + b₅X⁵ + b₆X⁶ + b₇X⁷
+
+    • Each bᵢ is 0 or 1, and the 8 bits b₇b₆b₅b₄b₃b₂b₁b₀ represent a byte, so we can represent the elemetns of GF(2⁸) as 8-bit bytes
+  
+        - for example, the polynomial X⁷ + X⁶ + X³ + X + 1 becomes 11001011
+
+    • Polynomial addition is simply the XOR of their bit representations:
+
+        - (X⁷ + X⁶ + X³ + X + 1) + (X⁴ + X³ + 1) =
+
+        - 11001011 ⊕ 00011001 = 11010010 = 
+
+        - X⁷ + X⁶ + X⁴ + X
+
+    • An important fact to note here is that when we add two polynomials of degree 'n' and 'm', their sum never exceeds either degree.
+
+        - so the bit representations will always fit within the 8-bit byte
+
+    • But for multiplication, the degree increases; even the simplest multiplication X⁷.X = X⁸, which means we need a 9th bit to fit the result.
+
+        - because of this, we need to reduce it by the irreducible modulus (X⁸ + X⁴ + X³ + X + 1)
+
+        * it is important to note that the degree-8 polynomial X⁸ + X⁴ + X³ + X + 1 is NOT an element of the field, it is the "wall" that defines the field
+
+        * any time you hit that wall (by reaching degree 8), you use the modulus to wrap back around to a smaller degree
+
+    • To see an exmaple of this, lets try multiplying X⁷ + X⁶ + X³ + X + 1 by X:
+
+        - (X⁷ + X⁶ + X³ + X + 1)(X) = X⁸ + X⁷ + X⁴ + X² + X = 
+
+        - (X⁸ + X⁴ + X³ + X + 1) + (X⁷ + X³ + X² + 1) ≡ X⁷ + X³ + X² + 1 (mod X⁸ + X⁴ + X³ + X + 1)
+          |____________________|   |________________|
+           irreducible modulus      terms in either but not both
+
+    • The same operation with bits becomes:
+
+        - 11001011 -> 110010110 (shift left and append 0) *every term increases by degree 1
+
+        - 110010110 ⊕ 100011011 = 010001101 = X⁷ + X³ + X² + 1
+
+        * To multiply by higher powers of X, multiply by X (shift left and append 0) multiple times
+  
+    • To summarize, the finite field GF(pⁿ) has size pⁿ as it includes the entire set, whereas GF(pⁿ)* is called the "multiplicative group" of GF(pⁿ), and has size pⁿ - 1.
+
+        - GF(pⁿ): closed under all 4 operations, zero included because it's necessary for addition 
+  
+        - GF(pⁿ)*: closed under multiplication and division, zero removed from the set because 0 has no multiplicative inverse
+
+        * if you are adding or XORing bits, you are talking about the field
+
+        * if you are raising an element to a power or finding an inverse (like in the AES S-Box), you are operating within the multiplicative group
