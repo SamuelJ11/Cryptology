@@ -685,9 +685,9 @@
     
         - each element of this field can be represented uniquely as a polynomial
   
-            b₀ + b₁X + b₂X² + b₃X³ + b₄X⁴ + b₅X⁵ + b₆X⁶ + b₇X⁷
+            b₇X⁷ + b₆X⁶ + b₅X⁵ + b₄X⁴ + b₃X³ + b₂X² + b₁X + b₀    
 
-    • Each bᵢ is 0 or 1, and the 8 bits b₇b₆b₅b₄b₃b₂b₁b₀ represent a byte, so we can represent the elemetns of GF(2⁸) as 8-bit bytes
+    • Each bᵢ is 0 or 1, and the 8 bits b₇b₆b₅b₄b₃b₂b₁b₀ represent a byte, so we can represent the elements of GF(2⁸) as 8-bit bytes
   
         - for example, the polynomial X⁷ + X⁶ + X³ + X + 1 becomes 11001011
 
