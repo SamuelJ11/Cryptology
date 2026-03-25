@@ -610,15 +610,15 @@
 
         - these must satisfy the following conditions:
   
-        1. it has a multiplication and addition satisfying (1), (3), (5) in the preceding list
+        1. it has multiplication and addition satisfying (1), (3), (5) in the preceding list
    
         2. every element has an additive inverse 
 
         3. every nonzero element has a multiplicative inverse
     
-    • For every power pⁿ of a prime, there is exactly one finite field with pⁿ elements, and these are the only finite feilds
+    • For every power pⁿ of a prime, there is exactly one finite field with pⁿ elements, and these are the only finite fields
                 
-        - if 'n' > 1, then the integers (mod pⁿ) do not form a feild
+        - if 'n' > 1, then the integers (mod pⁿ) do not form a field
 
         - aka, px ≡ 1 (mod pⁿ) does not have a solution, so we cannot divide by 'p'
 
