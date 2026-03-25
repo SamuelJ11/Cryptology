@@ -580,7 +580,7 @@
 
 # 3.11 Finite Fields
 
-    • Many tiems we word with integers (mod p), where we can divide by any number that is nonzero (mod p)
+    • Many times we work with integers (mod p), where we can divide by any number that is nonzero (mod p)
 
         - thus, any nonzero number from 1 - p - 1 has an inverse (mod p)
 
