@@ -49,31 +49,21 @@
 
             p = 11
             q = 7
-            e = 65537
+            e = 17
 
         (2) we compute n = pq = 77, therefore
 
             ϕ(n) = (p-1)(q-1) = 60
 
-        (3) we can encrypt a small message using the public key (n, e) via c = mᵉ (mod n); lets encyrpt 'cat'
+        (3) we can encrypt a small message using the public key (n, e) via c = mᵉ (mod n); lets encyrpt the letter 'm' 
 
-            here we depart from our earlier practice of numbering the letters starting with a = 0, and instead let a = 01, b = 2, c = 3 . . . z = 26
+            m = 13  *using the same letter encoding scheme we've been working with
 
-            m = 'cat' = 30120
-
-            c = mᵉ (mod n) ≡ 30120⁶⁵⁵³⁷ (mod 77)
+            c = mᵉ (mod n) ≡ 13¹⁷ (mod 77)
 
             * reference HW3 problem 3 part 2 to understand the reduction steps below:
 
-            (a) reduce the base (mod 77)
-
-            30120 ≡ 13 (mod 77)
-
-            (b) compute ϕ(n) = 60 and split the exponent using the technique from Euler’s Theorem
-
-            13⁶⁵⁵³⁷ (mod 77) = (13⁶⁰)¹⁰⁹² * 13¹⁷ = 1 * 13¹⁷ (mod 77)
-
-            (c) use the modular exponentiation algorithm (successive squaring) until we reach 17 or the powers of 13 repeat
+            use the modular exponentiation algorithm (successive squaring) until we reach 17 or the powers of 13 repeat
 
             13¹ ≡ 13 (mod 77)
             13² ≡ 15 (mod 77)
@@ -82,7 +72,7 @@
             13¹⁶ ≡ 64 (mod 77)
             13¹⁷ ≡ 62 (mod 77)
 
-            thus the ciphertext c = 30120⁶⁵⁵³⁷ (mod 77) was simplified to c = 13¹⁷ = 62 (mod 77)
+            thus the ciphertext c = 13¹⁷ was simplified to 62 (mod 77)
 
         (4) now we can solve for 'd' from the equation m = cᵈ (mod n)
 
@@ -98,23 +88,21 @@
   
             now we have ed ≡ 1 (mod 60), which we can rewrite to solve for 'd' as d ≡ e⁻¹ (mod 60)
 
-            we solve d ≡ e⁻¹ (mod 60) using the Extended Euclidean Algorithm to find integers 's' and 't' such that s(65537) + t(60) = 1
+            we solve d ≡ e⁻¹ (mod 60) using the Extended Euclidean Algorithm to find integers 's' and 't' such that s(60) + t(17) = 1
 
-            +-------------------------+-----------------------+-------------------------------------+
-            |     Euclidean           |    Rewrite            |         Build Solution              |
-            +-------------------------+-----------------------+-------------------------------------+
-            |  65537 = 60(1092) + 17  | 65537 - 60(1092) = 17 |     (7646)(60) + (-7)(65537) = 1    |                  
-            +-------------------------+-----------------------+-------------------------------------+
-            |   60 = 17(3) + 9        | 60 - 17(3) = 9        |        (2)(60) - (7)[17] = 1        |
-            +-------------------------+-----------------------+-------------------------------------+
-            |   17 = 9(1) + 8         |   17 - 9 = 8          |        (2)[9] - (1)17 = 1           |
-            +-------------------------+-----------------------+-------------------------------------+
-            |   9 = 8(1) + 1          |    9 - 8 = 1          |           9 - [8] = 1               |
-            +-------------------------+-----------------------+-------------------------------------+ 
+            +-------------------------+-----------------------+-----------------------------------+
+            |     Euclidean           |    Rewrite            |         Build Solution            |         
+            +-------------------------+-----------------------+-----------------------------------+
+            |   60 = 17(3) + 9        |     60 - 17(3) = 9    |       (2)(60) + (-7)17 = 1        |
+            +-------------------------+-----------------------+-----------------------------------+
+            |   17 = 9(1) + 8         |      17 - 9 = 8       |        (2)[9] - (1)17 = 1         |
+            +-------------------------+-----------------------+-----------------------------------+
+            |   9 = 8(1) + 1          |      9 - 8 = 1        |           9 - [8] = 1             |
+            +-------------------------+-----------------------+-----------------------------------+ 
 
-            * here we see that s = -7 and t = 7646
+            * here we see that s = 2 and t = -7
 
-            we verify that 65537(-7) ≡ 1 (mod 60), indeed it is
+            we verify that 17(-7) ≡ 1 (mod 60), indeed it is
 
             therefore d = -7 ≡ 53 (mod 60)
 
@@ -147,8 +135,4 @@
 
             62²² * 62¹ = 62²³ = 71 * 62 ≡ 13 (mod 77)
 
-            * recall from part (a) in step 3 that 30120 ≡ 13 (mod 77), so we have successfully decrypted the message!
-  
-    • Note that in the previous example, since m = 30120 was larger than n = 77, it was treated as a single block.
-
-        - in a real RSA implementation, we must break the message 'm' into smaller blocks, each less than 'n', and encrypt them individually
+            since 13 corresponds to 'm', we have successfully decrypted the message!
