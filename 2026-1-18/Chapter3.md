@@ -494,7 +494,7 @@
 
         - if you want to work (mod p), you should work (mod p - 1) in the exponent
 
-        *IMPORTANT!! - remeber to always reduce exponents by (mod p - 1) and NOT (mod p)
+        *IMPORTANT!! - remember to always reduce exponents by (mod p - 1) and NOT (mod p)
 
     • We can often use Fermat's theorem to show that a number 'c' is composite by showing that 2ᶜ⁻¹ ≢  1 (mod c):
 
@@ -555,7 +555,7 @@
 
     • In the previous example, we were able to change the previous exponent 803 to 3 because 803 ≡ 3 (mod ϕ(1000))
 
-        - if you want to work (mod n), you should work (mod ϕ(1000)) in the exponent
+        - if you want to work (mod n), you should work (mod ϕ(n)) in the exponent
 
 # 3.7 Primitive Roots
 
