@@ -166,9 +166,9 @@
 
                 * 6 is even so we discard this choice
   
-            .
-            .
-            .
+                    .
+                    .
+                    .
 
             (7) continuing this process we finally settle on the seventh convergent C₇ = 578/3511
 
