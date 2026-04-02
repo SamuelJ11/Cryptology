@@ -224,4 +224,50 @@
 
 ## 9.2.2 Short Plaintext
 
-    •
+    • A common use of RSA is to transmit keys for use in DES, AES, or other symmetric cryptosystems. 
+    
+        - however, a naive implementation could lead to a loss of security
+
+    • Suppose Bob sends a 56-bit DES key
+
+        - in decimal, this is a number 'm' roughly 10¹⁷ (17 digits long)
+
+        - this sounds large, but the RSA modulus is usually 200+ bits
+
+        - 'm' is encrypted with RSA to obtain c ≡ mᵉ (mod n)
+  
+    • Eve attacks the system by noting the following:
+
+        - Eve tries to guess two smaller numbers 'x' and 'y' that multiply together to make 'm'
+
+        - if 'm' is around 10¹⁷ (17 digits), then 'x' and 'y' could each be no greater than 10⁹ (9 digits)
+  
+        - Eve now takes Bob's original formula c ≡ mᵉ (mod n) and replaces it with c ≡ (xy)ᵉ (mod n)
+
+            * note that this can rewritten as cx⁻ᵉ ≡ yᵉ (mod n)
+
+        - the above derivation can split into two lists:
+
+            (1) cx⁻ᵉ (mod n) with 1 <= x <= 10⁹
+
+            (2) yᵉ (mod n) with 1 <= y <= 10⁹
+
+    • Eve now has two lists of numbers, and she looks for any number that appears on both lists:
+
+        - on the LHS, Eve takes 'c', and for every possible value of 1 <= x <= 10⁹ she calculates
+
+            c(1⁻ᵉ), c(2⁻ᵉ), c(3⁻ᵉ), . . .
+
+        - on the RHS, for every possible value of 1 <= y <= 10⁹ she calculates
+
+            1ᵉ, 2ᵉ, 3ᵉ, . . .
+
+    • If Eve finds that cx⁻ᵉ ≡ yᵉ (mod n), then c ≡ (xy)ᵉ (mod n):
+
+        - since xy = m, Eve has obtained the original message 
+
+    • This is the primary reason why RSA Padding (like OAEP) is mandatory in the real world:
+
+        - if Bob adds a long string of random numbers to that 56-bit DES key before he encrypts it, the new 'm' becomes 2048 bits long
+         
+        - now Eve can no longer split it into two small 9-digit numbers, and her lists become so large that no computer on earth could store them   
