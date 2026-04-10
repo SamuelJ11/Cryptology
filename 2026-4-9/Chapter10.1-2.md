@@ -176,4 +176,33 @@
 
 ## 10.2.2 Baby Step, Giant Step
 
-    • 
+    • Compared to Pohlig-Hellman, where we broke the exponent into prime "digits," here we are just breaking the exponent into two manageable chunks: a quotient and a remainder:
+
+        (1) first, pick a number 'N' such that N = ceiling(sqrt(p-1))
+
+            - we assume that in the equation β ≡ αˣ (mod p), 'x' can be written as 
+
+                x = j + N(k)
+
+                * as we will see shortly, 'j' is the "baby step", or the small remainder, and N(k) is the "giant step"
+                * by setting N = ceiling(sqrt(p-1)), we are ensuring that both 'j' and 'k' are relatively small to 'N'
+               
+        (2) now we take our target equation β ≡ αˣ (mod p) and plug in our split version of 'x':
+
+            β ≡ α^(j + N(k)) (mod p)
+
+        (3) to find a match, we use algebra to put the baby part 'j' on one side and the giant part 'N(k)' on the other:
+
+            αʲ ≡ β(α⁻ᴺᵏ) (mod p)
+
+        (4) now we for every possible 'j' (0, 1, 2, ... N - 1), we store the value of αʲ in a list (call it 'A')
+
+        (5) similarly, for every possible 'k' (0, 1, 2, ... N - 1), we store the value of β(α⁻ᴺᵏ) in a seperate list (call it 'B')
+
+        (6) the goal is to find a value that appears in both of these lists:
+
+            - this means that some value from list A (αʲ) = some value from list B (β(α⁻ᴺᵏ))
+
+            - rearranging this equation by multiplying both sides of αʲ ≡ β(α⁻ᴺᵏ) by (αᴺᵏ), we again obtain β ≡ α^(j + N(k)) (mod p)
+
+            - and just like that, the secret x is revealed as x = j + N(k)
