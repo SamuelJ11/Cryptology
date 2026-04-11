@@ -120,7 +120,7 @@
 
         - since we just found the value of x₀, we can define a new value, let's call it β₁, where we "divide out" the α^(x₀) part:
   
-        β₁ ≡ β * α^(-x₀) = α^(x₀ + x₁q + x₂q² + ... -x₀) = α^( x₁q + x₂q² + ...) (mod p)
+        β₁ ≡ β * α^(-x₀) = α^(x₀ + x₁q + x₂q² + ... -x₀) = α^(x₁q + x₂q² + ...) (mod p)
 
     • Starting with β₁ = α^(x₁q + x₂q² + ...) (mod p), we perform a new "test" on β₁:
 
