@@ -1,0 +1,148 @@
+!t_CLOSURE!tt!5!
+!closure!rm!5!
+!closure_arity!tt!5!
+!closure_get_code!tt!5!
+!closure_codestr!tt!5!
+!closure_get_oper!tt!5!
+!closure_get_data!tt!5!
+!closure_get_dbg!tt!5!
+!closure_get_text!tt!6!
+!closure_get_\EFF {}rame!tt!6!
+!t_LIST!tt!6!
+!list!rm!6!
+!gunclone_deep!tt!6!
+!gunclone!tt!6!
+!list_nmax!tt!6!
+!list_data!tt!6!
+!listcopy!tt!7!
+!mklistcopy!tt!7!
+!mklist_typ!tt!7!
+!mklist!tt!7!
+!mkmap!tt!7!
+!list_typ!tt!7!
+!listpop!tt!7!
+!listput!tt!7!
+!listinsert!tt!7!
+!mapdomain!tt!7!
+!mapselect_shallow!tt!7!
+!mapdomain_shallow!tt!8!
+!maptomat!tt!8!
+!maptomat_shallow!tt!8!
+!BLOCK_SIGINT_START!tt!8!
+!BLOCK_SIGALRM_START!tt!8!
+!BLOCK_SIGINT_END!tt!8!
+!PARI_SIGINT_block!tt!8!
+!PARI_SIGINT_pending!tt!8!
+!MT_SIGINT_BLOCK!tt!8!
+!MT_SIGINT_UNBLOCK!tt!8!
+!mt_sigint_block!tt!8!
+!mt_sigint_unblock!tt!8!
+!Fl2_equal1!tt!8!
+!Fl2_mul_pre!tt!8!
+!Fl2_sqr_pre!tt!8!
+!Fl2_inv_pre!tt!8!
+!Fl2_pow_pre!tt!9!
+!Fl2_sqrt_pre!tt!9!
+!Fl2_sqrtn_pre!tt!9!
+!Fl2_norm_pre!tt!9!
+!Flx_Fl2_eval_pre!tt!9!
+!toser_i!tt!9!
+!RgX_to_ser!tt!9!
+!r\EFF {}rac_to_ser!tt!9!
+!listinit!tt!9!
+!out_print1!tt!9!
+!\EFF {}_RAW!tt!9!
+!\EFF {}_PRETTYMAT!tt!9!
+!\EFF {}_TEX!tt!9!
+!out_print0!tt!10!
+!out_print1!tt!10!
+!pari_sprint0!tt!10!
+!pari_in\EFF {}ile!tt!10!
+!switchin!tt!10!
+!gp_read_\EFF {}ile!tt!10!
+!break0!tt!10!
+!next0!tt!10!
+!return0!tt!10!
+!vecslice0!tt!10!
+!matslice0!tt!10!
+!apply0!tt!10!
+!genapply!tt!10!
+!select0!tt!10!
+!genselect!tt!10!
+!vecapply!tt!10!
+!veccatapply!tt!10!
+!vecselect!tt!10!
+!vecselapply!tt!10!
+!push_localprec!tt!10!
+!push_localbitprec!tt!10!
+!pop_localprec!tt!10!
+!get_localprec!tt!11!
+!get_localbitprec!tt!11!
+!localprec!tt!11!
+!localbitprec!tt!11!
+!getlocalbitprec!tt!11!
+!getlocalprec!tt!11!
+!localvars_read_str!tt!11!
+!geval_gp!tt!11!
+!localvars_\EFF {}ind!tt!11!
+!os_getenv!tt!11!
+!getenv!tt!11!
+!os_signal!tt!11!
+!sigaction!tt!11!
+!SA_NODEFER!tt!11!
+!signal!tt!11!
+!SIG_IGN!tt!11!
+!sigaction!tt!11!
+!gp_embedded_init!tt!11!
+!gp_embedded!tt!11!
+!pari_completion_matches!tt!12!
+!pari_completion!tt!12!
+!pari_completion_matches!tt!12!
+!rl_attempted_completion_\EFF {}unction!tt!12!
+!pari_init_bu\EFF {}\EFF {}ers!tt!12!
+!pari_init_compiler!tt!12!
+!pari_init_de\EFF {}aults!tt!12!
+!pari_init_evaluator!tt!12!
+!pari_init_\EFF {}iles!tt!12!
+!pari_init_\EFF {}loats!tt!12!
+!pari_init_graphics!tt!12!
+!pari_init_homedir!tt!12!
+!pari_init_parser!tt!12!
+!pari_init_paths!tt!12!
+!pari_init_primetab!tt!12!
+!pari_init_rand!tt!13!
+!pari_close_compiler!tt!13!
+!pari_close_evaluator!tt!13!
+!pari_close_\EFF {}iles!tt!13!
+!pari_close_\EFF {}loats!tt!13!
+!pari_close_homedir!tt!13!
+!pari_close_m\EFF {}!tt!13!
+!pari_close_parser!tt!13!
+!pari_close_paths!tt!13!
+!pari_close_primes!tt!13!
+!pari_thread_close!tt!13!
+!pari_thread_close_\EFF {}iles!tt!13!
+!sa\EFF {}egel!tt!13!
+!sa\EFF {}eel!tt!13!
+!sa\EFF {}elistel!tt!13!
+!sa\EFF {}egcoe\EFF {}\EFF {}!tt!13!
+!mt_queue_start!tt!21!
+!mt_queue_start_lim!tt!21!
+!mt_queue_submit!tt!21!
+!mt_queue_get!tt!21!
+!mt_queue_end!tt!21!
+!mt_queue_end!tt!21!
+!mt_nbthreads!tt!21!
+!mt_queue_start!tt!22!
+!mt_nbthreads!tt!22!
+!mt_broadcast!tt!22!
+!gpinstall!tt!22!
+!pari_mt_init!tt!22!
+!pari_init_opts!tt!22!
+!INIT_noIMTm!tt!22!
+!pari_mt_init!tt!22!
+!pari_mt_close!tt!22!
+!pari_close!tt!22!
+!pari_close_opts!tt!22!
+!INIT_noIMTm!tt!22!
+The End

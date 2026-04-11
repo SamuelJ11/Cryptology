@@ -1,0 +1,23 @@
+{\hskip 0.5cm1. Greetings!\dotfill4}
+{\hskip 0.5cm2. Warming up\dotfill7}
+{\hskip 0.5cm3. The Remaining PARI Types\dotfill9}
+{\hskip 0.5cm4. Elementary Arithmetic Functions\dotfill14}
+{\hskip 0.5cm5. Performing Linear Algebra\dotfill15}
+{\hskip 0.5cm6. Using Transcendental Functions\dotfill17}
+{\hskip 0.5cm7. Using Numerical Tools\dotfill20}
+{\hskip 0.5cm8. Polynomials\dotfill22}
+{\hskip 0.5cm9. Power Series\dotfill24}
+{\hskip 0.5cm10. Working with Elliptic Curves\dotfill25}
+{\hskip 0.5cm11. Working in Quadratic Number Fields\dotfill30}
+{\hskip 0.5cm12. Working in General Number Fields\dotfill35}
+{\sevenrm \hskip 1cm12.1. Defining equations and elements in the field\dotfill35}
+{\sevenrm \hskip 1cm12.2. Ideals\dotfill39}
+{\sevenrm \hskip 1cm12.3. Class Groups and Units, {\fam \ttfam \tentt bnf}\dotfill41}
+{\sevenrm \hskip 1cm12.4. Class Field Theory, {\fam \ttfam \tentt bnr}\dotfill43}
+{\sevenrm \hskip 1cm12.5. Galois Theory over ${\fam \bffam \tenbf Q}$\dotfill44}
+{\sevenrm \hskip 1cm12.6. Creating and Listing Number Fields\dotfill45}
+{\hskip 0.5cm13. Working with Associative Algebras\dotfill46}
+{\sevenrm \hskip 1cm13.1. Arbitrary Associative Algebras\dotfill46}
+{\sevenrm \hskip 1cm13.2. Central Simple Algebras over Number Fields\dotfill49}
+{\hskip 0.5cm14. Plotting\dotfill52}
+{\hskip 0.5cm15. GP Programming\dotfill59}

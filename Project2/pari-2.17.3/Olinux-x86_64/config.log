@@ -1,0 +1,55 @@
+This file contains messages produced while configuring
+  pari-2.17.3 
+to aid debugging if Configure makes a mistake. Command line was
+  > ./Configure 
+
+/usr/bin/gcc -o linux-x86_64-ansi37743 ansi.c
+/usr/bin/gcc -o linux-x86_64-gnu37743 gnu.c
+/usr/bin/gcc -fno-strict-aliasing -o linux-x86_64-gnu37743 gnu.c
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing endian.c -o linux-x86_64-endian37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_sse2.c -o linux-x86_64-tmp37743 -lm
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_avx.c -o linux-x86_64-tmp37743 -lm
+has_avx.c: In function ‘main’:
+has_avx.c:17:3: error: cannot convert a vector of type ‘bit_array’ {aka ‘__vector(4) long unsigned int’} to type ‘long unsigned int’ which has different size
+   17 |   unsigned long t = TEST(x&y);
+      |   ^~~~~~~~
+has_avx.c:17:3: error: cannot convert a vector of type ‘bit_array’ {aka ‘__vector(4) long unsigned int’} to type ‘long unsigned int’ which has different size
+has_avx.c:17:3: error: cannot convert a vector of type ‘bit_array’ {aka ‘__vector(4) long unsigned int’} to type ‘long unsigned int’ which has different size
+has_avx.c:17:3: error: cannot convert a vector of type ‘bit_array’ {aka ‘__vector(4) long unsigned int’} to type ‘long unsigned int’ which has different size
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_exp2.c -o linux-x86_64-tmp37743 -lm
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_log2.c -o linux-x86_64-tmp37743 -lm
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_rint.c -o linux-x86_64-tmp37743 -lm
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_strftime.c -o linux-x86_64-tmp37743
+has_strftime.c: In function ‘main’:
+has_strftime.c:2:34: warning: argument 4 null where non-null expected [-Wnonnull]
+    2 | int main(){ struct tm *x = NULL; strftime("",1," ",x); return 0; }
+      |                                  ^~~~~~~~~~~~~~~~~~~~
+In file included from has_strftime.c:1:
+/usr/include/time.h:100:15: note: in a call to function ‘strftime’ declared ‘nonnull’
+  100 | extern size_t strftime (char *__restrict __s, size_t __maxsize,
+      |               ^~~~~~~~
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_getrusage.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_gettimeofday.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_sigaction.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_TIOCGWINSZ.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_getrlimit.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_stat.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_vsnprintf.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_mmap.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_waitpid.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_setsid.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_getenv.c -o linux-x86_64-tmp37743
+has_getenv.c: In function ‘main’:
+has_getenv.c:2:19: warning: ignoring return value of ‘getenv’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+    2 | int main(){ (void)getenv(""); return 0; }
+      |                   ^~~~~~~~~~
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_isatty.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_alarm.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_system.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing has_dlopen.c -o linux-x86_64-tmp37743
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing -o linux-x86_64-gmp37743 gmp_version.c -lgmp
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing -o linux-x86_64-gmp37743 gmp_mismatch.c -lgmp
+xmkmf
+./Configure: 1: eval: xmkmf: not found
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing -I/usr/include -o linux-x86_64-X1137743 has_X11.c -lX11
+/usr/bin/gcc -O3 -Wall -fno-strict-aliasing -o linux-x86_64-rlv37743 rl_version.c -lreadline

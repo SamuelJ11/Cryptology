@@ -1,0 +1,97 @@
+Bug numbers refer to the BTS at http://pari.math.u-bordeaux.fr/Bugs/
+
+ [last column crossreferences current development release 2.18.1]
+Done for version 2.17.3 (released 24/11/2025):
+  Fixed
+    1- sumnumrat & friends: use full precision estimates to avoid failing with
+        domain error when "close" to boundary                             [F17]
+    2- zeta([3,2,1]) -> oo-loop                                           [F18]
+BA  3- parforeach([1..1000],j,vector(10^5,i,i)) -> stack overflow         [F19]
+    4- mfpetersson() incorrect when one form not cuspidal                 [F20]
+    5- lift_to_frac: use of cgiv could corrupt PARI stack                 [F22]
+    6- sumeulerrat / prodeulerrat fail in cases where they shouldn't [#2620]
+       e.g., sumeulerrat(1/(p^2-5),1.1), prodeulerrat(1+1/(p^2-p-23),0.6) [F23]
+    7- incgam(0,10^-50) -> GEN corruption                                 [F25]
+BA  8- 12*harmonic(1) -> 12/1                                             [F26]
+    9- hyperellratpoints(P, d) could miss points when P(-d) = 0           [F27]
+   10- obscure bnrclassfield bug [internally creating an incorrect ideal
+       factorization whose prime ideals were not sorted]                  [F28]
+BA 11- qfeval(Qfb(2,3,4),[1,2;3,4]).disc was wrong [#2630]                [F29]
+   12- bnfsunit: could fail to detect non-S-units                         [F30]
+BA 13- lfunan: overflow error with large bad primes.                      [F32]
+   14- mftonew: fix problem with mfbd forms [#2619]                       [F34]
+   15- lfunthetainit: lost accuracy for large shifts.                     [F35]
+HC 16- hypergeom([8,8.5],7,-0.4) was wrong [#2628]                        [F36]
+HC 17- lfunmfspec(L) divided by zero if period vanishes                   [F37]
+BA 18- fforder(,factor(1)) -> crash [#2618]                               [F38]
+   19- mateigen must not call qfjacobi on non-real matrices [#2636]       [F39]
+BA 20- ^C\n^C in parfor could crash GP                                    [F40]
+   21- solve() iteration could incorrectly abort and return 0.0 [#2638]   [F41]
+   22- zeta(1/2+10^22*I) -> precision too low                             [F42]
+BA 23- lfuninit(lfunshift(1,3,1)) was incorrect [#2631]                   [F43]
+
+Done for version 2.17.2 (released 01/03/2025):
+  Fixed
+BA   1- ellrootno over number fields could be slow [#2595]                 [F2]
+BA   2- matsolvemod could fail [#2604]                                     [F3]
+BA   3- nfcompositum(nfinit(y-2),x^2-y,x^3-x-1) -> error [#2605]           [F4]
+     4- Mod(a,A) == Mod(b,B) was checking a == b && A == B instead         [F6]
+        of the documented Mod(a,A) - Mod(b,B) == 0 [F6]
+     5- normlp(, oo): support components equal to oo or -oo                [F8]
+     6- sqrtn(27+O(3^4),3) -> 1 + O(3) (wrong valuation in Qp_sqrtn_ram)  [F10]
+     7- vectorsmall(5, i, 2^63-1).normfu -> SEGV                          [F11]
+AP   8- alginit(nf,[a,b]) would reject a in basis form                    [F13]
+BA   9- for(i=1,10^6,bernpol(5,1)) -> "no more variables" [#2611]         [F14]
+BA  10- Flx_mod_Xn1(T,n), deg T >= 2*n -> wrong result                    [F15]
+    11- forprime(p=1099505335069-100000,1099505335069+10000,) -> crash    [F16]
+
+ [last column crossreferences current development release 2.18.0]
+Done for version 2.17.1 (released 24/12/2024):
+  Fixed
+BA   1- incorrect GP proto for ellpadicfrobenius, mftocoset, qfcvp [#2575] [F1]
+AP   2- fix idealismaximal for ideal p*ZK [Sage issue 38766]               [F2]
+AP   3- segfault in algsubalg when input is linearly dependent             [F3]
+AP   4- fix alglatinter trivial intersection (misuse of matkermod(,1))     [F4]
+BA   5- ellrank could try many more curves than requested by effort [#2577][F5]
+     6- wrong result in issquare(Mod(a, composite)) [#2578]                [F6]
+     7- gener_FpXQ_local(t_POL of degre 1) -> oo loop [#2581]              [F7]
+     8- GC error when squaring integer 2x2 matrices [#2582]                [F8]
+AP   9- algebras: fix splitting field for CSA, algtomatrix / algcharpoly
+        were sometimes wrong by an automorphism of the center              [F9]
+BA  10- paridecl.h could conflict with complex.h [#2583]                  [F10]
+    11- forprime(p=524288,1048576,1) -> crash [#2584]
+        forprime(p=1048607,1048617,1) -> oo loop                          [F11]
+    12- printf("%10.6f", tiny rational) -> undefined result [#2576]       [F12]
+AP  13- alginit(nf,[a,b]) was only allowing a,b integral over the power basis
+        instead of arbitrary algebraic integers.                          [F13]
+HC  14- zeta not continous around 1/2+3000*I [#2585]                      [F14]
+    15- missing type checks for change of variables in ellchangecurve,    [F15]
+        ellchangepoint, ellchangepointinv
+BA  16- control-C could lead to segfault later [#2496]                    [F16]
+    17- [libpari] missing normalization in FpX_mulu (when p is not prime) [F18]
+HC  18- mfsymboleval could return wrong sign [#2586]                      [F19]
+    19- missing type checks in factorback [#2590]                         [F20]
+BA  20- charpoly(Mod(x,x^20+1/2)) -> crash [#2591]                        [F21]
+    21- psi(x close to a nonpositive integer) -> error                    [F22]
+BA  22- polresultant(t_POL with RFRAC coeffs) could be incorrect [#2588]  [F24]
+BA  23- qflll(non-maximal rank) -> potential oo-loop [#2587]              [F25]
+
+  Added
+BA   1- [loongarch64] add loongarch64 assembly kernel
+
+Done for version 2.17.0 (released 30/09/2024):
+  Fixed
+     1- rare SEGV in sumnumrat [#2566]
+     2- gp -p N did not check for N < 2^32
+     3- nflist([6,8],12167) -> SEGV [#2567]
+     4- nflist([6,1],1229312), nflist([6,10],36192256) -> duplicate fields
+AP   5- variable leak in algsplit
+     6- mfslashexpansion: possible extra rational factor [#2572]
+     7- nfeltsign: possible wrong result
+
+  Added
+BA   1- [libpari] Flm_sqr
+
+  Changed
+BA   1- qflll(,1), qfllgram(,1): disable FLATTER algorithm.
+     2- tunings of forprime over "short" intervals (use sieve more frequently)
