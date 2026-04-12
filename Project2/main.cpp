@@ -1,5 +1,8 @@
 #include <pari/pari.h>
 #include <iostream>
+#include <vector>
+
+using namespace std;
 
 int main() 
 {
@@ -9,18 +12,32 @@ int main()
     */
     pari_init(1000000, 0);
 
-    GEN v = cgetg(4, t_VEC);
+    GEN v = stoi(15);
 
-    /* 
-        gel(x,i) is used to access elements of a GEN object
-        where we access component number i of the GEN object x
-    */
-    gel(v, 1) = stoi(1);
-    gel(v, 2) = stoi(2);
-    gel(v, 3) = stoi(3);
+    int flag = 1;
+    vector<int> bits;
+    int size = bits.size();
 
-    output(v);
+    while (cmpsi(flag, v) <= 0)
+    {
+        int i = 0;
+        if (bittest(v, i))
+        {
+            bits[size - (i + 1)] = 1;
+        }
+        else
+        {
+            bits[size - (i + 1)] = 0;
+        }
 
+        i ++;
+        flag *= 2;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        cout << bits[i] << " ";
+    }
+    
     return 0;
 }
-

@@ -18,6 +18,8 @@ class Helper
 {
 public:
 
+    static GEN modular_exponentiation(GEN base, GEN exponent, GEN modulus);
+
     static GEN generate_randint();  // method that uses the Blum Blum Shub algorithm to generate a random integer
 
     static bool is_prime(const GEN &num);  // method to check if a number is prime using Fermat's primality test and the Miller-Rabin primality test

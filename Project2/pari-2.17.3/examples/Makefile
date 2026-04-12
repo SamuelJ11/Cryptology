@@ -1,1 +1,0 @@
-../Olinux-x86_64/Makefile.examples
