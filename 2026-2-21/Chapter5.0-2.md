@@ -72,7 +72,7 @@
 
         - for example, lets consider all numbers (mod 7):
 
-            {0, 1, 2, 3, 4, 5, 6, 7}
+            {0, 1, 2, 3, 4, 5, 6}
 
         - the results obtained from squaring each of those numbers and reducing (mod 7) are the quadratic residues (mod 7):
 
@@ -102,7 +102,7 @@
 
         - for example, lets pick small primes for intuition:
 
-            p = 7, p = 11 (both are congruent to 3 (mod 4))
+            p = 7, q = 11 (both are congruent to 3 (mod 4))
 
         - quadratic residues (mod 7): {0, 1, 2, 4}
 
