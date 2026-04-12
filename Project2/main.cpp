@@ -3,12 +3,24 @@
 
 int main() 
 {
-    pari_init(1000000, 2);
+    /*
+        the first argument is the number of bytes given to PARI to work with, and the second is the upper
+        limit on a precomputed prime number table
+    */
+    pari_init(1000000, 0);
 
-    GEN x = stoi(2);
-    GEN y = stoi(6);
-    GEN z = gmul(x, y);
+    GEN v = cgetg(4, t_VEC);
 
-    std::cout << gtolong(z) << std::endl;
+    /* 
+        gel(x,i) is used to access elements of a GEN object
+        where we access component number i of the GEN object x
+    */
+    gel(v, 1) = stoi(1);
+    gel(v, 2) = stoi(2);
+    gel(v, 3) = stoi(3);
+
+    output(v);
+
+    return 0;
 }
 
