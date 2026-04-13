@@ -3,8 +3,8 @@ from utils import *
 
 r = RSA()
 
-result = modular_exponentiation(3, 654, 706)
-result2 = pow(3, 654, 706)
+result = modular_exponentiation(2, 1234, 789)
+result2 = pow(2, 1234, 789)
 
 print(result)
 print(result2)
