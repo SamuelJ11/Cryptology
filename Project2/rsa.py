@@ -1,4 +1,4 @@
-import string, sys, operator
+import string, utils
 from pathlib import Path
 
 class RSA:
@@ -8,30 +8,17 @@ class RSA:
         self.q = 5
         self.d = 7
 
-    def computeN(p, q):
-
+    def computeN(self, p, q):
         pass
 
-    def generate_pubkey(n, e):
-
+    def generate_pubkey(self, n, e):
         pass
 
-    def generate_privkey(n, d):
-
+    def generate_privkey(self, n, d):
         pass
 
-
-    def encrypt(message, keyname):
-
+    def encrypt(self, message, keyname):
         pass
 
-    def decrypt(ciphertext, keyname):
-
+    def decrypt(self, ciphertext, keyname):
         pass
-
-
-def main():
-
-    pass
-
-main()
