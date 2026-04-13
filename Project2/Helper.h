@@ -23,7 +23,7 @@ public:
 
     static GEN generate_randint();  // method that uses the Blum Blum Shub algorithm to generate a random integer
 
-    static vector<int> to_binary(const GEN &num);
+    static vector<int> to_binary(const GEN &exponent);  // method that converts a number to its binary representation 
 
     static bool is_prime(const GEN &num);  // method to check if a number is prime using Fermat's primality test and the Miller-Rabin primality test
 

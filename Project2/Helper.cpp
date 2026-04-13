@@ -15,7 +15,7 @@ GEN Helper::generate_randint()
     // TBD
 }
 
-GEN Helper::modular_exponentiation(GEN base, GEN exp, GEN mod)
+GEN Helper::modular_exponentiation(const GEN &base, const GEN &exp, const GEN &mod)
 {
     /* 
         This function uses sucessive squaring of the base until we reach the highest power 
@@ -31,7 +31,7 @@ GEN Helper::modular_exponentiation(GEN base, GEN exp, GEN mod)
     }
 
 
-
+    
     pari_sp lbot = avma; // declare a stack bottom pointer for garbage collection
 
 }
