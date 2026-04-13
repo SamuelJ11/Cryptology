@@ -27,8 +27,6 @@ public:
 
     GEN generate_keys();  // method to compute the public and private keys
 
-    void export_keys(const string &keyname);  // method to export the public and private keys to files
-
     void encrypt(const string &message, const string &keyname);  // method to encrypt a message using the public key
 
     void decrypt(const string &ciphertext, const string &keyname);  // method to decrypt a message using the private key
