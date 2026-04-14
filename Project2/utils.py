@@ -46,27 +46,21 @@ def is_prime(modulus):
     the Miller Rabin primality test to verify the result obtained from Fermat's primality test is 
     at least a strong pseudoprime
     '''
-
-    prime = True
+    result = False
     fermatexp = modulus - 1
 
     if (modulus % 2 == 0):
-        prime = False
         print(f"{modulus} is trivially composite as it is even")
-        return prime
+    else:
+        base = random.randint(2, modulus - 2)
+        gcd = math.gcd(base, modulus)
+        if (gcd != 1 or modular_exponentiation(base, fermatexp, modulus) != 1):
+            print(f"Failed Fermat's test; {modulus} is definitely composite")
+        else:
+            result = True
 
-    base = random.randint(2, modulus - 2)
-    gcd = math.gcd(base, modulus)
-    if (gcd != 1):
-        prime = False
-        print(f"Failed Fermat's test; {modulus} is definitely composite")
-        print(f"A non-trivial factor of {modulus} is; {gcd}")
-        return prime
-    value = modular_exponentiation(base, fermatexp, modulus)
-    if value != 1:
-        prime = False
-        print(f"Failed Fermat's test; {modulus} is definitely composite")
-        return prime
+    if (not result):
+        return
 
     millerexp = modulus - 1
     k = 0
@@ -74,31 +68,27 @@ def is_prime(modulus):
         k += 1
         millerexp /= 2
 
-    print(millerexp)
-    print(k)
-
     alpha = random.randint(2, modulus - 2)
     value = modular_exponentiation(alpha, millerexp, modulus)
     if(value == 1):
         print(f"Passed first round of Miller-Rabin; {modulus} is probably prime")
-        return prime
+        result = True
         
     i = 1
     flag = (i < k)
     while(value != (modulus - 1) and flag == True):        
         value = modular_exponentiation(value, 2, modulus)
         if (value == 1):
-            prime = False
             print(f"Failed round {i + 1} of Miller-Rabin; {modulus} is definitely composite")
             print(f"A non-trivial factor of {modulus} is; {math.gcd(value - 1, modulus)}")
-            return prime
-        
         i += 1
         flag = (i < k)
 
     if (value == -1 or flag == False):
         print(f"Passed all {i + 1} round of Miller-Rabin; {modulus} is probably prime")
-        return prime
+        result = True
+    
+    return result
 
     '''
     
@@ -125,9 +115,6 @@ def is_prime(modulus):
     print(f"Failed Miller-Rabin: a non-trivial factor of {modulus} is; {math.gcd(val0 - 1, modulus)}")
     
     '''
-
-    return prime
-
 def inverse(number, modulus):
     pass
 

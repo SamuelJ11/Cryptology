@@ -4,7 +4,7 @@ from utils import *
 r = RSA()
 
 for i in range(0, 5):
-    is_prime(561)
+    is_prime(55)
 
 
 
