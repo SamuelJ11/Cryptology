@@ -62,12 +62,13 @@ def is_prime(modulus):
             print(f"Failed Fermat's test; {modulus} is definitely composite")
             return False
         else:
-            return True
+            print(f"\nFermat test PASSED for base a = {fermatalpha}")
+            print("Proceeding to Miller-Rabin test\n")
 
     ### Double Check With Miller-Rabin Test
 
-    millerexp = modulus - 1
-    milleralpha = random.randint(2, modulus - 2)
+    millerexp = fermatexp
+    milleralpha = fermatalpha
     k = 0
     while(millerexp % 2 == 0):
         k += 1
