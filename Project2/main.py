@@ -3,8 +3,19 @@ from utils import *
 
 r = RSA()
 
-result = modular_exponentiation(2, 1234, 789)
-result2 = pow(2, 1234, 789)
+for i in range(0, 5):
+    is_prime(561)
 
-print(result)
-print(result2)
+
+
+
+'''
+print(modular_exponentiation(2, 4, 5))
+print(pow(2, 4, 5))
+
+print(modular_exponentiation(2, 1234, 789))
+print(pow(2, 1234, 789))
+
+'''
+
+
