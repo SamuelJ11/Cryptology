@@ -51,35 +51,32 @@ def is_prime(modulus):
         print("Please input an integer greater than 3")
         return
     
-    result = False
     fermatexp = modulus - 1
-    alpha = random.randint(2, modulus - 2)
+    fermatalpha = random.randint(2, modulus - 2)
 
     if (modulus % 2 == 0):
         print(f"{modulus} is trivially composite as it is even")
     else:
-        gcd = math.gcd(alpha, modulus)
-        if (gcd != 1 or modular_exponentiation(alpha, fermatexp, modulus) != 1):
+        gcd = math.gcd(fermatalpha, modulus)
+        if (gcd != 1 or modular_exponentiation(fermatalpha, fermatexp, modulus) != 1):
             print(f"Failed Fermat's test; {modulus} is definitely composite")
+            return False
         else:
-            result = True
-
-    if (not result):
-        return
+            return True
 
     ### Double Check With Miller-Rabin Test
 
     millerexp = modulus - 1
+    milleralpha = random.randint(2, modulus - 2)
     k = 0
     while(millerexp % 2 == 0):
         k += 1
         millerexp //= 2
 
-    value = modular_exponentiation(alpha, millerexp, modulus)
+    value = modular_exponentiation(milleralpha, millerexp, modulus)
     if(value == 1):
         print(f"Passed Miller-Rabin test; {modulus} is probably prime")
-        result = True
-        return result
+        return True
         
     i = 1
     flag = (i <= k)
@@ -87,40 +84,14 @@ def is_prime(modulus):
         value = modular_exponentiation(value, 2, modulus)
         if (value == 1):
             print(f"Failed Miller-Rabin test; {modulus} is definitely composite")
+            return False
         i += 1
         flag = (i < k)
 
     if (value == (modulus - 1)):
         print(f"Passed Miller-Rabin test; {modulus} is probably prime")
-        result = True
+        return True
     
-    return result
-
-    '''
-    
-    Miller-Rabin Primality Test
-
-    Let n > 1 be an odd integer. Write n - 1 = 2^k * m where m is odd.
-
-    Choose a random integer a with 1 < a < n - 1.
-    Compute b0 = a^m mod n.
-    If b0 is congruent to 1 or -1 mod n, then stop and declare n is probably prime.
-    Otherwise compute b1 = b0^2 mod n.
-    If b1 is congruent to 1 mod n, then n is composite. Also gcd(b0 - 1, n) gives a nontrivial factor of n.
-    If b1 is congruent to -1 mod n, then stop and declare n is probably prime.
-
-    Continue squaring:
-    bi+1 = bi^2 mod n
-
-    At each step:
-
-    If bi is congruent to -1 mod n, then stop and declare n is probably prime.
-    If bi is congruent to 1 mod n before ever seeing -1, then n is composite.
-    If you reach b(k-1) and never encountered -1, and b(k-1) is not congruent to -1 mod n, then n is composite.
-
-    print(f"Failed Miller-Rabin: a non-trivial factor of {modulus} is; {math.gcd(val0 - 1, modulus)}")
-    
-    '''
 def inverse(number, modulus):
     pass
 
