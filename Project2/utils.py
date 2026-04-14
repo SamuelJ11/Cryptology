@@ -37,7 +37,7 @@ def to_binary(number):
         quotient = quotient // 2  
         i += 1
         flag *= 2 
-        
+
     return bits
     
 def is_prime(modulus):
@@ -48,13 +48,13 @@ def is_prime(modulus):
     '''
     result = False
     fermatexp = modulus - 1
+    alpha = random.randint(2, modulus - 2)
 
     if (modulus % 2 == 0):
         print(f"{modulus} is trivially composite as it is even")
     else:
-        base = random.randint(2, modulus - 2)
-        gcd = math.gcd(base, modulus)
-        if (gcd != 1 or modular_exponentiation(base, fermatexp, modulus) != 1):
+        gcd = math.gcd(alpha, modulus)
+        if (gcd != 1 or modular_exponentiation(alpha, fermatexp, modulus) != 1):
             print(f"Failed Fermat's test; {modulus} is definitely composite")
         else:
             result = True
@@ -62,30 +62,31 @@ def is_prime(modulus):
     if (not result):
         return
 
+    ### Double Check With Miller-Rabin Test
+
     millerexp = modulus - 1
     k = 0
     while(millerexp % 2 == 0):
         k += 1
-        millerexp /= 2
+        millerexp //= 2
 
-    alpha = random.randint(2, modulus - 2)
     value = modular_exponentiation(alpha, millerexp, modulus)
     if(value == 1):
-        print(f"Passed first round of Miller-Rabin; {modulus} is probably prime")
+        print(f"Passed Miller-Rabin test; {modulus} is probably prime")
         result = True
+        return result
         
     i = 1
-    flag = (i < k)
+    flag = (i <= k)
     while(value != (modulus - 1) and flag == True):        
         value = modular_exponentiation(value, 2, modulus)
         if (value == 1):
-            print(f"Failed round {i + 1} of Miller-Rabin; {modulus} is definitely composite")
-            print(f"A non-trivial factor of {modulus} is; {math.gcd(value - 1, modulus)}")
+            print(f"Failed Miller-Rabin test; {modulus} is definitely composite")
         i += 1
         flag = (i < k)
 
-    if (value == -1 or flag == False):
-        print(f"Passed all {i + 1} round of Miller-Rabin; {modulus} is probably prime")
+    if (value == -1):
+        print(f"Passed Miller-Rabin test; {modulus} is probably prime")
         result = True
     
     return result
