@@ -46,6 +46,11 @@ def is_prime(modulus):
     the Miller Rabin primality test to verify the result obtained from Fermat's primality test is 
     at least a strong pseudoprime
     '''
+
+    if (modulus <= 3):
+        print("Please input an integer greater than 3")
+        return
+    
     result = False
     fermatexp = modulus - 1
     alpha = random.randint(2, modulus - 2)
@@ -85,7 +90,7 @@ def is_prime(modulus):
         i += 1
         flag = (i < k)
 
-    if (value == -1):
+    if (value == (modulus - 1)):
         print(f"Passed Miller-Rabin test; {modulus} is probably prime")
         result = True
     

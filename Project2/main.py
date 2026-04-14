@@ -4,4 +4,4 @@ from utils import *
 import random
 
 for _ in range(10):
-    is_prime(15)
+    is_prime(561)
