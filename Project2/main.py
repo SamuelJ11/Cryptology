@@ -1,21 +1,14 @@
 from rsa import RSA
 from utils import *
 
-r = RSA()
+import random
 
-for i in range(0, 5):
-    is_prime(55)
+for _ in range(200):
+    base = random.randint(1, 1000000)
+    exp = random.randint(2, 10000000)
+    mod = random.randint(3, 1000000)
 
+    a = modular_exponentiation(base, exp, mod)
+    b = pow(base, exp, mod)
 
-
-
-'''
-print(modular_exponentiation(2, 4, 5))
-print(pow(2, 4, 5))
-
-print(modular_exponentiation(2, 1234, 789))
-print(pow(2, 1234, 789))
-
-'''
-
-
+    print(a == b)

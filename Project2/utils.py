@@ -15,7 +15,7 @@ def modular_exponentiation(base, exponent, modulus):
         current_exp *= 2
 
     binary_exp = to_binary(exponent)
-    iterator = len(binary_exp) - 1
+    iterator = len(binary_exp)
 
     result = 1
     for i in range(iterator):
@@ -37,7 +37,7 @@ def to_binary(number):
         quotient = quotient // 2  
         i += 1
         flag *= 2 
-
+        
     return bits
     
 def is_prime(modulus):
