@@ -32,4 +32,45 @@
 
 # 11.2 Simple Hash Examples
 
-    
+    • The hash functions described in this section and the next are easily seen to involve only very basic operations on bits and therefore can be carried out much faster than procedures such as modular exponentiation.
+
+    • Suppose we start with a message 'm' of arbitrary length 'L' and break 'm' into 'n' bit blocks (these blocks are denoted mⱼ)
+
+        - thus we have m = [m₁, m₂, . . ., mₖ]
+
+        * here 'k' = ceil(L/n), so the last block mₖ is padded with zeroes to ensure it has 'n' bits
+  
+        (1) write the jth block mⱼ as a row vector
+
+            mⱼ = [mⱼ₁, mⱼ₂, ..., mⱼₙ]   *each mⱼᵢ is a bit
+
+            * pause here:  make sure you understand that each block mⱼ is a sequence of 'n' bits (011001011...)
+                           mⱼᵢ is just ONE of these bits of mⱼ
+
+        (2) stack these row vectors (mⱼ) to form a 2D array (a matrix):
+
+            +-----------------------------+
+            |  m11    m12   ...    m1n    |
+            |                             |
+            |  m21    m22   ...    m2n    |
+            |   .      .    .        .    |
+            |   .      .      .      .    |
+            |   .      .        .    .    | 
+            |  mk1    mk2   ...    mkn    |    
+            +-----------------------------+
+                ║      ║     ║      ║
+                ▼      ▼     ▼      ▼
+                ⊕     ⊕    ⊕     ⊕
+                ║      ║     ║      ║
+                ▼      ▼     ▼      ▼
+            [ c₁     c₂   ...     cₙ ]  =  h(m)
+
+            * here we are calculating the ith bit of the hash as the XOR along the ith column of the matrix (e.g., hᵢ = m₁ᵢ ⊕ m₂ᵢ ⊕ ..., ⊕ mₖᵢ)
+
+        • It is important to note that the above example is not cryptographically secure as it is easy to find to messages to hash to same value:
+        
+            - practical cryptographic hash functions typically make use of several other bit-level operations in order to make it more difficult to find collisions
+
+        • Another operation used in hash functions is bit rotation. For example, for every j = 1, 2, . . . , k shift the row j of the matrix by j − 1 positions to the left. 
+
+            - however, building a cryptographic hash requires considerably more tricks than just rotating as we'll see in chapter 12
