@@ -1,6 +1,9 @@
 import string, sys, random, math
 from pathlib import Path
 
+MAXRAND = 50
+MINRAND = 4
+
 def blumblumslub():
     '''
     This function generates a random binary sequence by operating on the quadratic residues in the Blum group of a number 'n', 
@@ -8,31 +11,55 @@ def blumblumslub():
     '''
     
     # Initialize values for p and q for primality testing
-    p = random.randint(0, 100000)
+    p = random.randint(MINRAND, MAXRAND)
     while(not candidate_prime(p)):
-        p = random.randint(0, 100000)
+        p = random.randint(MINRAND, MAXRAND)
         
-    q = random.randint(0, 100000)
+    q = random.randint(MINRAND, MAXRAND)
     while(not candidate_prime(q)):
-        q = random.randint(0, 100000)
-
+        q = random.randint(MINRAND, MAXRAND)
+        
     # Perform primality test on p and q and ensure they are congruent to 3 mod 4    
     while(not is_prime(p) or p % 4 != 3):   
-        p = random.randint(0, 100000)
+        p = random.randint(MINRAND, MAXRAND)
         while(not candidate_prime(p)):
-            p = random.randint(0, 100000)
+            p = random.randint(MINRAND, MAXRAND)
             
     while(not is_prime(q) or q % 4 != 3):
-        q = random.randint(0, 100000)
+        q = random.randint(MINRAND, MAXRAND)
         while(not candidate_prime(q)):
-            q = random.randint(0, 100000)
-            
+            q = random.randint(MINRAND, MAXRAND)
+              
     print(f"p = {p} has been vetted and tested to be prime and congruent to 3 (mod 4)")
     print(f"q = {q} has been vetted and tested to be prime and congruent to 3 (mod 4)")
+    
+    '''
+    # Generate the quadratic residues mod p and mod q
+    p_residues = set()
+    for i in range(1, p + 1):
+         p_residues.add(pow(i, 2) % p)
+    p_residues.remove(0)
+    
+    q_residues = set()
+    for i in range(1, q + 1):
+         q_residues.add(pow(i, 2) % q)
+    q_residues.remove(0)
+    
+    print(f"p_residues = {p_residues}")
+    print(f"q_residues = {q_residues}")
+    '''
+    
+    n = p * q    
+    print(f"n = {n} has been computed for the modulus of the blumblumshub generator seed")
+    
+    # Generate a random seed that is coprime to n = p * q for the blumblumslub bitstream generator
+    seed = random.randint(MINRAND, n - 1)
+    while(not math.gcd(seed, n) == 1):
+        seed = random.randint(MINRAND, n - 1)
+        
+    print(f"Found a seed = {seed} that is coprime to {n}")
 
-    n = p * q
-
-    return n
+    return True
 
 def candidate_prime(number):
     '''
@@ -41,32 +68,32 @@ def candidate_prime(number):
     calling the computationally expensive modular_exponentiation() function on numbers that fail such tests.
     '''
     
+    num_digits = len(str(number))
     last_digit = number % 10
      
     if (last_digit % 2 == 0): # Test for even parity   
         print(f"{number} is even")
         return False
-    elif (last_digit % 5 == 0): # Test for divisibility by 5
+    
+    if (last_digit % 5 == 0 and number != 5): # Test for divisibility by 5
         print(f"{number} is disible by 5")
-        return False    
-    else:
-        sum_of_digits = 0
-        num_digits = len(str(number))
+        return False        
+    
+    sum_of_digits = 0      
+    for i in range(0, num_digits):
+        sum_of_digits += (number // pow(10, i)) % 10
         
-        for i in range(0, num_digits):
-            sum_of_digits += (number // pow(10, i)) % 10
-
-        if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):  # Check if the sum of the digits is divisible by 3 or 9
-            print(f"{number} is divisible by 3 or 9")
-            return False
-               
-        alternating_digitsum = 0        
-        for i in range(0, num_digits):
-            alternating_digitsum +=  ((number // pow(10, i)) % 10) * pow(-1, i)
-            
-        if (alternating_digitsum % 11 == 0):    # Check if the alternating sum of digits is divisible by 11 
-            print(f"{number} is divisible by 11")
-            return False
+    if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):  # Check if the sum of the digits is divisible by 3 or 9
+        print(f"{number} is divisible by 3 or 9")
+        return False
+        
+    alternating_digitsum = 0        
+    for i in range(0, num_digits):
+        alternating_digitsum +=  ((number // pow(10, i)) % 10) * pow(-1, i)
+        
+    if (alternating_digitsum % 11 == 0 and number != 11):    # Check if the alternating sum of digits is divisible by 11 
+        print(f"{number} is divisible by 11")
+        return False
         
     return True
 
@@ -118,7 +145,7 @@ def is_prime(modulus):
     the Miller Rabin primality test to verify the result obtained from Fermat's primality test is 
     at least a strong pseudoprime.
     '''
-    
+   
     alpha = random.randint(2, modulus - 2)
     
     if (not candidate_prime(modulus)):
