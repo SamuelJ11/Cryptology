@@ -2,7 +2,12 @@ import string, sys, random, math
 from pathlib import Path
 
 def blumblumslub():
+    '''
+    This function generates a random binary sequence by operating on the quadratic residues in the Blum group of a number 'n', 
+    which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 mod 4.  
+    '''
     
+    # Initialize values for p and q for primality testing
     p = random.randint(0, 100000)
     while(not candidate_prime(p)):
         p = random.randint(0, 100000)
@@ -11,18 +16,19 @@ def blumblumslub():
     while(not candidate_prime(q)):
         q = random.randint(0, 100000)
 
-    while(not is_prime(p)):
+    # Perform primality test on p and q and ensure they are congruent to 3 mod 4    
+    while(not is_prime(p) or p % 4 != 3):   
         p = random.randint(0, 100000)
         while(not candidate_prime(p)):
             p = random.randint(0, 100000)
             
-    while(not is_prime(q)):
+    while(not is_prime(q) or q % 4 != 3):
         q = random.randint(0, 100000)
         while(not candidate_prime(q)):
             q = random.randint(0, 100000)
             
-    print(f"p = {p} has been vetted and tested to be prime")
-    print(f"q = {q} has been vetted and tested to be prime")
+    print(f"p = {p} has been vetted and tested to be prime and congruent to 3 (mod 4)")
+    print(f"q = {q} has been vetted and tested to be prime and congruent to 3 (mod 4)")
 
     n = p * q
 
@@ -34,6 +40,7 @@ def candidate_prime(number):
     The output of this function is used by the blumblumslub() function and the is_prime() function to avoid 
     calling the computationally expensive modular_exponentiation() function on numbers that fail such tests.
     '''
+    
     last_digit = number % 10
      
     if (last_digit % 2 == 0): # Test for even parity   
@@ -64,6 +71,10 @@ def candidate_prime(number):
     return True
 
 def modular_exponentiation(base, exponent, modulus):
+    '''
+    This function uses sucessive squaring of powers of {base} and the binary representation of {exponent} to compute 
+    the modular exponentiation equivalent to Python's pow(base, exponent, modulus) function.
+    '''
 
     current_exp = 1
     mod_reductions = []
@@ -83,6 +94,9 @@ def modular_exponentiation(base, exponent, modulus):
     return result
 
 def to_binary(number):
+    '''
+    This function converts a number to binary by storing the remainders in a list after repeated division by 2.
+    '''
 
     quotient = number // 2  
     remainder = number % 2  
@@ -102,8 +116,9 @@ def is_prime(modulus):
     '''
     Fermat's primality test is not enough as it is fooled by Carmichael numbers, so we also implement 
     the Miller Rabin primality test to verify the result obtained from Fermat's primality test is 
-    at least a strong pseudoprime
+    at least a strong pseudoprime.
     '''
+    
     alpha = random.randint(2, modulus - 2)
     
     if (not candidate_prime(modulus)):
