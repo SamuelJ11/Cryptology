@@ -6,7 +6,7 @@ MINRAND = 4
 
 def blumblumslub():
     '''
-    This function generates a random binary sequence by operating on the quadratic residues in the Blum group of a number 'n', 
+    This function generates a random binary sequence by operating on the quadratic residues in the Blum Group of a number 'n', 
     which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 mod 4.  
     '''
     
@@ -29,33 +29,18 @@ def blumblumslub():
         q = random.randint(MINRAND, MAXRAND)
         while(not candidate_prime(q)):
             q = random.randint(MINRAND, MAXRAND)
-    
-    '''
-    # Generate the quadratic residues mod p and mod q
-    p_residues = set()
-    for i in range(1, p + 1):
-         p_residues.add(pow(i, 2) % p)
-    p_residues.remove(0)
-    
-    q_residues = set()
-    for i in range(1, q + 1):
-         q_residues.add(pow(i, 2) % q)
-    q_residues.remove(0)
-    
-    print(f"p_residues = {p_residues}")
-    print(f"q_residues = {q_residues}")
-    '''
-    
+        
     # Compute the modulus of the seed for the blumblumslub bitstream generator
     n = p * q    
    
-    # Generate a random seed that is coprime to n
+    # Generate a random seed that is coprime to n, and square it to ensure its within the Blum Group
     seed = random.randint(MINRAND, n - 1)    
     while(not math.gcd(seed, n) == 1):
         seed = random.randint(MINRAND, n - 1)
-        
-    print(f"Found a seed = {seed} that is coprime to {n} = {p} * {q}")
 
+    seed = modular_exponentiation(seed, 2, n)
+    print(f"Found a seed = {seed} that is within the Blum Group B({n})")
+    
     return True
 
 def candidate_prime(number):
