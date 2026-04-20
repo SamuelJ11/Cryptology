@@ -143,6 +143,7 @@ def is_prime(modulus):
    
     alpha = random.randint(2, modulus - 2)
     
+    # Test for primality using Fermat's test    
     if (not candidate_prime(modulus)):
         return False            
     else:
@@ -156,8 +157,7 @@ def is_prime(modulus):
             print(f"Fermat test PASSED for base a = {alpha}")
             print("Proceeding to Miller-Rabin test")
 
-    ### Double Check With Miller-Rabin Test
-    
+    # Double Check With Miller-Rabin Test    
     millerexp = modulus - 1
     k = 0
     while(millerexp % 2 == 0):
