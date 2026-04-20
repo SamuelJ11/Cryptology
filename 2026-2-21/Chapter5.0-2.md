@@ -86,7 +86,7 @@
 
             thus the quadratic residues (mod 7) are the DISTINCT values we obtained: {0, 1, 2, 4}
 
-            *for an odd prime 'p', there are (p 1 1) / 2 NON-ZERO quadratic residues 
+            *for an odd prime 'p', there are (p - 1) / 2 NON-ZERO quadratic residues 
 
     • In the BBS, we define:
 
