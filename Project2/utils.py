@@ -16,7 +16,7 @@ def modular_exponentiation(base, exponent, modulus):
 
     binary_exp = to_binary(exponent)
     iterator = len(binary_exp)
-
+    
     result = 1
     for i in range(iterator):
         if binary_exp[i] == 1:
@@ -66,14 +66,14 @@ def is_prime(modulus):
             print("Proceeding to Miller-Rabin test\n")
 
     ### Double Check With Miller-Rabin Test
-
+    
     millerexp = fermatexp
     milleralpha = fermatalpha
     k = 0
     while(millerexp % 2 == 0):
         k += 1
         millerexp //= 2
-
+        
     value = modular_exponentiation(milleralpha, millerexp, modulus)
     if(value == 1):
         print(f"Passed Miller-Rabin test; {modulus} is probably prime")
@@ -86,6 +86,7 @@ def is_prime(modulus):
         if (value == 1):
             print(f"Failed Miller-Rabin test; {modulus} is definitely composite")
             return False
+        print(f"i = {i}")
         i += 1
         flag = (i < k)
 
