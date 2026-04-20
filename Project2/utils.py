@@ -46,11 +46,11 @@ def blumblumslub():
     print(f"q_residues = {q_residues}")
     '''
     
-    # Compute the modulus of the seed for the  blumblumslub bitstream generator
+    # Compute the modulus of the seed for the blumblumslub bitstream generator
     n = p * q    
    
     # Generate a random seed that is coprime to n
-    seed = random.randint(MINRAND, n - 1)
+    seed = random.randint(MINRAND, n - 1)    
     while(not math.gcd(seed, n) == 1):
         seed = random.randint(MINRAND, n - 1)
         
