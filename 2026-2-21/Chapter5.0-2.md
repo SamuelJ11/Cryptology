@@ -86,7 +86,7 @@
 
             thus the quadratic residues (mod 7) are the DISTINCT values we obtained: {0, 1, 2, 4}
 
-            *for an odd prime 'p', there are (p + 1) / 2 quadratic residues
+            *for an odd prime 'p', there are (p 1 1) / 2 NON-ZERO quadratic residues 
 
     • In the BBS, we define:
 
@@ -106,9 +106,9 @@
 
             p = 7, q = 11 (both are congruent to 3 (mod 4))
 
-        - quadratic residues (mod 7): {0, 1, 2, 4}
+        - quadratic residues (mod 7): {1, 2, 4}
 
-        - quadratic residues (mod 11): {0, 1, 3, 4, 5, 9}
+        - quadratic residues (mod 11): {1, 3, 4, 5, 9}
 
         - a number x is in the Blum group B₇₇ if x (mod 7) ∈ {1, 2, 4} and x (mod 11) ∈ {1, 3, 4, 5, 9}
 
