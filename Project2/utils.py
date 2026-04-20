@@ -1,7 +1,7 @@
 import string, sys, random, math
 from pathlib import Path
 
-MAXRAND = 50
+MAXRAND = 12
 MINRAND = 4
 
 def blumblumslub():
@@ -124,12 +124,11 @@ def to_binary(number):
     remainder = number % 2  
 
     bits = []
-    i, flag = 0, 1
+    flag = 1
     while (flag <= number):
         bits.insert(0, remainder)
         remainder = quotient % 2  
         quotient = quotient // 2  
-        i += 1
         flag *= 2 
 
     return bits
@@ -154,7 +153,7 @@ def is_prime(modulus):
             print(f"Failed Fermat's test; {modulus} is definitely composite")
             return False
         else:
-            print(f"Fermat test PASSED for base a = {alpha}")
+            print(f"Passed Fermat test for base a = {alpha}")
             print("Proceeding to Miller-Rabin test")
 
     # Double Check With Miller-Rabin Test    
