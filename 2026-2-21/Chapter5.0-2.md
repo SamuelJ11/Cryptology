@@ -76,15 +76,17 @@
 
         - the results obtained from squaring each of those numbers and reducing (mod 7) are the quadratic residues (mod 7):
 
-            0² ≡ 0 (mod n) 
-            1² ≡ 1 (mod n) 
-            2² ≡ 4 (mod n) 
-            3² ≡ 2 (mod n) 
-            4² ≡ 2 (mod n) 
-            5² ≡ 4 (mod n) 
-            6² ≡ 1 (mod n) 
+            0² ≡ 0 (mod 7) 
+            1² ≡ 1 (mod 7) 
+            2² ≡ 4 (mod 7) 
+            3² ≡ 2 (mod 7) 
+            4² ≡ 2 (mod 7) 
+            5² ≡ 4 (mod 7) 
+            6² ≡ 1 (mod 7) 
 
-            thus the quadratic residues (mod 7) are {0, 1, 2, 4}
+            thus the quadratic residues (mod 7) are the DISTINCT values we obtained: {0, 1, 2, 4}
+
+            *for an odd prime 'p', there are (p + 1) / 2 quadratic residues
 
     • In the BBS, we define:
 
