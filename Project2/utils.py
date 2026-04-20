@@ -29,9 +29,6 @@ def blumblumslub():
         q = random.randint(MINRAND, MAXRAND)
         while(not candidate_prime(q)):
             q = random.randint(MINRAND, MAXRAND)
-              
-    print(f"p = {p} has been vetted and tested to be prime and congruent to 3 (mod 4)")
-    print(f"q = {q} has been vetted and tested to be prime and congruent to 3 (mod 4)")
     
     '''
     # Generate the quadratic residues mod p and mod q
@@ -49,15 +46,15 @@ def blumblumslub():
     print(f"q_residues = {q_residues}")
     '''
     
+    # Compute the modulus of the seed for the  blumblumslub bitstream generator
     n = p * q    
-    print(f"n = {n} has been computed for the modulus of the blumblumshub generator seed")
-    
-    # Generate a random seed that is coprime to n = p * q for the blumblumslub bitstream generator
+   
+    # Generate a random seed that is coprime to n
     seed = random.randint(MINRAND, n - 1)
     while(not math.gcd(seed, n) == 1):
         seed = random.randint(MINRAND, n - 1)
         
-    print(f"Found a seed = {seed} that is coprime to {n}")
+    print(f"Found a seed = {seed} that is coprime to {n} = {p} * {q}")
 
     return True
 
@@ -70,31 +67,29 @@ def candidate_prime(number):
     
     num_digits = len(str(number))
     last_digit = number % 10
-     
+    
     if (last_digit % 2 == 0): # Test for even parity   
-        print(f"{number} is even")
         return False
     
-    if (last_digit % 5 == 0 and number != 5): # Test for divisibility by 5
-        print(f"{number} is disible by 5")
-        return False        
-    
-    sum_of_digits = 0      
-    for i in range(0, num_digits):
-        sum_of_digits += (number // pow(10, i)) % 10
+    if (num_digits > 1 and number != 11):      
+     
+        if (last_digit % 5 == 0): # Test for divisibility by 5
+            return False        
         
-    if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):  # Check if the sum of the digits is divisible by 3 or 9
-        print(f"{number} is divisible by 3 or 9")
-        return False
-        
-    alternating_digitsum = 0        
-    for i in range(0, num_digits):
-        alternating_digitsum +=  ((number // pow(10, i)) % 10) * pow(-1, i)
-        
-    if (alternating_digitsum % 11 == 0 and number != 11):    # Check if the alternating sum of digits is divisible by 11 
-        print(f"{number} is divisible by 11")
-        return False
-        
+        sum_of_digits = 0      
+        for i in range(0, num_digits):
+            sum_of_digits += (number // pow(10, i)) % 10
+            
+        if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):  # Check if the sum of the digits is divisible by 3 or 9
+            return False
+            
+        alternating_digitsum = 0        
+        for i in range(0, num_digits):
+            alternating_digitsum +=  ((number // pow(10, i)) % 10) * pow(-1, i)
+            
+        if (alternating_digitsum % 11 == 0):    # Check if the alternating sum of digits is divisible by 11 
+            return False
+            
     return True
 
 def modular_exponentiation(base, exponent, modulus):
@@ -158,8 +153,8 @@ def is_prime(modulus):
             print(f"Failed Fermat's test; {modulus} is definitely composite")
             return False
         else:
-            print(f"\nFermat test PASSED for base a = {alpha}")
-            print("Proceeding to Miller-Rabin test\n")
+            print(f"Fermat test PASSED for base a = {alpha}")
+            print("Proceeding to Miller-Rabin test")
 
     ### Double Check With Miller-Rabin Test
     
@@ -171,7 +166,7 @@ def is_prime(modulus):
         
     value = modular_exponentiation(alpha, millerexp, modulus)
     if(value == 1):
-        print(f"Passed Miller-Rabin test; {modulus} is probably prime")
+        print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
         return True
         
     i = 1
@@ -185,7 +180,7 @@ def is_prime(modulus):
         flag = (i < k)
 
     if (value == (modulus - 1)):
-        print(f"Passed Miller-Rabin test; {modulus} is probably prime")
+        print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
         return True
     
 def inverse(number, modulus):
