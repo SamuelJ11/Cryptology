@@ -22,7 +22,7 @@ def generate_prime():
 def blumblumslub():
     '''
     This function generates a random binary sequence by operating on the quadratic residues in the Blum Group of a number 'n', 
-    which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 mod 4.  
+    which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 (mod 4).  
     '''
     
     # Generate distinct primes p and q and ensure p ≡ q ≡ 3 mod 4
@@ -155,9 +155,9 @@ def to_binary(number):
     
 def is_prime(modulus):
     '''
-    Fermat's primality test is not enough as it is fooled by Carmichael numbers, so we also implement 
-    the Miller Rabin primality test to verify the result obtained from Fermat's primality test is 
-    at least a strong pseudoprime.
+    This function tests {modulus} for primality by running the input through Fermat's primality test, 
+    then feeding the result into the Miller-Rabin primality test to verify the result obtained is at least 
+    a strong pseudoprime.
     '''
    
     alpha = random.randint(2, modulus - 2)
