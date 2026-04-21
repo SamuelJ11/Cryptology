@@ -218,12 +218,13 @@ def is_prime(modulus):
         
     
 def inverse(number, modulus):
+    
+    pass
+
+def totient(number):
+    
     pass
 
 def export_keys(keyname):
-
-    pass
-
-def compute_D(e, p, q):
 
     pass
