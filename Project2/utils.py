@@ -19,7 +19,7 @@ def generate_prime():
 
     return p
 
-def blumblumslub():
+def blumblumshub():
     '''
     This function generates a random binary sequence by operating on the quadratic residues in the Blum Group of a number 'n', 
     which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 (mod 4).  
@@ -62,7 +62,7 @@ def blumblumslub():
 def candidate_prime(number):
     '''
     This function generates "candidate" primes, aka numbers that don't immediately fail trivial composite tests.
-    The output of this function is used by the blumblumslub() function and the is_prime() function to avoid 
+    The output of this function is used by the blumblumshub() function and the is_prime() function to avoid 
     calling the computationally expensive modular_exponentiation() function on numbers that fail such tests.
     '''
     
