@@ -164,6 +164,7 @@ def is_prime(modulus):
     
     # First apply a stronger preliminary primality check  
     if (not candidate_prime(modulus)):
+        print(f"Failed a trivial composite test; {modulus} is definitely composite\n")
         return False            
     else:
         fermatexp = modulus - 1  
@@ -174,11 +175,11 @@ def is_prime(modulus):
         # Fermat's little theorem check: pow(a, n-1, n) ≡ 1 for a prime modulus n
         # If gcd != 1, or the congruence !≡ -1, then {modulus} is definitely composite 
         if (gcd != 1 or modular_exponentiation(alpha, fermatexp, modulus) != 1):
-            print(f"Failed Fermat's test; {modulus} is definitely composite")
+            print(f"Failed Fermat's test; {modulus} is definitely composite\n")
             return False
         else:
             # Passed Fermat test for this base (does not guarantee primality)
-            print(f"Passed Fermat test for base alpha = {alpha}")
+            print(f"Passed Fermat test with modulus = {modulus} and with base = {alpha}")
             
             # Proceed to the stronger probabilistic Miller-Rabin test 
             print("Proceeding to Miller-Rabin test")
@@ -189,35 +190,35 @@ def is_prime(modulus):
     while(millerexp % 2 == 0):
         k += 1
         millerexp //= 2
-        
+
     value = modular_exponentiation(alpha, millerexp, modulus)
-    
-    # First check: is value ≡ 1? If so, {modulus} passes this round
-    if(value == 1):
+
+    # Check for value ≡ 1 or -1 before entering the loop
+    if value == 1 or value == modulus - 1:
         print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
-        return True
+        return True     
     
-    # Otherwise, repeatedly square to look for a value ≡ -1    
+    # Repeatedly square to check if value ≡ -1    
     i = 1
-    while(i <= k):
+    while(i < k):
         
-        # Compute successive powers: value^(2^i) mod {modulus} via repeated squaring
-        nextpow2 = 2 ** i        
-        nextvalue = modular_exponentiation(value, nextpow2, modulus)
-        
-        # If we hit 1 prematurely, {value} is a non-trivial square root of 1, meaning {modulus} is composite
-        if (value == 1):
+        # Declare {modulus} prime and return immediately if value ≡ -1
+        if value == modulus - 1:
+            print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
+            return True
+
+        # If we reach 1 prematurely, {modulus} is definitely composite
+        if value == 1:
             print(f"Failed Miller-Rabin test; {modulus} is definitely composite")
             return False
         
-        i += 1
-        
-    # If we ever hit -1, this round passes
-    if (value == (modulus - 1)):
-        print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
-        return True
-        
+        # Update the value and loop condition for the next iteration
+        value = modular_exponentiation(value, 2, modulus)
+        i += 1    
     
+    print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
+    return True
+        
 def inverse(number, modulus):
     
     pass
