@@ -37,10 +37,12 @@ def blumblumslub():
     # Compute the modulus of the seed for the blumblumslub bitstream generator
     n = p * q    
    
-    # Generate a random seed that is coprime to n and ensure it is at most n - 2
-    seed = random.randint(MINRAND, n - 2)    
+    # Generate a random seed that is coprime to n
+    seed = random.randint(MINRAND, n - 1)    
     while(math.gcd(seed, n) != 1):
-        seed = random.randint(MINRAND, n - 2)
+        seed = random.randint(MINRAND, n - 1)
+        
+    print(f"Chose {seed} as a proto-seed before squaring (mod {n})")
 
     seed = modular_exponentiation(seed, 2, n)
     print(f"Found a seed ({seed}) that is within the Blum Group B({n})")
@@ -48,7 +50,7 @@ def blumblumslub():
     # Generate the ordered sequence of the sub-cycle
     bitstream = [seed]
     for i in range(1, STREAMLENGTH):
-        bitstream.append(pow(bitstream[i-1], 2, n))
+        bitstream.append(modular_exponentiation(bitstream[i-1], 2, n))
         
     # Convert the sequence into a binary stream taking the LSB of each number
     for i in range(len(bitstream)):
