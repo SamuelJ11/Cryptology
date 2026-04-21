@@ -192,9 +192,11 @@ def is_prime(modulus):
     
     # Otherwise, repeatedly square to look for a value ≡ -1
     i = 1
-    flag = (i <= k)
-    while(value != (modulus - 1) and flag == True):        
-        value = modular_exponentiation(value, 2, modulus)
+    while(i <= k):
+        
+        # Compute successive powers: value^(2^i) mod {modulus} via repeated squaring
+        nextpow2 = 2 ** i        
+        nextvalue = modular_exponentiation(value, nextpow2, modulus)
         
         # If we hit 1 prematurely, {value} is a non-trivial square root of 1, meaning {modulus} is composite
         if (value == 1):
@@ -202,7 +204,6 @@ def is_prime(modulus):
             return False
         
         i += 1
-        flag = (i < k)
         
     # If we ever hit -1, this round passes
     if (value == (modulus - 1)):
