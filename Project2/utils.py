@@ -96,18 +96,21 @@ def modular_exponentiation(base, exponent, modulus):
     the modular exponentiation equivalent to Python's pow(base, exponent, modulus) function.
     '''
     
-    # Generate and Store the result of each successive squaring of {base} into a list     
-    mod_reductions = []    
+    # Precompute powers of base corresponding to powers of 2:
+    # base^(1), base^(2), base^(4), base^(8), ... (all mod modulus)    
+    mod_reductions = []  
+      
     current_exp = 1
     while (current_exp <= exponent):
         result = (base ** current_exp) % modulus
         mod_reductions.insert(0, result)
         current_exp *= 2
         
-    # Convert the original exponent to binary, and define an iterator that is the length of this binary represenation
+    # Convert exponent into binary form to determine which powers to include
     binary_exp = to_binary(exponent)
     iterator = len(binary_exp)
     
+    # Reconstruct result by multiplying selected powers of two (mod modulus)
     result = 1
     for i in range(iterator):
         if binary_exp[i] == 1:
@@ -120,15 +123,25 @@ def to_binary(number):
     This function converts a number to binary by storing the remainders in a list after repeated division by 2.
     '''
 
+    # Initialize the quotient and remainder values
     quotient = number // 2  
     remainder = number % 2  
-
+    
+    # Build binary representation from least significant bit upward    
     bits = []
+    
+    # Iterate through powers of 2 to extract each bit position
     flag = 1
     while (flag <= number):
+        
+        # Prepend current least significant bit
         bits.insert(0, remainder)
+        
+        # Shift number right by one binary position
         remainder = quotient % 2  
-        quotient = quotient // 2  
+        quotient = quotient // 2 
+
+        # Move to next power of 2
         flag *= 2 
 
     return bits
