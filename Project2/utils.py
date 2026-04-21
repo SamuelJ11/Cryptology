@@ -222,9 +222,12 @@ def inverse(number, modulus):
     
     pass
 
-def totient(number):
+def totient(modulus, p, q):
     
-    pass
+    # We assume {modulus} = {p} * {q}, with p and q distinct primes    
+    totient = int(modulus*((1 - 1/p)*(1 - 1/q)))
+    
+    return totient
 
 def export_keys(keyname):
 
