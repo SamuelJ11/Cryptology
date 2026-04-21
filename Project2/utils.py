@@ -34,10 +34,10 @@ def blumblumslub():
     # Compute the modulus of the seed for the blumblumslub bitstream generator
     n = p * q    
    
-    # Generate a random seed that is coprime to n, and square it to ensure its within the Blum Group
-    seed = random.randint(MINRAND, n - 1)    
-    while(not math.gcd(seed, n) == 1):
-        seed = random.randint(MINRAND, n - 1)
+    # Generate a random seed that is coprime to n and ensure it is at most n - 2
+    seed = random.randint(MINRAND, n - 2)    
+    while(math.gcd(seed, n) != 1):
+        seed = random.randint(MINRAND, n - 2)
 
     seed = modular_exponentiation(seed, 2, n)
 
@@ -191,6 +191,7 @@ def is_prime(modulus):
         return True
     
     # Otherwise, repeatedly square to look for a value ≡ -1
+    
     i = 1
     while(i <= k):
         
@@ -209,6 +210,7 @@ def is_prime(modulus):
     if (value == (modulus - 1)):
         print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
         return True
+        
     
 def inverse(number, modulus):
     pass
