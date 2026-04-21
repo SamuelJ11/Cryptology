@@ -3,6 +3,7 @@ from pathlib import Path
 
 MAXRAND = 12
 MINRAND = 4
+STREAMLENGTH = 20
 
 def blumblumslub():
     '''
@@ -39,10 +40,18 @@ def blumblumslub():
         seed = random.randint(MINRAND, n - 1)
 
     seed = modular_exponentiation(seed, 2, n)
-    print(f"Found a seed = {seed} that is within the Blum Group B({n})")
-    
-    return True
 
+    # Define the size of the Blum Group to print a sequence of this length 
+    blumsize = ((p-1)*(q-1)) // 4
+    print(f"Found a seed ({seed}) that is within the Blum Group B({n}), which has size {blumsize}")
+    
+    # Generate the ordered sequence of the sub-cycle
+    bitstream = [seed]
+    for i in range(1, STREAMLENGTH):
+        bitstream.append(pow(bitstream[i-1], 2, n))
+        
+    return bitstream
+    
 def candidate_prime(number):
     '''
     This function generates "candidate" primes, aka numbers that don't immediately fail trivial composite tests.
@@ -82,14 +91,16 @@ def modular_exponentiation(base, exponent, modulus):
     This function uses sucessive squaring of powers of {base} and the binary representation of {exponent} to compute 
     the modular exponentiation equivalent to Python's pow(base, exponent, modulus) function.
     '''
-
+    
+    # Generate and Store the result of each successive squaring of {base} into a list     
+    mod_reductions = []    
     current_exp = 1
-    mod_reductions = []
     while (current_exp <= exponent):
         result = (base ** current_exp) % modulus
         mod_reductions.insert(0, result)
         current_exp *= 2
-
+        
+    # Convert the original exponent to binary, and define an iterator that is the length of this binary represenation
     binary_exp = to_binary(exponent)
     iterator = len(binary_exp)
     
@@ -138,7 +149,7 @@ def is_prime(modulus):
             print(f"Failed Fermat's test; {modulus} is definitely composite")
             return False
         else:
-            print(f"Passed Fermat test for base a = {alpha}")
+            print(f"Passed Fermat test for base alpha = {alpha}")
             print("Proceeding to Miller-Rabin test")
 
     # Double Check With Miller-Rabin Test    
