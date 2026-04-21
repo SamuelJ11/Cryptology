@@ -5,31 +5,35 @@ MAXRAND = 12
 MINRAND = 4
 STREAMLENGTH = 20
 
+def generate_prime():
+    
+    # Initialize the value of prime for primality testing
+    prime = random.randint(MINRAND, MAXRAND)
+    while(not candidate_prime(prime)):
+        prime = random.randint(MINRAND, MAXRAND)
+        
+    # Perform primality test on prime
+    while(not is_prime(prime)):   
+        prime = random.randint(MINRAND, MAXRAND)
+        while(not candidate_prime(prime)):
+            prime = random.randint(MINRAND, MAXRAND)
+            
+    return prime
+
 def blumblumslub():
     '''
     This function generates a random binary sequence by operating on the quadratic residues in the Blum Group of a number 'n', 
     which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 mod 4.  
     '''
     
-    # Initialize values for p and q for primality testing
-    p = random.randint(MINRAND, MAXRAND)
-    while(not candidate_prime(p)):
-        p = random.randint(MINRAND, MAXRAND)
+    # Generate distinct primes p and q and ensure p ≡ q ≡ 3 mod 4
+    p = generate_prime()
+    while(p % 4 != 3):
+        p = generate_prime()
         
-    q = random.randint(MINRAND, MAXRAND)
-    while(not candidate_prime(q)):
-        q = random.randint(MINRAND, MAXRAND)
-        
-    # Perform primality test on p and q and ensure they are congruent to 3 mod 4    
-    while(not is_prime(p) or p % 4 != 3):   
-        p = random.randint(MINRAND, MAXRAND)
-        while(not candidate_prime(p)):
-            p = random.randint(MINRAND, MAXRAND)
-            
-    while(not is_prime(q) or q % 4 != 3):
-        q = random.randint(MINRAND, MAXRAND)
-        while(not candidate_prime(q)):
-            q = random.randint(MINRAND, MAXRAND)
+    q = generate_prime()
+    while(q % 4 != 3 or q == p):
+        q = generate_prime()
         
     # Compute the modulus of the seed for the blumblumslub bitstream generator
     n = p * q    
@@ -40,10 +44,7 @@ def blumblumslub():
         seed = random.randint(MINRAND, n - 2)
 
     seed = modular_exponentiation(seed, 2, n)
-
-    # Define the size of the Blum Group to print a sequence of this length 
-    blumsize = ((p-1)*(q-1)) // 4
-    print(f"Found a seed ({seed}) that is within the Blum Group B({n}), which has size {blumsize}")
+    print(f"Found a seed ({seed}) that is within the Blum Group B({n})")
     
     # Generate the ordered sequence of the sub-cycle
     bitstream = [seed]
