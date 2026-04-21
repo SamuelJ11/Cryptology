@@ -62,26 +62,30 @@ def candidate_prime(number):
     num_digits = len(str(number))
     last_digit = number % 10
     
-    if (last_digit % 2 == 0): # Test for even parity   
+    # Test for even parity
+    if (last_digit % 2 == 0):    
         return False
     
     if (num_digits > 1 and number != 11):      
      
-        if (last_digit % 5 == 0): # Test for divisibility by 5
+        # Test for divisibility by 5
+        if (last_digit % 5 == 0): 
             return False        
         
         sum_of_digits = 0      
         for i in range(0, num_digits):
             sum_of_digits += (number // pow(10, i)) % 10
             
-        if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):  # Check if the sum of the digits is divisible by 3 or 9
+        # Check if the sum of the digits is divisible by 3 or 9
+        if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):  
             return False
             
         alternating_digitsum = 0        
         for i in range(0, num_digits):
             alternating_digitsum +=  ((number // pow(10, i)) % 10) * pow(-1, i)
             
-        if (alternating_digitsum % 11 == 0):    # Check if the alternating sum of digits is divisible by 11 
+        # Check if the alternating sum of digits is divisible by 11    
+        if (alternating_digitsum % 11 == 0):     
             return False
             
     return True
@@ -138,21 +142,28 @@ def is_prime(modulus):
    
     alpha = random.randint(2, modulus - 2)
     
-    # Test for primality using Fermat's test    
+    # First apply a stronger preliminary primality check  
     if (not candidate_prime(modulus)):
         return False            
     else:
-        fermatexp = modulus - 1        
+        fermatexp = modulus - 1  
+
+        # Ensure alpha is coprime to {modulus}      
         gcd = math.gcd(alpha, modulus)
         
+        # Fermat's little theorem check: pow(a, n-1, n) ≡ 1 for a prime modulus n
+        # If gcd != 1, or the congruence !≡ -1, then {modulus} is definitely composite 
         if (gcd != 1 or modular_exponentiation(alpha, fermatexp, modulus) != 1):
             print(f"Failed Fermat's test; {modulus} is definitely composite")
             return False
         else:
+            # Passed Fermat test for this base (does not guarantee primality)
             print(f"Passed Fermat test for base alpha = {alpha}")
+            
+            # Proceed to the stronger probabilistic Miller-Rabin test 
             print("Proceeding to Miller-Rabin test")
 
-    # Double Check With Miller-Rabin Test    
+    # For the Miller-Rabin test, write {modulus - 1} as 2^k * q where q is odd   
     millerexp = modulus - 1
     k = 0
     while(millerexp % 2 == 0):
@@ -160,20 +171,27 @@ def is_prime(modulus):
         millerexp //= 2
         
     value = modular_exponentiation(alpha, millerexp, modulus)
+    
+    # First check: is value ≡ 1? If so, {modulus} passes this round
     if(value == 1):
         print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
         return True
-        
+    
+    # Otherwise, repeatedly square to look for a value ≡ -1
     i = 1
     flag = (i <= k)
     while(value != (modulus - 1) and flag == True):        
         value = modular_exponentiation(value, 2, modulus)
+        
+        # If we hit 1 prematurely, {value} is a non-trivial square root of 1, meaning {modulus} is composite
         if (value == 1):
             print(f"Failed Miller-Rabin test; {modulus} is definitely composite")
             return False
+        
         i += 1
         flag = (i < k)
-
+        
+    # If we ever hit -1, this round passes
     if (value == (modulus - 1)):
         print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
         return True
