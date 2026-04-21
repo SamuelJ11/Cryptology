@@ -190,8 +190,7 @@ def is_prime(modulus):
         print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
         return True
     
-    # Otherwise, repeatedly square to look for a value ≡ -1
-    
+    # Otherwise, repeatedly square to look for a value ≡ -1    
     i = 1
     while(i <= k):
         
