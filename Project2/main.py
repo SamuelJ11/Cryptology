@@ -12,5 +12,5 @@ print()
 for _ in range(10):
     sequence = blumblumslub()
     print(sequence)    
-    time.sleep(5)
+    time.sleep(3)
     
