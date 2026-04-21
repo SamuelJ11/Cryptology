@@ -50,6 +50,11 @@ def blumblumslub():
     for i in range(1, STREAMLENGTH):
         bitstream.append(pow(bitstream[i-1], 2, n))
         
+    # Convert the sequence into a binary stream taking the LSB of each number
+    for i in range(len(bitstream)):
+        LSB = bitstream[i] % 2
+        bitstream[i] = LSB
+        
     return bitstream
     
 def candidate_prime(number):
