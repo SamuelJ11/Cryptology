@@ -94,6 +94,11 @@ def candidate_prime(number):
         # Check if the alternating sum of digits is divisible by 11    
         if (alternating_digitsum % 11 == 0):     
             return False
+        
+        # Check if {number} is a perfect square
+        root = math.isqrt(number)
+        if (root ** 2 == number):
+            return False
             
     return True
 
@@ -209,14 +214,14 @@ def is_prime(modulus):
 
         # If we reach 1 prematurely, {modulus} is definitely composite
         if value == 1:
-            print(f"Failed Miller-Rabin test; {modulus} is definitely composite")
+            print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
             return False
         
         # Update the value and loop condition for the next iteration
         value = modular_exponentiation(value, 2, modulus)
         i += 1    
     
-    print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
+    print(f"Made it to final stage of Miller-Rabin test; {modulus} is probably prime\n")
     return True
         
 def inverse(number, modulus):
