@@ -6,19 +6,18 @@ MINRAND = 4
 STREAMLENGTH = 20
 
 def generate_prime():
+    '''
+    This function generates a random prime integer within the range of (MINRAND, MAXRAND)
+    '''   
     
-    # Initialize the value of prime for primality testing
-    prime = random.randint(MINRAND, MAXRAND)
-    while(not candidate_prime(prime)):
-        prime = random.randint(MINRAND, MAXRAND)
-        
-    # Perform primality test on prime
-    while(not is_prime(prime)):   
-        prime = random.randint(MINRAND, MAXRAND)
-        while(not candidate_prime(prime)):
-            prime = random.randint(MINRAND, MAXRAND)
-            
-    return prime
+    # Initialize p within the given constraints
+    p = random.randint(MINRAND, MAXRAND)
+   
+    # Ensure p is not trivially composite and verify its "probably" prime 
+    while not (candidate_prime(p) and is_prime(p)):
+        p = random.randint(MINRAND, MAXRAND)
+
+    return p
 
 def blumblumslub():
     '''
