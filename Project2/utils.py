@@ -22,7 +22,11 @@ def generate_prime():
 def blumblumshub():
     '''
     This function generates a random binary sequence by operating on the quadratic residues in the Blum Group of a number 'n', 
-    which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 (mod 4).  
+    which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 (mod 4). 
+
+    Note: while cryptographically secure, BBS is not a tool for producing “useful objects” like primes or keys.  It's a theoretical
+    tool for producing provably unpredictable bits, but its running time is simply too slow to be used in production systems.  For 
+    this reason, this function is not used anywhere in this program, but the implementation remains for the curious programmer ...
     '''
     
     # Generate distinct primes p and q and ensure p ≡ q ≡ 3 mod 4
@@ -335,8 +339,8 @@ def eea_recursive(a, b):
 
 def mod_inverse(a, n):
     '''
-    This is an interface function for the ea_recursive(). It simply returns
-    the relevant part of that function's output (the Bezout coefficient of {a}) reduced (mod n)
+    This is an interface function for the eea_recursive() function. It simply returns the
+    relevant part of that function's output (the Bezout coefficient of {a}) reduced (mod n).
     '''
     
     gcd, s, t = eea_recursive(a, n)
