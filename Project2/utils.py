@@ -54,8 +54,8 @@ def blumblumshub():
         
     # Convert the sequence into a binary stream taking the LSB of each number
     for i in range(len(bitstream)):
-        LSB = bitstream[i] % 2
-        bitstream[i] = LSB
+        lsb = bitstream[i] % 2
+        bitstream[i] = lsb
         
     return bitstream
     
@@ -239,29 +239,111 @@ def gcd_recursive(a, b):
         # the function with these updated parameters until the base case is reached
         return gcd_recursive(b, a % b)
         
-def inverse(a, b, s, t):
+def eea_recursive(a, b):
+    '''
+    This function servers as a helper for mod_recursive(); it recursively computes the modular 
+    inverse of {a} (mod {b}). At every step, we are trying to solve the equation GCD = (a * s) + (b * t), 
+    where {a} and {b} are the dividends and divisors, and s and t are the Bezout coefficients
+    that allow us to ultimately find the modular inverse.  Most crucially, s' and t' are the s and t 
+    values that the level below found; they are "incoming" answers the function uses while ascending 
+    from the recursion.
+    '''   
+ 
+    # Base Case: remainder is 0 because a = 1 and b = 0
+    if b == 0:        
+        return a, 1, 0
     
-    # Ensure {number} and {modulus} are coprime before continuing
-    if (gcd_recursive(a, b) != 1):
-        print(f"Error: operation impossible; no inverse exists for {a} (mod {b})")
-        sys.exit
+    # At each recursive stage, the new value of {a} is assigned the old value of {b}, and 
+    # the old value of {b} is assigned the old value of {a} (mod old {b})
+    gcd, s_prime, t_prime = eea_recursive(b, a % b)
     
-    # Base Case 
-    if a == 0: 
-        s[0] = 0
-        t[0] = 1
-        return b 
-
-    s1, t1 = [0], [0]
-    gcd = inverse(b % a, a, s1, t1)
-
-    # Update x and y using results of 
-    # recursive call 
-    s[0] = t1[0] - (b // a) * s1[0] 
-    t[0] = t1[0] 
+    # Before we can update s' and t', we need to know how many times our current {b} divided into {a}
+    q = a // b
     
-    return gcd
+    # s' and t' are just the "old s" and "old t" from the level below, and we are now using them to 
+    # build the "new S" and "new T"
+    s = t_prime
+    t = s_prime - (q * t_prime)
+    
+    return gcd, s, t
 
+    '''
+    Recursion is hard ... here is concrete example involving a trace for eea_recursive(26, 55)
+    
+    1. THE TOP CALL (Step 1): a = 26, b = 55
+       * q = 26 // 55 = 0
+       * This call waits for Step 2 (55, 26) to return.
+
+    2. STEP 2: a = 55, b = 26
+       * q = 55 // 26 = 2
+       * This call waits for Step 3 (26, 3) to return.
+
+    3. STEP 3: a = 26, b = 3
+       * q = 26 // 3 = 8
+       * This call waits for Step 4 (3, 2) to return.
+
+    4. STEP 4: a = 3, b = 2
+       * q = 3 // 2 = 1
+       * This call waits for Step 5 (2, 1) to return.
+
+    5. STEP 5: a = 2, b = 1
+       * q = 2 // 1 = 2
+       * This call waits for the BASE CASE (1, 0).
+
+    6. THE BASE CASE (The Floor): a = 1, b = 0
+       * Returns: gcd = 1, s = 1, t = 0.
+
+    -------------------------------------------------------
+    THE ASCENT (Calculating s and t as we go back up)
+    -------------------------------------------------------
+
+    7. BACK TO STEP 5 (a=2, b=1):
+       * Catches: s_prime = 1, t_prime = 0.  (q was 2)
+       * s = t_prime = 0
+       * t = s_prime - (q * t_prime) = 1 - (2 * 0) = 1
+       * Returns: (1, 0, 1)
+
+    8. BACK TO STEP 4 (a=3, b=2):
+       * Catches: s_prime = 0, t_prime = 1.  (q was 1)
+       * s = t_prime = 1
+       * t = s_prime - (q * t_prime) = 0 - (1 * 1) = -1
+       * Returns: (1, 1, -1)
+
+    9. BACK TO STEP 3 (a=26, b=3):
+       * Catches: s_prime = 1, t_prime = -1. (q was 8)
+       * s = t_prime = -1
+       * t = s_prime - (q * t_prime) = 1 - (8 * -1) = 9
+       * Returns: (1, -1, 9)
+
+    10. BACK TO STEP 2 (a=55, b=26):
+        * Catches: s_prime = -1, t_prime = 9.  (q was 2)
+        * s = t_prime = 9
+        * t = s_prime - (q * t_prime) = -1 - (2 * 9) = -19
+        * Returns: (1, 9, -19)
+
+    11. BACK TO THE TOP (a=26, b=55):
+        * Catches: s_prime = 9, t_prime = -19. (q was 0)
+        * s = t_prime = -19
+        * t = s_prime - (q * t_prime) = 9 - (0 * -19) = 9
+        * Returns: (1, -19, 9)
+
+    FINAL RESULT:
+    gcd = 1, s = -19, t = 9
+    Equation: 1 = (26 * -19) + (55 * 9)
+    -19 % 55 = 36
+    '''
+
+def mod_inverse(a, n):
+    gcd, s, t = eea_recursive(a, n)
+    
+    if gcd != 1:
+        print(f"Error: Operation impossible; modular inverse does not exist for {a} (mod {n})")
+        return -1
+    else:
+        print(f"Solved for {a}(s) + {n}(t) ≡ 1 (mod {n}):")
+        print(f"The inverse of {a} (mod {n}) is {s % n}")
+        return s % n
+    
 def totient(modulus, p, q):
     
     # We assume {modulus} = {p} * {q}, with p and q distinct primes    
