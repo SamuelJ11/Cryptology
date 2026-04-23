@@ -334,6 +334,11 @@ def eea_recursive(a, b):
     '''
 
 def mod_inverse(a, n):
+    '''
+    This is an interface function for the ea_recursive(). It simply returns
+    the relevant part of that function's output (the Bezout coefficient of {a}) reduced (mod n)
+    '''
+    
     gcd, s, t = eea_recursive(a, n)
     
     if gcd != 1:
@@ -345,6 +350,9 @@ def mod_inverse(a, n):
         return s % n
     
 def totient(modulus, p, q):
+    '''
+    This function computes the amount of integers coprime to {modulus} using Euler's Product Formula
+    '''
     
     # We assume {modulus} = {p} * {q}, with p and q distinct primes    
     totient = int(modulus*((1 - 1/p)*(1 - 1/q)))
