@@ -2,10 +2,26 @@ from rsa import RSA
 from utils import *
 import time
 
-   
+
+for _ in range(10):
+    
+    x = generate_prime()
+    
+    y = generate_prime()
+    while y == x:
+        y = generate_prime()
+    
+    if (x > y):
+        temp = x
+        x = y
+        y = temp
+    
+    mod_inverse(x, y)
+    time.sleep(2) 
+
 for _ in range(10):
     sequence = blumblumshub()
-    print(f"Taking the LSB of each number in Blum sequence yeilds: {sequence}\n")    
+    print(f"Taking the LSB of each number in Blum sub-cycle yields: {sequence}\n")    
     time.sleep(2)
 
 
