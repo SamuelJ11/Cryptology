@@ -39,7 +39,7 @@ def blumblumshub():
    
     # Generate a random seed that is coprime to n
     seed = random.randint(MINRAND, n - 1)    
-    while(math.gcd(seed, n) != 1):
+    while(gcd_recursive(seed, n) != 1):
         seed = random.randint(MINRAND, n - 1)
         
     print(f"Chose {seed} as a proto-seed before squaring (mod {n})")
@@ -175,7 +175,7 @@ def is_prime(modulus):
         fermatexp = modulus - 1  
 
         # Ensure alpha is coprime to {modulus}      
-        gcd = math.gcd(alpha, modulus)
+        gcd = gcd_recursive(alpha, modulus)
         
         # Fermat's little theorem check: pow(a, n-1, n) ≡ 1 for a prime modulus n
         # If gcd != 1, or the congruence !≡ -1, then {modulus} is definitely composite 
@@ -223,10 +223,44 @@ def is_prime(modulus):
     
     print(f"Made it to final stage of Miller-Rabin test; {modulus} is probably prime\n")
     return True
-        
-def inverse(number, modulus):
+
+def gcd_recursive(a, b):
+    '''
+    This function recursively computes the GCD of {a} and {b} by repeatedly replacing the larger number 
+    with the remainder of its division by the smaller number until the remainder is zero.
+    '''
     
-    pass
+    # If {b} is zero, it means {a} divided the previous number perfectly, and since every number divides 
+    # zero the greatest number that divides both {a} and zero is simply {a}.
+    if b == 0:
+        return a
+    else:        
+        # Replace the dividend with the divisor, the divisor with the remainder, and recursivley call 
+        # the function with these updated parameters until the base case is reached
+        return gcd_recursive(b, a % b)
+        
+def inverse(a, b, s, t):
+    
+    # Ensure {number} and {modulus} are coprime before continuing
+    if (gcd_recursive(a, b) != 1):
+        print(f"Error: operation impossible; no inverse exists for {a} (mod {b})")
+        sys.exit
+    
+    # Base Case 
+    if a == 0: 
+        s[0] = 0
+        t[0] = 1
+        return b 
+
+    s1, t1 = [0], [0]
+    gcd = inverse(b % a, a, s1, t1)
+
+    # Update x and y using results of 
+    # recursive call 
+    s[0] = t1[0] - (b // a) * s1[0] 
+    t[0] = t1[0] 
+    
+    return gcd
 
 def totient(modulus, p, q):
     
