@@ -21,12 +21,33 @@ def generate_prime():
 
 def blumblumshub():
     '''
-    This function generates a random binary sequence by operating on the quadratic residues in the Blum Group of a number 'n', 
-    which we define to be the product of two randomly-generated primes 'p' and 'q', such that p ≡ q ≡ 3 (mod 4). 
+    This function generates a pseudorandom binary sequence using the
+    recurrence:
 
-    Note: while cryptographically secure, BBS is not a tool for producing “useful objects” like primes or keys.  It's a theoretical
-    tool for producing provably unpredictable bits, but its running time is simply too slow to be used in production systems.  For 
-    this reason, this function is not used anywhere in this program, but the implementation remains for the curious programmer ...
+        xᵢ = (xᵢ₋₁)² (mod n)
+
+    where n = p * q, with p and q are distinct large primes satisfying:
+    
+        p ≡ q ≡ 3 (mod 4)
+
+    The initial seed x₀ is chosen uniformly at random such that
+    gcd(x₀, n) = 1, and is then squared once to ensure it lies in
+    the quadratic residue subgroup (mod n), or more informally referred
+    to as the "Blum Group" of n
+
+    Each output bit is derived from the least significant bit of xᵢ.
+
+    Security note:
+    Blum Blum Shub is a cryptographically secure pseudorandom number
+    generator under the assumption that factoring n is computationally
+    infeasible. Predicting future bits is equivalent to solving a hard
+    number-theoretic problem related to integer factorization.
+
+    Practical note:
+    Although theoretically strong, BBS is computationally slow and is
+    not used in modern production systems, where faster CSPRNGs are preferred. 
+    This implementation is included purely for the amusement of the curious
+    programmer ...    
     '''
     
     # Generate distinct primes p and q and ensure p ≡ q ≡ 3 mod 4
