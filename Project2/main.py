@@ -6,21 +6,11 @@ MINDIFF = 10 ** 95
 
 def main():
     
-    ### VALIDATE PROGRAM USAGE AND FILE PATH ###
-
+    ### VALIDATE PROGRAM USAGE ###
+    
     if len(sys.argv) != 2:
         print("Usage: myscript.py <filename>")
         return
-    
-    filename = str(sys.argv[1])
-    cwd = Path().resolve() 
-    filepath = cwd.joinpath(filename)   
-
-    if filepath.exists() == False:
-        print(f"{filename} could not be found in the current working directory")
-        return
-    
-    message = int(filepath.read_text())
     
     ### KEY SETUP ###
     
@@ -41,6 +31,8 @@ def main():
     priv_key = rsa.generate_privkey()
     
     shared_modulus = rsa.n
+    
+    message = read_message()
     
     ### ENCRYPTION ###
     
