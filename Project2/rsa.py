@@ -22,7 +22,7 @@ class RSA:
             return
         
         encryption_exp = utils.generate_prime()        
-        modulus = utils.totient(self.n, self.p, self.q)
+        modulus = utils.totient(self.p, self.q)
         
         while (utils.gcd_recursive(encryption_exp, modulus) != 1):
             encryption_exp = utils.generate_prime()
@@ -35,8 +35,9 @@ class RSA:
             print("Warning: modulus not yet defined, unable to compute the decryption exponent.")
             return
         
-        self.d = utils.mod_inverse(self.e, utils.totient(self.n, self.p, self.q))
-
+        modulus = utils.totient(self.p, self.q)
+        self.d = utils.mod_inverse(self.e, modulus)
+        
     def generate_pubkey(self):
         
         if (self.e == None):
