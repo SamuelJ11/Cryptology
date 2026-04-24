@@ -2,22 +2,19 @@ from rsa import RSA
 from utils import *
 import time
 
-
+'''
 for _ in range(10):
-    
-    x = generate_prime()
-    
+
+x = generate_prime()
+
+y = generate_prime()
+while y == x:
     y = generate_prime()
-    while y == x:
-        y = generate_prime()
-    
-    if (x > y):
-        temp = x
-        x = y
-        y = temp
-    
-    mod_inverse(x, y)
-    time.sleep(2) 
+
+if (x > y):
+    temp = x
+    x = y
+    y = temp
 
 for _ in range(10):
     sequence = blumblumshub()
@@ -25,16 +22,19 @@ for _ in range(10):
     time.sleep(2)
 
 
-for _ in range(20):
+
+for _ in range(5):
     x = random.randint(1, 20)
     y = random.randint(1, 20)
-    result = gcd_recursive(x, y)
     
-    print(f"The GCD of {x} and {y} is {result}")
+    temp = x
+    x = y
+    y = temp
+    
+    result = mod_inverse(x, y)    
     time.sleep(2)
-    
+'''    
 
-for _ in range(10):
-    x = random.randint(100, 1000)
-    is_prime(x)
+for _ in range(20):
+    x = generate_prime()
     time.sleep(2)
