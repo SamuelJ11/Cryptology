@@ -36,5 +36,6 @@ for _ in range(5):
 '''    
 
 for _ in range(20):
-    x = generate_prime()
+    x = random.randint(4, 256)
+    is_prime(x)
     time.sleep(2)
