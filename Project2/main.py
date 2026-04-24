@@ -31,4 +31,25 @@ for _ in range(5):
     
     result = mod_inverse(x, y)    
     time.sleep(2)
-'''    
+''' 
+
+def main():
+    
+    p = generate_prime()
+    q = generate_prime()
+    
+    if (p < q):
+        temp = p
+        p = q
+        q = temp
+        
+    while(p - q < 10 ** 95):
+        p = generate_prime()
+        q = generate_prime()
+
+    rsa = RSA(p, q)
+
+    rsa.computeN()
+    rsa.computeE()
+
+main()
