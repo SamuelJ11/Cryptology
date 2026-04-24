@@ -18,7 +18,7 @@ class RSA:
     def computeE(self):
         
         if (self.n == None):
-            print("Warning: modulus not defined, unable to compute the encyrption exponent")
+            print("Warning: modulus not defined, unable to compute the encyrption exponent.")
             return
         
         encryption_exp = utils.generate_prime()        
@@ -29,8 +29,8 @@ class RSA:
         
         self.e = encryption_exp
     
-    def computeD(self, e, n):
-        self.d = utils.mod_inverse(e, utils.totient(n))
+    def computeD(self):
+        self.d = utils.mod_inverse(self.e, utils.totient(self.n, self.p, self.q))
 
     def generate_pubkey(self, n, e):
         
