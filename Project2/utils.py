@@ -1,8 +1,8 @@
 import string, sys, random, math
 from pathlib import Path
 
-MAXRAND = 256
-MINRAND = 4
+MAXRAND = 10 ** 100 - 1
+MINRAND = 10 ** 99
 STREAMLENGTH = 20
 
 def generate_prime():
@@ -145,14 +145,19 @@ def modular_exponentiation(base, exponent, modulus):
     the modular exponentiation equivalent to Python's pow(base, exponent, modulus) function.
     '''
     
-    # Precompute powers of base corresponding to powers of 2:
-    # base^(1), base^(2), base^(4), base^(8), ... (all mod modulus)    
-    mod_reductions = []  
-      
-    current_exp = 1
+    # Precompute powers of base corresponding to powers of 2 and store them in a 
+    # list as base^(1), base^(2), base^(4), base^(8), ... (all mod modulus)    
+    mod_reductions = []    
+    
+    # We start with {base} mod {modulus} and sucessively square the base until the 
+    # current exponent exceeds the the final exponent 
+    current_val = base % modulus 
+
+    current_exp = 1    
     while (current_exp <= exponent):
-        result = (base ** current_exp) % modulus
-        mod_reductions.insert(0, result)
+        mod_reductions.insert(0, current_val)
+        current_val = (current_val ** 2) % modulus
+        
         current_exp *= 2
         
     # Convert exponent into binary form to determine which powers to include
