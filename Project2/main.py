@@ -2,7 +2,7 @@ from rsa import RSA
 from utils import *
 import sys, time
 
-MINDIFF = 10 ** 4
+MINDIFF = 10 ** 95
 
 def main():
     

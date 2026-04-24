@@ -1,8 +1,8 @@
 import string, sys, random, math
 from pathlib import Path
 
-MAXRAND = 10 ** 5 - 1
-MINRAND = 10 ** 4
+MAXRAND = 10 ** 100 - 1
+MINRAND = 10 ** 99
 STREAMLENGTH = 20 # deprecated
 
 def generate_prime():
