@@ -37,14 +37,8 @@ def blumblumshub():
 
     Each output bit is derived from the least significant bit of xᵢ.
 
-    Security note:
-    Blum Blum Shub is a cryptographically secure pseudorandom number
-    generator under the assumption that factoring n is computationally
-    infeasible. Predicting future bits is equivalent to solving a hard
-    number-theoretic problem related to integer factorization.
-
-    Practical note:
-    Although theoretically strong, BBS is computationally slow and is
+    Important note:   
+    Although cryptographically secure, BBS is computationally slow and is
     not used in modern production systems, where faster CSPRNGs are preferred. 
     This implementation is included purely for the amusement of the curious
     programmer, but is not used within this program.    
@@ -128,7 +122,8 @@ def candidate_prime(number):
         if (alternating_digitsum % 11 == 0):
             print(f"Failed a trivial composite test; {number} is divisible by 11\n")     
             return False
-        '''   
+        '''
+           
         # Check if {number} is a perfect square
         root = math.isqrt(number)
         if (root ** 2 == number):
@@ -393,16 +388,15 @@ def totient(p, q):
     totient = (p - 1) * (q - 1)
     return totient
 
-def read_message():
+def read_file():
     '''
-    This function simply validates the file path for the message and ensures it exists
-    in the current directory
+    This function validates the file path for the message and ensures it exists in the current directory
     '''
     
-    ## Import and read message 
+    ## Import and read filename for analysis
     filename = str(sys.argv[1])
     cwd = Path().resolve() 
-    filepath = cwd.joinpath(filename)   
+    filepath = cwd.joinpath(filename) 
 
     ## Check if the path for the provided filename exists in the current directory
     if filepath.exists() == False:
@@ -412,6 +406,10 @@ def read_message():
     message = int(filepath.read_text())
     return message
 
-def export_pubkey(pub_key):
-
-    pass
+def write_file(filename, file):
+    '''
+    This function writes {file} to a file named {filename}.txt
+    '''
+    
+    with open(str(filename), "w") as f:
+        f.write(str(file))

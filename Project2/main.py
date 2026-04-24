@@ -2,22 +2,25 @@ from rsa import RSA
 from utils import *
 import sys
 
-MINDIFF = 10 ** 95
+MINIMUMDIFF = 10 ** 95
 
 def main():
     
-    ### VALIDATE PROGRAM USAGE ###
-    
+    ### VALIDATE PROGRAM USAGE AND FILE PATH ###
+
     if len(sys.argv) != 2:
         print("Usage: myscript.py <filename>")
         return
+    
+    message = read_file()
+    print(f"The original message before encryption is {message}\n")
     
     ### KEY SETUP ###
     
     p = generate_prime()
     q = generate_prime()
     
-    while abs(p - q) < MINDIFF:
+    while abs(p - q) < MINIMUMDIFF:
         p = generate_prime()
         q = generate_prime()
 
@@ -26,24 +29,23 @@ def main():
     rsa.computeN()
     rsa.computeE()
     rsa.computeD()
-
-    pub_key = rsa.generate_pubkey()
-    priv_key = rsa.generate_privkey()
-    
-    shared_modulus = rsa.n
-    
-    message = read_message()
     
     ### ENCRYPTION ###
     
-    print(f"The original message before encryption is {message}\n")
-    
+    rsa.generate_pubkey()
     ciphertext = rsa.encrypt(message)
-    print(f"The message after encryption is {ciphertext}\n")   
+    print(f"The message after encryption is {ciphertext}\n") 
+
+    # Write the ciphertext to a seperate file
+    write_file("ciphertext.txt", ciphertext)
     
     ### DECRYPTION ###
     
+    rsa.generate_privkey()
     plaintext = rsa.decrypt(ciphertext)
     print(f"The message after decryption is {plaintext}\n") 
+    
+    # Write the plaintext to a seperate file
+    write_file("plaintext.txt", plaintext)
     
 main()

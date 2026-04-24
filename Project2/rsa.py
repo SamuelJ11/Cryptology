@@ -10,8 +10,6 @@ class RSA:
         self.d = None
         self.e = None
         self.n = None
-        self.pubkey = None
-        self.privkey = None
 
     def computeN(self):
         
@@ -46,7 +44,11 @@ class RSA:
             print("Warning: encryption exponent not yet defined, unable to compute the public key.")
             return
         
-        self.pubkey = (self.e, self.n)
+        pubkey = (self.e, self.n)
+        
+        # Write the public key to a seperate file
+        with open("pubkey.txt", "w") as pb:
+            pb.write(str(pubkey))
 
     def generate_privkey(self):
         
@@ -54,16 +56,20 @@ class RSA:
             print("Warning: decryption exponent not yet defined, unable to compute the private key.")
             return
         
-        self.privkey = (self.d, self.n)
-
+        privkey = (self.d, self.n)
+        
+        # Write the private key to a seperate file
+        with open("privkey.txt", "w") as pv:
+            pv.write(str(privkey))
+        
     def encrypt(self, message):
         
         # Encrypt the message
-        ciphertext = utils.modular_exponentiation(message, self.pubkey[0], self.pubkey[1])
+        ciphertext = utils.modular_exponentiation(message, self.e, self.n)
         return ciphertext
-
+        
     def decrypt(self, ciphertext):
         
         # Decrypt the message
-        plaintext = utils.modular_exponentiation(ciphertext, self.privkey[0], self.privkey[1])
+        plaintext = utils.modular_exponentiation(ciphertext, self.d, self.n)        
         return plaintext
