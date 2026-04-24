@@ -225,7 +225,7 @@ def is_prime(modulus):
             return False
         else:
             # Passed Fermat test for this base (does not guarantee primality)
-            print(f"Passed Fermat test with modulus = {modulus} and with base = {alpha}")
+            print(f"Passed Fermat test with\n   modulus = {modulus}\n   base = {alpha}")
             
             # Proceed to the stronger probabilistic Miller-Rabin test 
             print("Proceeding to Miller-Rabin test")
@@ -309,7 +309,7 @@ def eea_recursive(a, b):
     return gcd, s, t
 
     '''
-    Recursion is hard ... here is concrete example involving a trace for eea_recursive(26, 55)
+    Recursion is hard ... here is a concrete example involving a trace for eea_recursive(26, 55)
     
     1. THE TOP CALL (Step 1): a = 26, b = 55
        * q = 26 // 55 = 0
