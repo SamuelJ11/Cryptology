@@ -133,7 +133,7 @@ def candidate_prime(number):
 
 def modular_exponentiation(base, exponent, modulus):
     '''
-    This function uses sucessive squaring of powers of {base} and the binary representation of {exponent} to compute 
+    This function uses successive squaring of powers of {base} and the binary representation of {exponent} to compute 
     the modular exponentiation equivalent to Python's pow(base, exponent, modulus) function.
     '''
     
@@ -196,7 +196,7 @@ def is_prime(modulus):
     '''
     This function tests {modulus} for primality by running the input through Fermat's primality test, 
     then feeding the result into the Miller-Rabin primality test to verify the result obtained is at least 
-    a strong pseudoprime.
+    a strong pseudo-prime.
     '''
    
     alpha = random.randint(2, modulus - 2)
@@ -256,41 +256,41 @@ def is_prime(modulus):
     print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
     return False
 
-def gcd_recursive(a, b):
+def gcd_recursive(number, modulus):
     '''
-    This function recursively computes the GCD of {a} and {b} by repeatedly replacing the larger number 
+    This function recursively computes the GCD of {number} and {modulus} by repeatedly replacing the larger number 
     with the remainder of its division by the smaller number until the remainder is zero.
     '''
     
-    # If {b} is zero, it means {a} divided the previous number perfectly, and since every number divides 
-    # zero the greatest number that divides both {a} and zero is simply {a}.
-    if b == 0:
-        return a
+    # If {modulus} is zero, it means {number} divided the previous number perfectly, and since every number 
+    # divides zero, the greatest number that divides both {number} and zero is simply {number}.
+    if modulus == 0:
+        return number
     else:        
         # Replace the dividend with the divisor, the divisor with the remainder, and recursivley call 
         # the function with these updated parameters until the base case is reached
-        return gcd_recursive(b, a % b)
+        return gcd_recursive(modulus, number % modulus)
         
-def eea_recursive(a, b):
+def eea_recursive(number, modulus):
     '''
     This function servers as a helper for mod_recursive(); it recursively computes the modular 
-    inverse of {a} (mod {b}). At every step, we are trying to solve the equation GCD = (a * s) + (b * t), 
-    where {a} and {b} are the dividends and divisors, and s and t are the Bezout coefficients
+    inverse of a (mod b). At every step, we are trying to solve the equation GCD = (a * s) + (b * t), 
+    where a and b are the dividends and divisors, and s and t are the Bezout coefficients
     that allow us to ultimately find the modular inverse.  Most crucially, s' and t' are the s and t 
     values that the level below found; they are "incoming" answers the function uses while ascending 
     from the recursion.
     '''   
  
-    # Base Case: remainder is 0 because a = 1 and b = 0
-    if b == 0:        
-        return a, 1, 0
+    # Base Case: remainder is 0 because {number} = 1 and {modulus} = 0
+    if modulus == 0:        
+        return number, 1, 0
     
-    # At each recursive stage, the new value of {a} is assigned the old value of {b}, and 
-    # the old value of {b} is assigned the old value of {a} (mod old {b})
-    gcd, s_prime, t_prime = eea_recursive(b, a % b)
+    # At each recursive stage, the new value of {number} is assigned the old value of {modulus}, and 
+    # the old value of {modulus} is assigned the old value of {number} (mod old {modulus})
+    gcd, s_prime, t_prime = eea_recursive(modulus, number % modulus)
     
-    # Before we can update s' and t', we need to know how many times our current {b} divided into {a}
-    q = a // b
+    # Before we can update s' and t', we need to know how many times our current {modulus} divided into {number}
+    q = number // modulus
     
     # s' and t' are just the "old s" and "old t" from the level below, and we are now using them to 
     # build the "new S" and "new T"
@@ -300,58 +300,58 @@ def eea_recursive(a, b):
     '''
     Recursion is hard ... here is a concrete example involving a trace for eea_recursive(26, 55)
     
-    1. THE TOP CALL (Step 1): a = 26, b = 55
+    1. THE TOP CALL (Step 1): number = 26, modulus = 55
        * q = 26 // 55 = 0
        * This call waits for Step 2 (55, 26) to return.
 
-    2. STEP 2: a = 55, b = 26
+    2. STEP 2: number = 55, modulus = 26
        * q = 55 // 26 = 2
        * This call waits for Step 3 (26, 3) to return.
 
-    3. STEP 3: a = 26, b = 3
+    3. STEP 3: number = 26, modulus = 3
        * q = 26 // 3 = 8
        * This call waits for Step 4 (3, 2) to return.
 
-    4. STEP 4: a = 3, b = 2
+    4. STEP 4: number = 3, modulus = 2
        * q = 3 // 2 = 1
        * This call waits for Step 5 (2, 1) to return.
 
-    5. STEP 5: a = 2, b = 1
+    5. STEP 5: number = 2, modulus = 1
        * q = 2 // 1 = 2
        * This call waits for the BASE CASE (1, 0).
 
-    6. THE BASE CASE (The Floor): a = 1, b = 0
+    6. THE BASE CASE (The Floor): number = 1, modulus = 0
        * Returns: gcd = 1, s = 1, t = 0.
 
     -------------------------------------------------------
     THE ASCENT (Calculating s and t as we go back up)
     -------------------------------------------------------
 
-    7. BACK TO STEP 5 (a = 2, b = 1):
+    7. BACK TO STEP 5 (number = 2, modulus = 1):
        * Catches: s_prime = 1, t_prime = 0.  (q was 2)
        * s = t_prime = 0
        * t = s_prime - (q * t_prime) = 1 - (2 * 0) = 1
        * Returns: (1, 0, 1)
 
-    8. BACK TO STEP 4 (a = 3, b = 2):
+    8. BACK TO STEP 4 (number = 3, modulus = 2):
        * Catches: s_prime = 0, t_prime = 1.  (q was 1)
        * s = t_prime = 1
        * t = s_prime - (q * t_prime) = 0 - (1 * 1) = -1
        * Returns: (1, 1, -1)
 
-    9. BACK TO STEP 3 (a = 26, b = 3):
+    9. BACK TO STEP 3 (number = 26, modulus = 3):
        * Catches: s_prime = 1, t_prime = -1. (q was 8)
        * s = t_prime = -1
        * t = s_prime - (q * t_prime) = 1 - (8 * -1) = 9
        * Returns: (1, -1, 9)
 
-    10. BACK TO STEP 2 (a = 55, b = 26):
+    10. BACK TO STEP 2 (number = 55, modulus = 26):
         * Catches: s_prime = -1, t_prime = 9.  (q was 2)
         * s = t_prime = 9
         * t = s_prime - (q * t_prime) = -1 - (2 * 9) = -19
         * Returns: (1, 9, -19)
 
-    11. BACK TO THE TOP (a = 26, b = 55):
+    11. BACK TO THE TOP (number = 26, modulus = 55):
         * Catches: s_prime = 9, t_prime = -19. (q was 0)
         * s = t_prime = -19
         * t = s_prime - (q * t_prime) = 9 - (0 * -19) = 9
@@ -365,19 +365,19 @@ def eea_recursive(a, b):
     
     return gcd, s, t
 
-def mod_inverse(a, n):
+def mod_inverse(number, modulus):
     '''
     This is an interface function for the eea_recursive() function. It simply returns the
     relevant part of that function's output (the Bezout coefficient of {a} reduced (mod n)).
     '''
     
-    gcd, s, t = eea_recursive(a, n)
+    gcd, s, t = eea_recursive(number, modulus)
     
     if gcd != 1:
-        print(f"Error: Operation impossible; modular inverse does not exist for {a} (mod {n})")
+        print(f"Error: Operation impossible; modular inverse does not exist for {number} (mod {modulus})")
         return
     else:
-        return s % n
+        return s % modulus
     
 def totient(p, q):
     '''
