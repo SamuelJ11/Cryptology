@@ -18,7 +18,7 @@ class RSA:
     def computeE(self):
         
         if (self.n == None):
-            print("Warning: modulus not defined, unable to compute the encyrption exponent.")
+            print("Warning: modulus not yet defined, unable to compute the encyrption exponent.")
             return
         
         encryption_exp = utils.generate_prime()        
@@ -30,15 +30,28 @@ class RSA:
         self.e = encryption_exp
     
     def computeD(self):
+        
+        if (self.n == None):
+            print("Warning: modulus not yet defined, unable to compute the decryption exponent.")
+            return
+        
         self.d = utils.mod_inverse(self.e, utils.totient(self.n, self.p, self.q))
 
-    def generate_pubkey(self, n, e):
+    def generate_pubkey(self):
         
-        pass
+        if (self.e == None):
+            print("Warning: encryption exponent not yet defined, unable to compute the public key.")
+            return
+        
+        return (self.e, self.n)
 
-    def generate_privkey(self, n, d):
+    def generate_privkey(self):
         
-        pass
+        if (self.d == None):
+            print("Warning: decryption exponent not yet defined, unable to compute the private key.")
+            return
+        
+        return (self.d, self.n)
 
     def encrypt(self, message, keyname):
         

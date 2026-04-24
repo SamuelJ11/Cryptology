@@ -95,8 +95,7 @@ def candidate_prime(number):
     last_digit = number % 10
     
     # Test for even parity
-    if (last_digit % 2 == 0 and number != 2):
-        print(f"Failed a trivial composite test; {number} is even\n")    
+    if (last_digit % 2 == 0 and number != 2):   
         return False 
     
     '''
@@ -108,8 +107,7 @@ def candidate_prime(number):
     if (num_digits > 1 or number == 9):      
         
         # Test for divisibility by 5 for multi-digit numbers
-        if (last_digit % 5 == 0):
-            print(f"Failed a trivial composite test; {number} is divisible by 5\n") 
+        if (last_digit % 5 == 0): 
             return False              
         '''
         # Calculate the sum of the digits of a number
@@ -134,7 +132,6 @@ def candidate_prime(number):
         # Check if {number} is a perfect square
         root = math.isqrt(number)
         if (root ** 2 == number):
-            print(f"Failed a trivial composite test; {number} is a perfect square\n")
             return False
             
     return True
@@ -221,14 +218,13 @@ def is_prime(modulus):
         # Fermat's little theorem check: pow(a, n-1, n) ≡ 1 for a prime modulus n
         # If gcd != 1, or the congruence !≡ -1, then {modulus} is definitely composite 
         if (gcd != 1 or modular_exponentiation(alpha, fermatexp, modulus) != 1):
-            print(f"Failed Fermat's test; {modulus} is definitely composite\n")
             return False
         else:
             # Passed Fermat test for this base (does not guarantee primality)
             print(f"Passed Fermat test with\n   modulus = {modulus}\n   base = {alpha}")
             
             # Proceed to the stronger probabilistic Miller-Rabin test 
-            print("Proceeding to Miller-Rabin test")
+            print("Proceeding to Miller-Rabin test . . .")
 
     # For the Miller-Rabin test, write {modulus - 1} as 2^k * q where q is odd   
     millerexp = modulus - 1
@@ -384,10 +380,8 @@ def mod_inverse(a, n):
     
     if gcd != 1:
         print(f"Error: Operation impossible; modular inverse does not exist for {a} (mod {n})")
-        return -1
+        return
     else:
-        print(f"Solved for {a}(s) + {n}(t) ≡ 1 (mod {n}):")
-        print(f"The inverse of {a} (mod {n}) is {s % n}")
         return s % n
     
 def totient(modulus, p, q):

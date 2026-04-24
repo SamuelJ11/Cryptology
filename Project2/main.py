@@ -1,18 +1,34 @@
 from rsa import RSA
 from utils import *
-import time
+import sys
+
+MINDIFF = 10**95
 
 def main():
+    
+    ### VALIDATE PROGRAM USAGE AND FILE PATH ###
+
+    # Check for valid program usage
+    if len(sys.argv) != 2:
+        print("Usage: myscript.py <filename>")
+        return
+    
+    ## Import and read filename for analysis
+    filename = str(sys.argv[1])
+    cwd = Path().resolve() 
+    filepath = cwd.joinpath(filename)   
+
+    ## Check if the path for the provided filename exists in the current directory
+    if filepath.exists() == False:
+        print(f"{filename} could not be found in the current working directory")
+        return
+    
+    message = int(filepath.read_text())
     
     p = generate_prime()
     q = generate_prime()
     
-    if (p < q):
-        temp = p
-        p = q
-        q = temp
-        
-    while(p - q < 10 ** 95):
+    while abs(p - q) < MINDIFF:
         p = generate_prime()
         q = generate_prime()
 
@@ -22,4 +38,7 @@ def main():
     rsa.computeE()
     rsa.computeD()
 
+    pub_key = rsa.generate_pubkey()
+    priv_key = rsa.generate_privkey()
+    
 main()
