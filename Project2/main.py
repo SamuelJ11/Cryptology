@@ -38,15 +38,12 @@ def main():
     
     print(f"The original message before encryption is {message}\n")
     
-    encryption_exp = pub_key[0]
-    ciphertext = modular_exponentiation(message, encryption_exp, shared_modulus)
-    
+    ciphertext = rsa.encrypt(message)
     print(f"The message after encryption is {ciphertext}\n")   
     
     ### DECRYPTION ###
     
-    decryption_exp = priv_key[0]
-    plaintext = modular_exponentiation(ciphertext, decryption_exp, shared_modulus)
+    plaintext = rsa.decrypt(ciphertext)
     print(f"The message after decryption is {plaintext}\n") 
     
 main()
