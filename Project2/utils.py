@@ -1,7 +1,7 @@
 import string, sys, random, math
 from pathlib import Path
 
-MAXRAND = 12
+MAXRAND = 1000
 MINRAND = 4
 STREAMLENGTH = 20
 
@@ -95,23 +95,24 @@ def candidate_prime(number):
     last_digit = number % 10
     
     # Test for even parity
-    if (last_digit % 2 == 0):    
-        return False
+    if (last_digit % 2 == 0 and number != 2):    
+        return False 
     
-    if (num_digits > 1 and number != 11):      
-     
-        # Test for divisibility by 5
-        if (last_digit % 5 == 0): 
-            return False        
+    # Calculate the sum of the digits of a number
+    sum_of_digits = 0      
+    for i in range(0, num_digits):
+        sum_of_digits += (number // pow(10, i)) % 10
+
+    if (num_digits > 1):      
         
-        sum_of_digits = 0      
-        for i in range(0, num_digits):
-            sum_of_digits += (number // pow(10, i)) % 10
-            
-        # Check if the sum of the digits is divisible by 3 or 9
+        # Test for divisibility by 5 for multi-digit numbers
+        if (last_digit % 5 == 0): 
+            return False      
+    
+        # Check if a multi-digit number's sum of digits is divisible by 3 or 9
         if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):  
             return False
-            
+        
         alternating_digitsum = 0        
         for i in range(0, num_digits):
             alternating_digitsum +=  ((number // pow(10, i)) % 10) * pow(-1, i)
@@ -120,12 +121,13 @@ def candidate_prime(number):
         if (alternating_digitsum % 11 == 0):     
             return False
         
-        # Check if {number} is a perfect square
-        root = math.isqrt(number)
-        if (root ** 2 == number):
-            return False
+    # Check if {number} is a perfect square
+    root = math.isqrt(number)
+    if (root ** 2 == number):
+        return False
             
     return True
+
 
 def modular_exponentiation(base, exponent, modulus):
     '''
@@ -246,7 +248,7 @@ def is_prime(modulus):
         value = modular_exponentiation(value, 2, modulus)
         i += 1    
     
-    print(f"Made it to final stage of Miller-Rabin test; {modulus} is probably prime\n")
+    print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
     return True
 
 def gcd_recursive(a, b):
