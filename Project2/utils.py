@@ -1,7 +1,7 @@
 import string, sys, random, math
 from pathlib import Path
 
-MAXRAND = 1000
+MAXRAND = 256
 MINRAND = 4
 STREAMLENGTH = 20
 
@@ -95,22 +95,31 @@ def candidate_prime(number):
     last_digit = number % 10
     
     # Test for even parity
-    if (last_digit % 2 == 0 and number != 2):    
+    if (last_digit % 2 == 0 and number != 2):
+        print(f"Failed a trivial composite test; {number} is even\n")    
         return False 
     
-    # Calculate the sum of the digits of a number
-    sum_of_digits = 0      
-    for i in range(0, num_digits):
-        sum_of_digits += (number // pow(10, i)) % 10
-
-    if (num_digits > 1):      
+    '''
+    Some of the below tests have been commented out because they are too aggressive; the goal is to 
+    show how some composite numbers pass Fermat's primality test with Fermat-liar bases, but go on
+    to correctly get flagged as composite by the Miller-Rabin test
+    '''
+    
+    if (num_digits > 1 or number == 9):      
         
         # Test for divisibility by 5 for multi-digit numbers
-        if (last_digit % 5 == 0): 
-            return False      
-    
+        if (last_digit % 5 == 0):
+            print(f"Failed a trivial composite test; {number} is divisible by 5\n") 
+            return False              
+        '''
+        # Calculate the sum of the digits of a number
+        sum_of_digits = 0      
+        for i in range(0, num_digits):
+            sum_of_digits += (number // pow(10, i)) % 10
+            
         # Check if a multi-digit number's sum of digits is divisible by 3 or 9
-        if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):  
+        if (sum_of_digits % 3 == 0 or sum_of_digits % 9 == 0):
+            print(f"Failed a trivial composite test; {number} is divisible by 3 or 9\n")   
             return False
         
         alternating_digitsum = 0        
@@ -118,16 +127,17 @@ def candidate_prime(number):
             alternating_digitsum +=  ((number // pow(10, i)) % 10) * pow(-1, i)
             
         # Check if the alternating sum of digits is divisible by 11    
-        if (alternating_digitsum % 11 == 0):     
+        if (alternating_digitsum % 11 == 0):
+            print(f"Failed a trivial composite test; {number} is divisible by 11\n")     
             return False
-        
-    # Check if {number} is a perfect square
-    root = math.isqrt(number)
-    if (root ** 2 == number):
-        return False
+        '''   
+        # Check if {number} is a perfect square
+        root = math.isqrt(number)
+        if (root ** 2 == number):
+            print(f"Failed a trivial composite test; {number} is a perfect square\n")
+            return False
             
     return True
-
 
 def modular_exponentiation(base, exponent, modulus):
     '''
@@ -194,9 +204,8 @@ def is_prime(modulus):
    
     alpha = random.randint(2, modulus - 2)
     
-    # First apply a stronger preliminary primality check  
+    # First apply a basic preliminary primality check  
     if (not candidate_prime(modulus)):
-        print(f"Failed a trivial composite test; {modulus} is definitely composite\n")
         return False            
     else:
         fermatexp = modulus - 1  
@@ -234,6 +243,10 @@ def is_prime(modulus):
     i = 1
     while(i < k):
         
+        # Update the value and loop condition for the next iteration
+        value = modular_exponentiation(value, 2, modulus)
+        i += 1 
+        
         # Declare {modulus} prime and return immediately if value ≡ -1
         if value == modulus - 1:
             print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
@@ -244,12 +257,8 @@ def is_prime(modulus):
             print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
             return False
         
-        # Update the value and loop condition for the next iteration
-        value = modular_exponentiation(value, 2, modulus)
-        i += 1    
-    
-    print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
-    return True
+    print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
+    return False
 
 def gcd_recursive(a, b):
     '''
