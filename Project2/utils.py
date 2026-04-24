@@ -393,6 +393,25 @@ def totient(p, q):
     totient = (p - 1) * (q - 1)
     return totient
 
-def export_keys(keyname):
+def read_message():
+    '''
+    This function simply validates the file path for the message and ensures it exists
+    in the current directory
+    '''
+    
+    ## Import and read message 
+    filename = str(sys.argv[1])
+    cwd = Path().resolve() 
+    filepath = cwd.joinpath(filename)   
+
+    ## Check if the path for the provided filename exists in the current directory
+    if filepath.exists() == False:
+        print(f"{filename} could not be found in the current working directory")
+        return
+    
+    message = int(filepath.read_text())
+    return message
+
+def export_pubkey(pub_key):
 
     pass
