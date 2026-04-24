@@ -21,8 +21,6 @@ for _ in range(10):
     print(f"Taking the LSB of each number in Blum sub-cycle yields: {sequence}\n")    
     time.sleep(2)
 
-
-
 for _ in range(5):
     x = random.randint(1, 20)
     y = random.randint(1, 20)
@@ -34,8 +32,3 @@ for _ in range(5):
     result = mod_inverse(x, y)    
     time.sleep(2)
 '''    
-
-for _ in range(20):
-    x = random.randint(4, 256)
-    is_prime(x)
-    time.sleep(2)
