@@ -1,9 +1,9 @@
 import string, sys, random, math
 from pathlib import Path
 
-MAXRAND = 64
-MINRAND = 4
-STREAMLENGTH = 20
+MAXRAND = 10 ** 5 - 1
+MINRAND = 10 ** 4
+STREAMLENGTH = 20 # deprecated
 
 def generate_prime():
     '''
@@ -384,13 +384,13 @@ def mod_inverse(a, n):
     else:
         return s % n
     
-def totient(modulus, p, q):
+def totient(p, q):
     '''
     This function computes the amount of integers coprime to {modulus} using Euler's Product Formula
     '''
     
-    # We assume {modulus} = {p} * {q}, with p and q distinct primes    
-    totient = int(modulus*((1 - 1/p)*(1 - 1/q)))    
+    # We assume modulus = {p} * {q}, with p and q distinct primes    
+    totient = (p - 1) * (q - 1)
     return totient
 
 def export_keys(keyname):
