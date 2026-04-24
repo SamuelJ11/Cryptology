@@ -1,8 +1,8 @@
 import string, sys, random, math
 from pathlib import Path
 
-MAXRAND = 10 ** 100 - 1
-MINRAND = 10 ** 99
+MAXRAND = 64
+MINRAND = 4
 STREAMLENGTH = 20
 
 def generate_prime():
@@ -47,7 +47,7 @@ def blumblumshub():
     Although theoretically strong, BBS is computationally slow and is
     not used in modern production systems, where faster CSPRNGs are preferred. 
     This implementation is included purely for the amusement of the curious
-    programmer ...    
+    programmer, but is not used within this program.    
     '''
     
     # Generate distinct primes p and q and ensure p ≡ q ≡ 3 mod 4
@@ -302,8 +302,6 @@ def eea_recursive(a, b):
     s = t_prime
     t = s_prime - (q * t_prime)
     
-    return gcd, s, t
-
     '''
     Recursion is hard ... here is a concrete example involving a trace for eea_recursive(26, 55)
     
@@ -334,31 +332,31 @@ def eea_recursive(a, b):
     THE ASCENT (Calculating s and t as we go back up)
     -------------------------------------------------------
 
-    7. BACK TO STEP 5 (a=2, b=1):
+    7. BACK TO STEP 5 (a = 2, b = 1):
        * Catches: s_prime = 1, t_prime = 0.  (q was 2)
        * s = t_prime = 0
        * t = s_prime - (q * t_prime) = 1 - (2 * 0) = 1
        * Returns: (1, 0, 1)
 
-    8. BACK TO STEP 4 (a=3, b=2):
+    8. BACK TO STEP 4 (a = 3, b = 2):
        * Catches: s_prime = 0, t_prime = 1.  (q was 1)
        * s = t_prime = 1
        * t = s_prime - (q * t_prime) = 0 - (1 * 1) = -1
        * Returns: (1, 1, -1)
 
-    9. BACK TO STEP 3 (a=26, b=3):
+    9. BACK TO STEP 3 (a = 26, b = 3):
        * Catches: s_prime = 1, t_prime = -1. (q was 8)
        * s = t_prime = -1
        * t = s_prime - (q * t_prime) = 1 - (8 * -1) = 9
        * Returns: (1, -1, 9)
 
-    10. BACK TO STEP 2 (a=55, b=26):
+    10. BACK TO STEP 2 (a = 55, b = 26):
         * Catches: s_prime = -1, t_prime = 9.  (q was 2)
         * s = t_prime = 9
         * t = s_prime - (q * t_prime) = -1 - (2 * 9) = -19
         * Returns: (1, 9, -19)
 
-    11. BACK TO THE TOP (a=26, b=55):
+    11. BACK TO THE TOP (a = 26, b = 55):
         * Catches: s_prime = 9, t_prime = -19. (q was 0)
         * s = t_prime = -19
         * t = s_prime - (q * t_prime) = 9 - (0 * -19) = 9
@@ -369,11 +367,13 @@ def eea_recursive(a, b):
     Equation: 1 = (26 * -19) + (55 * 9)
     -19 % 55 = 36
     '''
+    
+    return gcd, s, t
 
 def mod_inverse(a, n):
     '''
     This is an interface function for the eea_recursive() function. It simply returns the
-    relevant part of that function's output (the Bezout coefficient of {a}) reduced (mod n).
+    relevant part of that function's output (the Bezout coefficient of {a} reduced (mod n)).
     '''
     
     gcd, s, t = eea_recursive(a, n)
@@ -390,8 +390,7 @@ def totient(modulus, p, q):
     '''
     
     # We assume {modulus} = {p} * {q}, with p and q distinct primes    
-    totient = int(modulus*((1 - 1/p)*(1 - 1/q)))
-    
+    totient = int(modulus*((1 - 1/p)*(1 - 1/q)))    
     return totient
 
 def export_keys(keyname):

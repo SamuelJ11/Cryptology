@@ -2,7 +2,7 @@ from rsa import RSA
 from utils import *
 import sys
 
-MINDIFF = 10**95
+MINDIFF = 32
 
 def main():
     
