@@ -216,10 +216,10 @@ def is_prime(modulus):
             return False
         else:
             # Passed Fermat test for this base (does not guarantee primality)
-            print(f"Passed Fermat test with\n   modulus = {modulus}\n   base = {alpha}")
-            
+            # print(f"Passed Fermat test with\n   modulus = {modulus}\n   base = {alpha}")
+            pass
             # Proceed to the stronger probabilistic Miller-Rabin test 
-            print("Proceeding to Miller-Rabin test . . .")
+            # print("Proceeding to Miller-Rabin test . . .")
 
     # For the Miller-Rabin test, write {modulus - 1} as 2^k * q where q is odd   
     millerexp = modulus - 1
@@ -232,7 +232,7 @@ def is_prime(modulus):
 
     # Check for value ≡ 1 or -1 before entering the loop
     if value == 1 or value == modulus - 1:
-        print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
+        # print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
         return True     
     
     # Repeatedly square to check if value ≡ -1    
@@ -245,12 +245,12 @@ def is_prime(modulus):
         
         # Declare {modulus} prime and return immediately if value ≡ -1
         if value == modulus - 1:
-            print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
+            # print(f"Passed Miller-Rabin test; {modulus} is probably prime\n")
             return True
 
         # If we reach 1 prematurely, {modulus} is definitely composite
         if value == 1:
-            print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
+            # print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
             return False
         
     print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
