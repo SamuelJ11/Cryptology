@@ -43,7 +43,7 @@ def main():
     
     rsa.generate_privkey()
     plaintext = rsa.decrypt(ciphertext)
-    print(f"The message after decryption is {plaintext}\n") 
+    print(f"The message after decryption is {plaintext}") 
     
     # Write the plaintext to a seperate file
     write_file("plaintext.txt", plaintext)
