@@ -1,5 +1,4 @@
-import string
-import utils
+import string, utils, sys
 from pathlib import Path
 
 class RSA:
@@ -19,7 +18,7 @@ class RSA:
         
         if (self.n == None):
             print("Warning: modulus not yet defined, unable to compute the encyrption exponent.")
-            return
+            sys.exit()
         
         encryption_exp = utils.generate_prime()        
         modulus = utils.totient(self.p, self.q)
@@ -33,7 +32,7 @@ class RSA:
         
         if (self.n == None):
             print("Warning: modulus not yet defined, unable to compute the decryption exponent.")
-            return
+            sys.exit()
         
         modulus = utils.totient(self.p, self.q)
         self.d = utils.mod_inverse(self.e, modulus)
@@ -42,7 +41,7 @@ class RSA:
         
         if (self.e == None):
             print("Warning: encryption exponent not yet defined, unable to compute the public key.")
-            return
+            sys.exit()
         
         pubkey = (self.e, self.n)
         
@@ -54,7 +53,7 @@ class RSA:
         
         if (self.d == None):
             print("Warning: decryption exponent not yet defined, unable to compute the private key.")
-            return
+            sys.exit()
         
         privkey = (self.d, self.n)
         

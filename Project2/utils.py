@@ -309,7 +309,7 @@ def mod_inverse(number, modulus):
     
     if gcd != 1:
         print(f"Error: Operation impossible; modular inverse does not exist for {number} (mod {modulus})")
-        return
+        sys.exit()
     else:
         return s % modulus
     
@@ -335,7 +335,7 @@ def read_file():
     ## Check if the path for the provided filename exists in the current directory
     if filepath.exists() == False:
         print(f"{filename} could not be found in the current working directory")
-        return
+        sys.exit()
     
     message = int(filepath.read_text())
     return message
