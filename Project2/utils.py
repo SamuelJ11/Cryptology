@@ -253,7 +253,7 @@ def is_prime(modulus):
             # print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
             return False
         
-    print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
+    # print(f"Failed Miller-Rabin test; {modulus} is definitely composite\n")
     return False
 
 def gcd_recursive(number, modulus):
