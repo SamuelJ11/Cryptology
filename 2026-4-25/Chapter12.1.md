@@ -12,7 +12,7 @@
 
         (3) continuing this process for the 23rd person, we have:
 
-            (1 - 1/365)(1 - 2/365)(1 - 3/365) ... = ∏ x: 1, 23 (1-x/365) = 0.493
+            (1 - 1/365)(1 - 2/365)(1 - 3/365) ... = ∏ x 1, 23; (1-x/365) = 0.493
 
         (4) therefore, the probability of at least 2 people having the same birthday is 
 
