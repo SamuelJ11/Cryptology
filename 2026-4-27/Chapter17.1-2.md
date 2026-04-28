@@ -183,3 +183,37 @@
     • Now, to calculate the secret message 'M', all we have to do is calculate p(x) and evaluate it at x = 0.
 
 ## Blakley Threshold Scheme
+
+    • Suppose there are serveral people and we want to arrange that any three can find the secret, but no two can;
+
+        (1) choose a prime 'p' and let x₀ be the secret
+
+        (2) choose y₀, z₀ randomly (mod p) so that we now have a point Q = (x₀, y₀, z₀) in three-dimensional space
+
+            * x₀, y₀, z₀ are unknown to the participants
+
+        (3) each person is given random values 'a' and 'b' such that c = z₀ - ax₀ - by₀
+
+            * each person has a, b, c
+
+        (4) Each person now has an equation of a plane passing through Q:
+
+            z = ax + by + c
+
+    • These three planes will intersect at a point, which must be 'Q'.
+
+    • the three people who want to deduce teh secret can proceed as follows:
+
+        (1) initially, they have three equations aᵢx + bᵢy - z ≡ -cᵢ (mod p)
+
+        (2) these equations are rearranged into a matrix to obtain
+
+            +--         --+   +-  -+     +-   -+
+            | a₁  b₁  -1  |   | x₀ |     | -c₁ |
+            | a₂  b₂  -1  | * | y₀ |  ≡  | -c₂ |
+            | a₃  b₃  -1  |   | z₀ |     | -c₃ |
+            +--         --+   +-  -+     +-   -+
+
+            as long as the determinant of this matrix is nonzero (mod p), the matrix can be inverted (mod p) and the secret x₀ can be found
+
+            * row operations would probabably be your best bet here
