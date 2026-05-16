@@ -41,7 +41,7 @@
 
         - the SHA-2 family consists of six algorithms: SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, and SHA-512/256
 
-    • We now begin our discussion of SHA-256.
+    • We now define some variables and functions used in SHA-256.
 
         - SHA-256 produces a 256-bit hash and is built upon the same design principles as the Merkle-Damgård Construction, where the original message 'M' is broken into a set of fixed-size blocks
 
@@ -90,4 +90,97 @@
 
 ## Padding and Preprocessing
 
-    • 
+    • We now begin our discussion of the SHA-256 process
+
+        (1) SHA-256 begins by taking the original message and padding it with the bit 1 followed by a sequence of 0 bits, enough to make the new message 64 bits short of the next highest multiple of 512
+
+        (2) Next, we append the 64-bit representation of the length 'T' of the message
+
+            - for example, if the original message has 2800 bits, we add a 1 and 207 0s to obtain a new message of length 
+
+                3008 = 6 x 512 - 64
+
+            - since 2800 = 101011110000₂, we append 52 zeroes followed by 101011110000 to obtain a message length of 3072
+
+        (3) Break the message with padding into 'N' blocks of length 512:
+
+            M(¹) || M(²) || ... M(ⁿ) 
+
+            - in the hash algorithm, each 512-bit block M(ⁱ) is divided into 32-bit blocks:
+
+            M(ⁱ) = M₀(ⁱ) || M₁(ⁱ) || ... || M₁₅(ⁱ)
+
+## The Algorithm
+
+    1:  for i from 1 to N do
+            ▷ This initializes the registers with the (i – 1)st intermediate hash value
+    2:      a ← H₁⁽ⁱ⁻¹⁾
+    3:      b ← H₂⁽ⁱ⁻¹⁾
+    4:      c ← H₃⁽ⁱ⁻¹⁾
+    5:      d ← H₄⁽ⁱ⁻¹⁾
+    6:      e ← H₅⁽ⁱ⁻¹⁾
+    7:      f ← H₆⁽ⁱ⁻¹⁾
+    8:      g ← H₇⁽ⁱ⁻¹⁾
+    9:      h ← H₈⁽ⁱ⁻¹⁾
+    10:     for k from 0 to 15 do
+    11:         Wₖ ← Mₖ⁽ⁱ⁾       ▷ This is where the message blocks are entered.
+    12:     for j₁ from 16 to 63 do
+    13:         Wⱼ₁ ← σ₁(Wⱼ₁₋₂) + Wⱼ₁₋₇ + σ₀(Wⱼ₁₋₁₅) + Wⱼ₁₋₁₆
+    14:     for j from 0 to 63 do
+    15:         T₁ ← h + Σ₁(e) + Ch(e, f, g) + Kⱼ + Wⱼ
+    16:         T₂ ← Σ₀(a) + Maj(a, b, c)
+    17:         h ← g
+    18:         g ← f
+    19:         f ← e
+    20:         e ← d + T₁
+    21:         d ← c
+    22:         c ← b
+    23:         b ← a
+    24:         a ← T₁ + T₂
+    25:     H₁⁽ⁱ⁾ ← a + H₁⁽ⁱ⁻¹⁾    ▷ These are the ith intermediate hash values
+    26:     H₂⁽ⁱ⁾ ← b + H₂⁽ⁱ⁻¹⁾
+    27:     H₃⁽ⁱ⁾ ← c + H₃⁽ⁱ⁻¹⁾
+    28:     H₄⁽ⁱ⁾ ← d + H₄⁽ⁱ⁻¹⁾
+    29:     H₅⁽ⁱ⁾ ← e + H₅⁽ⁱ⁻¹⁾
+    30:     H₆⁽ⁱ⁾ ← f + H₆⁽ⁱ⁻¹⁾
+    31:     H₇⁽ⁱ⁾ ← g + H₇⁽ⁱ⁻¹⁾
+    32:     H₈⁽ⁱ⁾ ← h + H₈⁽ⁱ⁻¹⁾
+    33: H(m) = H₁⁽ᴺ⁾ || H₂⁽ᴺ⁾ || H₃⁽ᴺ⁾ || H₄⁽ᴺ⁾ || H₅⁽ᴺ⁾ || H₆⁽ᴺ⁾ || H₇⁽ᴺ⁾ || H₈⁽ᴺ⁾
+    34: return H(m)
+
+    • An explanation of the algorithm is given below:
+
+        - lines 2 - 9: the algorithm sets up 8 working "variables" or registers named a, b, c, d, e, f, g, h.  for the very first block (i = 1), these are loaded with the fixed IV constants H₁(⁰) through H₈(⁰).  subsequent blocks are loaded with the output of the previous block's hashing pass
+
+        * note that 'N' in the for-loop condition is the number of 512-bit blocks
+
+        - lines 10 - 11: the first 16 words (W₀ through W₁₅) are just copies of the raw message block split up:
+
+            Wₖ = Mₖ⁽ⁱ⁾  for k = 0, 1, ..., 15
+
+        - lines 12–13: The remaining 48 words (W₁₆ through W₆₃) are generated mathematically using a formula that mixes previous words together using σ₀ and σ₁
+
+        * A 512-bit block only gives us sixteen 32-bit words
+        * The inner loop (for j from 0 to 63) runs exactly 64 rounds for every single block (for every i from 1 to N)
+        * For this reason, this phase expands those 16 words into 64 words for the for-loop starting on line 14
+
+        - lines 14 - 16: This is begginning of the compression round; in every single round two temporary variables T₁ and T₂ are calculated using the current values of the registers, a round constant Kⱼ, and the current round's message word Wⱼ
+
+        - lines 17 - 24: here the register values shift down like a conveyor belt:
+
+            'h' becomes whatever 'g' was
+            'g' becomes whatever 'f' was
+            'f' becomes whatever 'e' was
+            'e' becomes d + T₁ (injecting the scrambled data halfway through)
+                    .
+                    .
+                    .
+            'a' becomes T₁ + T₂ (injecting the newly scrambled data at the top)
+
+            * by doing this 64 times, a single change to even one bit of the message completely randomizes the states of all 8 registers
+
+        - lines 25 - 32: once the 64 rounds are finished, we have a heavily scrambled set of registers 'a' through 'h'. Now we take those register values and add them (mod 2³²) back to the values the block started with 
+
+        - lines 33 - 34: After every single 512-bit block ('N' blocks total) has gone through this 4-phase lifecycle, the very last intermediate hash values are concatenated together side-by-side
+
+            H(m) = H₁⁽ᴺ⁾ || H₂⁽ᴺ⁾ || H₃⁽ᴺ⁾ || H₄⁽ᴺ⁾ || H₅⁽ᴺ⁾ || H₆⁽ᴺ⁾ || H₇⁽ᴺ⁾ || H₈⁽ᴺ⁾
